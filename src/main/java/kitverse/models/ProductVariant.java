@@ -14,7 +14,7 @@ public class ProductVariant {
     private int variantId;
     private int productId;
     private String size;
-    private float sellingPrice;
+    private double sellingPrice;
     private int stock;
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
@@ -46,11 +46,11 @@ public class ProductVariant {
         this.size = size;
     }
 
-    public float getSellingPrice() {
+    public double getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(float sellingPrice) {
+    public void setSellingPrice(double sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 
