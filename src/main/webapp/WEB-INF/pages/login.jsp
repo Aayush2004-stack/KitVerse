@@ -53,7 +53,7 @@
             </form>
             <p style='margin:0px;color:red; display: ${not empty error ? "block" : "none"}'>${error}</p>
 
-            <p class="register">Don't have an account? <a href="#">Register</a></p>
+            <p class="register">Don't have an account? <a href="${pageContext.request.contextPath}/register">Register</a></p>
         </div>
     </body>
 </html>
