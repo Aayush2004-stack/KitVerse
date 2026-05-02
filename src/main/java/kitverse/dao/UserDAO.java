@@ -80,7 +80,7 @@ public class UserDAO implements UserDAOInterface {
                 user.setFullName(rs.getString("full_name"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
-                user.setUserType("user_type");
+                user.setUserType(rs.getString("user_type"));
                 user.setCreateAt(rs.getObject("created_at", LocalDateTime.class));
                 user.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
                 return user;
