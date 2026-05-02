@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import kitverse.daoInterfaces.UserDAOInterface;
 import kitverse.models.User;
 import kitverse.utilities.DBConfig;
@@ -17,6 +18,7 @@ import kitverse.utilities.DBConfig;
  * @author aayushbastola
  */
 public class UserDAO implements UserDAOInterface {
+
     private Connection conn;
     private boolean isConnectionError = false;
 
@@ -28,7 +30,6 @@ public class UserDAO implements UserDAOInterface {
             System.out.println(ex.getLocalizedMessage());
         }
     }
-
 
     @Override
     public int insertUser(String fullName, String email, String phnNo, String password) {
@@ -57,7 +58,32 @@ public class UserDAO implements UserDAOInterface {
     }
 
     @Override
-    public User getUser(String user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public User getUser(String email) {
+        try {
+            final String SELECT_USER = "select * from users where email=?;";
+
+            PreparedStatement pStm_ = conn.prepareStatement(SELECT_USER);
+            pStm_.setString(1, email);
+            ResultSet rs = pStm_.executeQuery();
+            if (rs.next()) {
+                final User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setCreateAt(rs.getObject("created_at", LocalDateTime.class));
+                user.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
+                return user;
+
+            }
+            return null;
+            
+        }
+        catch(SQLException ex){
+            System.out.println(ex.getLocalizedMessage());
+            return null;
+        }
+        
     }
 }
+          
