@@ -1,0 +1,87 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 2, 2026, 11:58:42 AM
+    Author     : ACER
+*/
+@import url("main.css");
+
+
+/* Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-primary);
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    color: var(--color-primary);
+    margin-top: 20px;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    margin: 30px auto;
+}
+
+/* Button */
+.add-btn {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background-color: var(--color-primary);
+    color: var(--text-white);
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.add-btn:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-white);
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid var(--border-light);
+    text-align: center;
+}
+
+th {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Actions */
+.action a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.action a:hover {
+    color: var(--color-primary-hover);
+}
+
+.action button {
+    border: none;
+    background: none;
+    color: red;
+    cursor: pointer;
+    font-weight: bold;
+}
