@@ -22,61 +22,66 @@
                 <span class="brand-name">KitVerse</span>
             </div>
             <h1>Create account</h1>
-            <p class="subtitle">Join KitVerse to track orders and manage your account.</p>
+            <p class="subtitle">Join KitVerse to Buy, Wear, and Represent premium jersey.</p>
             <div class="divider"></div>
 
             <form action="register" method="post">
                 <div class="field-row">
                     <div class="field">
                         <label for="firstName">First name</label>
-                        <input type="text" name="firstName" id="firstName" placeholder="Asmit"/>
+                        <input type="text" name="firstName"
+
+                               value="${firstName}" required/>
+
+                        <p style="color:red;">${erFirst}</p>                    
                     </div>
                     <div class="field">
                         <label for="lastName">Last name</label>
-                        <input type="text" name="lastName" id="lastName" placeholder="Bastola"/>
+                        <input type="text" name="lastName"
+                               value="${lastName}" required/>
+
+                        <p style="color:red;">${erLast}</p>
                     </div>
                 </div>
 
                 <div class="field">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="you@example.com"/>
+                    <input type="email" name="email"
+                           value="${email}" required/>
+
+                    <p style="color:red;">${erEmail}</p>
                 </div>
 
                 <div class="field">
                     <label for="phone">Phone number</label>
                     <div class="phone-wrap">
                         <span class="phone-prefix">+977</span>
-                        <input type="tel" name="phone" id="phone" placeholder="98XXXXXXXX"/>
+                        <input type="number" name="phone"
+                               value="${phone}" required/>
+
+                        <p style="color:red;">${erPhone}</p>
                     </div>
                 </div>
 
                 <div class="field">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="••••••••"/>
+                    <input type="password" name="password" id="password" placeholder="••••••••" required/>
+                    <p style="color:red;">${erPass}</p>
                 </div>
 
                 <div class="field">
                     <label for="confirmPassword">Confirm password</label>
-                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••"/>
+                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="••••••••" required/>
+                    <p style="color:red;">${erConfirm}</p>
                 </div>
 
-                <div class="field field-terms">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="terms" id="terms"/>
-                        <span class="checkmark"></span>
-                        <span class="terms-text">
-                            I agree to the
-                            <a href="#" class="terms-link">Terms of Service</a>
-                            and
-                            <a href="#" class="terms-link">Privacy Policy</a>
-                        </span>
-                    </label>
-                </div>
 
                 <button class="btn-register" type="submit">Create Account</button>
             </form>
+            <p style='margin:0px;color:red; display: ${not empty error ? "block" : "none"}'>${error}</p>
 
-            <p class="login-link">Already have an account? <a href="login.jsp">Sign in</a></p>
+
+            <p class="login-link">Already have an account? <a href="${pageContext.request.contextPath}/login">Sign in</a></p>
         </div>
     </body>
 </html>
