@@ -8,7 +8,6 @@ package kitverse.dao;
  *
  * @author ACER
  */
-
 import kitverse.daoInterfaces.ProductVariantDAOInterface;
 import kitverse.models.ProductVariant;
 import kitverse.utilities.DBConfig;
@@ -25,15 +24,22 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
     public ProductVariantDAO() {
         try {
             conn = DBConfig.getConnection();
-        } catch (SQLException | ClassNotFoundException ex) {
+
+            if (conn == null) {
+                throw new SQLException("DB connection is NULL");
+            }
+
+            System.out.println("DB CONNECTED SUCCESSFULLY");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            conn = null;
             isConnectionError = true;
-            System.out.println(ex.getLocalizedMessage());
         }
     }
 
     @Override
     public boolean insertVariant(ProductVariant variant) {
-        if (isConnectionError) return false;
 
         String query = "INSERT INTO product_variants (product_id, size, selling_price, stock, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -43,13 +49,13 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             ps.setString(2, variant.getSize());
             ps.setDouble(3, variant.getSellingPrice());
             ps.setInt(4, variant.getStock());
-            ps.setObject(5, variant.getCreateAt());
-            ps.setObject(6, variant.getUpdatedAt());
-
+            ps.setTimestamp(5, Timestamp.valueOf(variant.getCreateAt()));
+            ps.setTimestamp(6, Timestamp.valueOf(variant.getUpdatedAt()));
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
+            System.out.println("SQL ERROR: " + e.getMessage());
         }
 
         return false;
@@ -57,7 +63,6 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
 
     @Override
     public ArrayList<ProductVariant> getVariantsByProductId(int productId) {
-        if (isConnectionError) return null;
 
         ArrayList<ProductVariant> list = new ArrayList<>();
         String query = "SELECT * FROM product_variants WHERE product_id=?";
@@ -72,7 +77,7 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return list;
@@ -80,7 +85,6 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
 
     @Override
     public ProductVariant getVariantById(int variantId) {
-        if (isConnectionError) return null;
 
         String query = "SELECT * FROM product_variants WHERE variant_id=?";
 
@@ -94,7 +98,7 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return null;
@@ -102,16 +106,20 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
 
     @Override
     public boolean updateVariant(ProductVariant variant) {
-        if (isConnectionError) return false;
+        if (isConnectionError) {
+            return false;
+        }
 
-        String query = "UPDATE product_variants SET size=?, selling_price=?, updated_at=? WHERE variant_id=?";
+        String query
+                = "UPDATE product_variants SET size=?, selling_price=?, stock=?, updated_at=? WHERE variant_id=?";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, variant.getSize());
             ps.setDouble(2, variant.getSellingPrice());
-            ps.setObject(3, variant.getUpdatedAt());
-            ps.setInt(4, variant.getVariantId());
+            ps.setInt(3, variant.getStock());
+            ps.setTimestamp(4, Timestamp.valueOf(variant.getUpdatedAt()));
+            ps.setInt(5, variant.getVariantId());
 
             return ps.executeUpdate() > 0;
 
@@ -124,7 +132,6 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
 
     @Override
     public boolean deleteVariant(int variantId) {
-        if (isConnectionError) return false;
 
         String query = "DELETE FROM product_variants WHERE variant_id=?";
 
@@ -134,7 +141,7 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return false;
@@ -142,7 +149,6 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
 
     @Override
     public boolean updateStock(int variantId, int stock) {
-        if (isConnectionError) return false;
 
         String query = "UPDATE product_variants SET stock=?, updated_at=? WHERE variant_id=?";
 
@@ -155,7 +161,7 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return false;
@@ -163,7 +169,6 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
 
     @Override
     public boolean deductStock(int variantId, int quantity) {
-        if (isConnectionError) return false;
 
         String query = "UPDATE product_variants SET stock = stock - ? WHERE variant_id=? AND stock >= ?";
 
@@ -176,7 +181,7 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return false;
@@ -184,7 +189,6 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
 
     @Override
     public int getStock(int variantId) {
-        if (isConnectionError) return 0;
 
         String query = "SELECT stock FROM product_variants WHERE variant_id=?";
 
@@ -198,10 +202,30 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return 0;
+    }
+
+    @Override
+    public boolean increaseStock(int variantId, int addStock) {
+
+        String query = "UPDATE product_variants SET stock = stock + ?, updated_at = ? WHERE variant_id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, addStock);
+            ps.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setInt(3, variantId);
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     // Mapper
@@ -213,8 +237,8 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         v.setSize(rs.getString("size"));
         v.setSellingPrice(rs.getDouble("selling_price"));
         v.setStock(rs.getInt("stock"));
-        v.setCreateAt(rs.getObject("created_at", LocalDateTime.class));
-        v.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
+        v.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
+        v.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
 
         return v;
     }
