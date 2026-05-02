@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import kitverse.dao.UserDAO;
 import kitverse.models.User;
+import kitverse.utilities.SessionUtil;
 
 /**
  *
@@ -31,6 +32,7 @@ public class LoginServlet extends HttpServlet {
 @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //TODO: handle validation for empty fields  
         String email = request.getParameter("email");
         String typedPassword = request.getParameter("password");
         
@@ -47,7 +49,7 @@ public class LoginServlet extends HttpServlet {
             //if user and password matched, redirect to topiclist
             boolean matched=(typedPassword.equals(hashedPassword));
             if (matched) {
-                
+                   SessionUtil.setAttribute(request, "user", user);
                    if(user.getUserType().equalsIgnoreCase("admin")){
                        response.sendRedirect("/WEB-INF/pages/login.jsp");
                    }
