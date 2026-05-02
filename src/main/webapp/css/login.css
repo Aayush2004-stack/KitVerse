@@ -1,0 +1,236 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 2, 2026, 1:00:01 PM
+    Author     : ASUS
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background blobs */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.25;
+    pointer-events: none;
+}
+body::before {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, #285A48, transparent 70%);
+    top: -100px;
+    left: -100px;
+}
+body::after {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, #3C7A63, transparent 70%);
+    bottom: -80px;
+    right: -80px;
+}
+
+/* Card */
+.card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 36px 32px 32px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 32px rgba(40, 90, 72, 0.10);
+    animation: fadeUp 0.45s cubic-bezier(.22,.68,0,1.2) both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+    }
+    to   {
+        opacity: 1;
+        transform: translateY(0)    scale(1);
+    }
+}
+
+/* Brand / Logo */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.brand-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+}
+
+/* Heading */
+h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+}
+.subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.5;
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+    background: var(--border-light);
+    margin-bottom: 24px;
+}
+
+/* Form fields */
+.field {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 7px;
+    letter-spacing: 0.1px;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+input {
+    width: 100%;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14.5px;
+    color: var(--text-primary);
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+input::placeholder {
+    color: #A0AFA8;
+}
+input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(40, 90, 72, 0.10);
+    background: var(--bg-white);
+}
+
+/* Password toggle */
+.toggle-pw {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #A0AFA8;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    transition: color 0.2s;
+}
+.toggle-pw:hover {
+    color: var(--color-primary);
+}
+.toggle-pw svg {
+    width: 18px;
+    height: 18px;
+}
+input[type="password"],
+input[type="text"].pw-field {
+    padding-right: 40px;
+}
+
+/* Login button */
+.btn-login {
+    width: 100%;
+    margin-top: 8px;
+    padding: 13px;
+    background: var(--color-primary);
+    color: var(--text-white);
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.1px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(40, 90, 72, 0.25);
+}
+.btn-login:hover {
+    background: var(--color-primary-hover);
+    box-shadow: 0 6px 22px rgba(40, 90, 72, 0.35);
+}
+.btn-login:active {
+    background: var(--color-primary-dark);
+    transform: scale(0.98);
+}
+
+/* Footer */
+.footer {
+    margin-top: 20px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+.footer a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.footer a:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
