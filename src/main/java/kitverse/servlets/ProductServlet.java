@@ -5,13 +5,12 @@
 package kitverse.servlets;
 
 import jakarta.servlet.RequestDispatcher;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import kitverse.dao.ProductDAO;
@@ -48,30 +47,30 @@ public class ProductServlet extends HttpServlet {
                 ? ""
                 : request.getParameter("action");
 
-        ProductDAO pdao = new ProductDAO();
+        ProductDAO pDao = new ProductDAO();
 
         switch (action) {
 
             case "new": {
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
                 rd.forward(request, response);
                 break;
             }
 
             case "edit": {
-                int productId = Integer.parseInt(request.getParameter("productid"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
-                Product product = pdao.getProductDetails(productId);
+                Product product = pDao.getProductDetails(productId);
 
                 request.setAttribute("product", product);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
                 rd.forward(request, response);
                 break;
             }
 
-            default: {
-                ArrayList<Product> products = pdao.fetchAllProducts();
+            case "admin": {
+                ArrayList<Product> products = pDao.fetchAllProducts();
 
                 if (products == null) {
                     products = new ArrayList<>();
@@ -79,7 +78,12 @@ public class ProductServlet extends HttpServlet {
 
                 request.setAttribute("products", products);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productlist.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productList.jsp");
+                rd.forward(request, response);
+                break;
+            }
+            default:{
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/product.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -138,7 +142,7 @@ public class ProductServlet extends HttpServlet {
                 boolean isAdded = pdao.insertProduct(product);
 
                 if (isAdded) {
-                    response.sendRedirect(request.getContextPath() + "/product");
+                    response.sendRedirect(request.getContextPath() + "/product?action=admin");
                 } else {
                     request.setAttribute("error", "Failed to add product!");
                     RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
@@ -148,7 +152,7 @@ public class ProductServlet extends HttpServlet {
             }
 
             case "update": {
-                int productId = Integer.parseInt(request.getParameter("productid"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
                 String name = request.getParameter("productName");
                 String team = request.getParameter("teamName");
@@ -168,7 +172,7 @@ public class ProductServlet extends HttpServlet {
                 boolean isUpdated = pdao.updateProduct(product);
 
                 if (isUpdated) {
-                    response.sendRedirect(request.getContextPath() + "/product");
+                    response.sendRedirect(request.getContextPath() + "/product?action=admin");
                 } else {
                     request.setAttribute("error", "Failed to update product!");
                     RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
@@ -178,12 +182,12 @@ public class ProductServlet extends HttpServlet {
             }
 
             case "delete": {
-                int productId = Integer.parseInt(request.getParameter("productid"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
                 boolean isDeleted = pdao.deleteProduct(productId);
 
                 if (isDeleted) {
-                    response.sendRedirect(request.getContextPath() + "/product");
+                    response.sendRedirect(request.getContextPath() + "/product?action=admin");
                 } else {
                     System.out.println("Failed to delete product!");
                 }
@@ -191,7 +195,7 @@ public class ProductServlet extends HttpServlet {
             }
 
             default:
-                response.sendRedirect(request.getContextPath() + "/product");
+                response.sendRedirect(request.getContextPath() + "/product?action=admin");
         }
     }
 }

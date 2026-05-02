@@ -11,7 +11,7 @@
 <html>
     <head>
         <title>Product Variant</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productvariantadd.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productVariantAdd.css">
     </head>
 
     <body>
@@ -25,12 +25,10 @@
             <div class="nav-actions">
 
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/product">Products</a>
+                <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
                 <a href="${pageContext.request.contextPath}/order">Orders</a>
 
-                <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
+                <a href="${pageContext.request.contextPath}/logout" class="nav-login">Logout</a>
 
             </div>
         </div>
@@ -56,10 +54,10 @@
                     <input type="hidden" name="action"
                            value="${variant != null ? 'update' : 'add'}"/>
 
-                    <input type="hidden" name="productid" value="${productid}"/>
+                    <input type="hidden" name="productId" value="${productId}"/>
 
                     <c:if test="${variant != null}">
-                        <input type="hidden" name="variantid" value="${variant.variantId}"/>
+                        <input type="hidden" name="variantId" value="${variant.variantId}"/>
                     </c:if>
 
                     <!-- SIZE -->
@@ -102,7 +100,7 @@
                 </form>
 
                 <a class="back-link"
-                   href="${pageContext.request.contextPath}/variant?action=product&productid=${productid}">
+                   href="${pageContext.request.contextPath}/variant?action=product&productId=${productId}">
                     ← Back to Variants
                 </a>
 

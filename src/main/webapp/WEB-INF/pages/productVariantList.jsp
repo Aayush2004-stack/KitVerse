@@ -11,7 +11,7 @@
 <html>
     <head>
         <title>Product Variants</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productvariantlist.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productVariantList.css">
     </head>
 
     <body>
@@ -25,12 +25,10 @@
             <div class="nav-actions">
 
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/product">Products</a>
+                <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
                 <a href="${pageContext.request.contextPath}/order">Orders</a>
 
-                <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
+                <a href="${pageContext.request.contextPath}/logout" class="nav-login">Logout</a>
 
             </div>
         </div>
@@ -42,7 +40,7 @@
                 <h2>Product Variants</h2>
 
                 <a class="btn-add"
-                   href="${pageContext.request.contextPath}/variant?action=new&productid=${productid}">
+                   href="${pageContext.request.contextPath}/variant?action=new&productId=${productId}">
                     + Add New Variant
                 </a>
             </div>
@@ -75,15 +73,15 @@
 
                                     <!-- Edit -->
                                     <a class="btn-edit"
-                                       href="${pageContext.request.contextPath}/variant?action=edit&variantid=${v.variantId}&productid=${productid}">
+                                       href="${pageContext.request.contextPath}/variant?action=edit&variantId=${v.variantId}&productId=${productId}">
                                         Edit
                                     </a>
 
                                     <!-- Delete -->
                                     <form action="${pageContext.request.contextPath}/variant" method="post">
                                         <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="variantid" value="${v.variantId}">
-                                        <input type="hidden" name="productid" value="${productid}">
+                                        <input type="hidden" name="variantId" value="${v.variantId}">
+                                        <input type="hidden" name="productId" value="${productId}">
                                         <button class="submit" type="submit"
                                                 onclick="return confirm('Are you sure you want to delete?');">Delete</button>
                                     </form>
@@ -91,8 +89,8 @@
                                     <!-- Stock Update -->
                                     <form action="${pageContext.request.contextPath}/variant" method="post" class="stock-form">
                                         <input type="hidden" name="action" value="stock">
-                                        <input type="hidden" name="variantid" value="${v.variantId}">
-                                        <input type="hidden" name="productid" value="${productid}">
+                                        <input type="hidden" name="variantId" value="${v.variantId}">
+                                        <input type="hidden" name="productId" value="${productId}">
 
                                         <input type="number" name="stock" min="1" placeholder="Add stock">
                                         <button class="btn-stock" type="submit">+ Add Stock</button>
@@ -106,7 +104,7 @@
 
             </div>
 
-            <a class="btn-back" href="${pageContext.request.contextPath}/product">
+            <a class="btn-back" href="${pageContext.request.contextPath}/product?action=admin">
                 ← Back to Products
             </a>
 

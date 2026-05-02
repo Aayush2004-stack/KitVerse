@@ -8,8 +8,8 @@ package kitverse.dao;
  *
  * @author ACER
  */
-import kitverse.utilities.DBConfig;
 import java.sql.*;
+import kitverse.utilities.DBConfig;
 
 public class AdminDashboardDAO {
 
@@ -19,17 +19,9 @@ public class AdminDashboardDAO {
     public AdminDashboardDAO() {
         try {
             conn = DBConfig.getConnection();
-
-            if (conn == null) {
-                throw new SQLException("DB connection is NULL");
-            }
-
-            System.out.println("DB CONNECTED SUCCESSFULLY");
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            conn = null;
+        } catch (SQLException | ClassNotFoundException ex) {
             isConnectionError = true;
+            System.out.println(ex.getLocalizedMessage());
         }
     }
 
