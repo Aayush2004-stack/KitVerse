@@ -25,7 +25,7 @@
         <a href="#">Shop</a>
         <a href="#">Categories</a>
         <a href="#">About</a>
-        <a href="#" class="nav-login">Login</a>
+        <a href="${pageContext.request.contextPath}/logout" class="nav-login">Logout</a>
     </nav>
 
 </header>
