@@ -27,7 +27,7 @@
             <li><a href="#">Shop</a></li>
             <li><a href="#">Categories</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#" class="login-btn">Login</a></li>
+            <li><a href="${pageContext.request.contextPath}/login" class="login-btn">Login</a></li>
         </ul>
     </nav>
 </header>
