@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import kitverse.dao.UserDAO;
+import kitverse.utilities.PasswordUtil;
 import kitverse.utilities.ValidationUtil;
 
 /**
@@ -85,7 +86,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     request.setAttribute("email", email);
     request.setAttribute("phone", phone);
 
-    // 6. If ANY error → return
+    //If ANY error → return
     if (!erFirst.isEmpty() || !erLast.isEmpty() || !erEmail.isEmpty()
             || !erPhone.isEmpty() || !erPass.isEmpty() || !erConfirm.isEmpty()) {
 
@@ -94,13 +95,14 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         return;
     }
 
-    // 7. Process data
+    
     firstName = capitalize(firstName);
     lastName = capitalize(lastName);
     String fullName = firstName + " " + lastName;
+    String hashedPassword= PasswordUtil.getHashPassword(password);
 
     UserDAO userDAO = new UserDAO();
-    int check = userDAO.insertUser(fullName, email, phone, password);
+    int check = userDAO.insertUser(fullName, email, phone, hashedPassword);
 
     switch (check) {
         case 1:
@@ -109,6 +111,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
 
         case 2:
             request.setAttribute("error", "User/Email already present!");
+            request.getRequestDispatcher("/WEB-INF/pages/register.jsp")
+                    .forward(request, response);
+            break;
+        
+        case 4:
+            request.setAttribute("error", "Phn number already used!");
             request.getRequestDispatcher("/WEB-INF/pages/register.jsp")
                     .forward(request, response);
             break;
