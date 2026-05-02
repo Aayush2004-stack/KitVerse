@@ -15,6 +15,26 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productadd.css">
     </head>
     <body>
+        <!-- ADMIN HEADER -->
+        <div class="admin-header">
+
+            <div class="logo">
+                <h2>KitVerse Admin</h2>
+            </div>
+
+            <div class="nav-actions">
+
+                <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
+                <a href="${pageContext.request.contextPath}/product">Products</a>
+                <a href="${pageContext.request.contextPath}/order">Orders</a>
+
+                <form action="${pageContext.request.contextPath}/logout" method="post">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+
+            </div>
+        </div>
+        <!-- END HEADER -->
 
         <h2 style="text-align:center;">
             <c:choose>
