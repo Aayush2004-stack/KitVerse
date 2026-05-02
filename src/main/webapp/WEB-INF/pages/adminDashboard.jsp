@@ -4,14 +4,74 @@
     Author     : ACER
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Admin Dashboard</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/adminDashboard.css">
     </head>
+
     <body>
-        <h1>Hello World!</h1>
+
+        <!-- HEADER START -->
+        <div class="admin-header">
+
+            <div class="logo">
+                <h2>KitVerse Admin</h2>
+            </div>
+
+            <div class="nav-actions">
+
+                <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
+                <a href="${pageContext.request.contextPath}/product">Products</a>
+                <a href="${pageContext.request.contextPath}/order">Orders</a>
+
+                <form action="${pageContext.request.contextPath}/logout" method="post">
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+
+            </div>
+        </div>
+        <!-- HEADER END -->
+
+
+        <div class="container">
+
+            <h1>Inventory Dashboard</h1>
+
+            <div class="grid">
+
+                <div class="card">
+                    <h3>Total Products</h3>
+                    <p>${totalProducts}</p>
+                </div>
+
+                <div class="card">
+                    <h3>Total Variants</h3>
+                    <p>${totalVariants}</p>
+                </div>
+
+                <div class="card">
+                    <h3>Total Stock</h3>
+                    <p>${totalStock}</p>
+                </div>
+
+                <div class="card warning">
+                    <h3>Low Stock (≤5)</h3>
+                    <p>${lowStock}</p>
+                </div>
+
+                <div class="card danger">
+                    <h3>Out of Stock</h3>
+                    <p>${outOfStock}</p>
+                </div>
+
+            </div>
+
+        </div>
+
     </body>
 </html>

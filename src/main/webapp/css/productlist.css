@@ -7,81 +7,180 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : ACER
 */
 @import url("main.css");
+@import url("adminNavbar.css");
 
+/* =========================
+   BASE
+========================= */
 
-/* Page Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--bg-primary);
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
     margin: 0;
     padding: 0;
-}
-
-h2 {
-    text-align: center;
-    color: var(--color-primary);
-    margin-top: 20px;
-}
-
-/* Container */
-.container {
-    width: 90%;
-    margin: 30px auto;
-}
-
-/* Button */
-.add-btn {
-    display: inline-block;
-    margin-bottom: 15px;
-    padding: 10px 15px;
-    background-color: var(--color-primary);
-    color: var(--text-white);
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.add-btn:hover {
-    background-color: var(--color-primary-hover);
-}
-
-/* Table */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: var(--bg-white);
-}
-
-th, td {
-    padding: 12px;
-    border: 1px solid var(--border-light);
-    text-align: center;
-}
-
-th {
-    background-color: var(--bg-secondary);
     color: var(--text-primary);
 }
 
-tr:hover {
-    background-color: #f9f9f9;
+/* Page title */
+h2 {
+    text-align: center;
+    margin: 20px 0 10px;
+    font-size: 26px;
+    color: var(--color-primary);
 }
 
-/* Actions */
-.action a {
-    margin: 0 5px;
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+    width: 92%;
+    margin: 25px auto;
+}
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.add-btn {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 10px 16px;
+    background: var(--color-primary);
+    color: var(--text-white);
     text-decoration: none;
-    color: var(--color-primary);
-    font-weight: bold;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.add-btn:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   TABLE CARD STYLE
+========================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* header */
+th {
+    background: var(--color-primary);
+    color: white;
+    padding: 14px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* cells */
+td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+}
+
+/* hover row */
+tr:hover {
+    background: rgba(40, 90, 72, 0.06);
+}
+
+/* =========================
+   IMAGE
+========================= */
+
+td img {
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid var(--border-light);
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.action {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+}
+
+/* edit button */
+.action a {
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    background: #3498db;
+    color: white;
+    transition: 0.2s ease;
 }
 
 .action a:hover {
-    color: var(--color-primary-hover);
+    background: #2c80b4;
+    transform: translateY(-1px);
 }
 
+/* delete button */
 .action button {
+    padding: 6px 10px;
+    border-radius: 6px;
     border: none;
-    background: none;
-    color: red;
+    background: #e74c3c;
+    color: white;
+    font-size: 13px;
     cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.action button:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
+
+/* variant link (special style) */
+.action a:last-child {
+    background: var(--color-primary);
+}
+
+.action a:last-child:hover {
+    background: var(--color-primary-hover);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+td[colspan] {
+    padding: 20px;
     font-weight: bold;
+    color: var(--text-secondary);
+}
+
+/* =========================
+   RESPONSIVE (optional but useful)
+========================= */
+
+@media (max-width: 900px) {
+    table {
+        font-size: 12px;
+    }
+
+    .action {
+        flex-direction: column;
+    }
 }

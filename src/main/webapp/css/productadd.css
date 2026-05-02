@@ -8,88 +8,138 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 
 @import url("main.css");
+@import url("adminNavbar.css");
 
-/* Page */
+/* =========================
+   BASE
+========================= */
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--bg-primary);
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
     margin: 0;
     padding: 0;
+    color: var(--text-primary);
 }
 
+/* Page title */
 h2 {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 26px;
     color: var(--color-primary);
-    margin-top: 30px;
 }
 
-/* Form Container */
+/* =========================
+   FORM CONTAINER
+========================= */
+
 .form-container {
-    width: 420px;
+    width: 460px;
     margin: 40px auto;
-    background-color: var(--bg-white);
-    padding: 25px 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    background: var(--bg-white);
+    padding: 28px 32px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+    border: 1px solid var(--border-light);
+    transition: 0.3s ease;
 }
 
-/* Labels */
+.form-container:hover {
+    transform: translateY(-3px);
+}
+
+/* =========================
+   LABELS
+========================= */
+
 label {
     display: block;
-    margin-top: 12px;
-    margin-bottom: 5px;
-    color: var(--text-primary);
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-size: 13px;
     font-weight: 600;
+    color: var(--text-secondary);
 }
 
-/* Inputs */
+/* =========================
+   INPUTS + TEXTAREA + SELECT
+========================= */
+
 input[type="text"],
-textarea {
+textarea,
+select {
     width: 100%;
-    padding: 10px;
+    padding: 10px 12px;
     border: 1px solid var(--border-light);
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 14px;
     outline: none;
-    transition: border 0.2s ease;
+    background: #fff;
+    transition: all 0.2s ease;
 }
 
-/* Focus effect */
+/* focus */
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(40, 90, 72, 0.15);
 }
 
-/* Button */
+/* textarea */
+textarea {
+    resize: none;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
 button {
     width: 100%;
     margin-top: 18px;
     padding: 12px;
-    background-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     color: var(--text-white);
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: 0.25s ease;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
 }
 
 button:hover {
-    background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--color-primary-hover), var(--color-primary));
 }
 
-/* Back link */
-a {
+/* =========================
+   BACK LINK
+========================= */
+
+.form-container a {
+    display: inline-block;
+    margin-top: 16px;
     color: var(--color-primary);
     text-decoration: none;
     font-weight: 500;
+    transition: 0.2s;
 }
 
-a:hover {
+.form-container a:hover {
     color: var(--color-primary-hover);
+    text-decoration: underline;
 }
 
-/* Error message */
+/* =========================
+   ERROR MESSAGE
+========================= */
+
 p {
-    margin-bottom: 10px;
+    text-align: center;
     font-size: 14px;
 }
+
