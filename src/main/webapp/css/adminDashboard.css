@@ -1,0 +1,107 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 2, 2026, 7:39:10 PM
+    Author     : ACER
+*/
+
+@import url('main.css');
+@import url('adminNavbar.css');
+
+/* =========================
+   BASE
+========================= */
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+    margin: 0;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+/* container */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+h1 {
+    text-align: center;
+    margin: 25px 0;
+    font-size: 26px;
+    color: var(--text-primary);
+}
+
+/* =========================
+   GRID DASHBOARD
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+    background: var(--bg-white);
+    padding: 22px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+    border: 1px solid var(--border-light);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.card h3 {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+/* =========================
+   SPECIAL CARDS
+========================= */
+
+.warning {
+    background: linear-gradient(135deg, #fff7d6, #fff1b8);
+    border: 1px solid #f0d98c;
+}
+
+.danger {
+    background: linear-gradient(135deg, #ffe3e3, #ffcccc);
+    border: 1px solid #f2a5a5;
+}
+
+/* =========================
+   SMALL ANIMATIONS
+========================= */
+
+.card,
+.nav-actions a,
+.logout-btn {
+    transition: all 0.25s ease;
+}
