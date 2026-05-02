@@ -21,7 +21,6 @@ import kitverse.models.Product;
  *
  * @author ACER
  */
-
 @WebServlet(name = "ProductServlet", urlPatterns = {"/product"})
 public class ProductServlet extends HttpServlet {
 
@@ -37,7 +36,7 @@ public class ProductServlet extends HttpServlet {
         switch (action) {
 
             case "new": {
-                RequestDispatcher rd = request.getRequestDispatcher("/pages/productadd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -49,7 +48,7 @@ public class ProductServlet extends HttpServlet {
 
                 request.setAttribute("product", product);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/pages/productadd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -57,16 +56,18 @@ public class ProductServlet extends HttpServlet {
             default: {
                 ArrayList<Product> products = pdao.fetchAllProducts();
 
+                if (products == null) {
+                    products = new ArrayList<>();
+                }
+
                 request.setAttribute("products", products);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/pages/productlist.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productlist.jsp");
                 rd.forward(request, response);
                 break;
             }
         }
     }
-
-    
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -86,6 +87,10 @@ public class ProductServlet extends HttpServlet {
                 String description = request.getParameter("description");
                 String image = request.getParameter("imagePath");
 
+                if (image == null || image.trim().isEmpty()) {
+                    image = "resources/images/background.jpeg";
+                }
+
                 Product product = new Product();
                 product.setProductName(name);
                 product.setTeamName(team);
@@ -101,7 +106,7 @@ public class ProductServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/product");
                 } else {
                     request.setAttribute("error", "Failed to add product!");
-                    RequestDispatcher rd = request.getRequestDispatcher("/pages/productadd.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
                     rd.forward(request, response);
                 }
                 break;
@@ -131,7 +136,7 @@ public class ProductServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/product");
                 } else {
                     request.setAttribute("error", "Failed to update product!");
-                    RequestDispatcher rd = request.getRequestDispatcher("/pages/productadd.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
                     rd.forward(request, response);
                 }
                 break;
@@ -153,5 +158,5 @@ public class ProductServlet extends HttpServlet {
             default:
                 response.sendRedirect(request.getContextPath() + "/product");
         }
-    }   
+    }
 }
