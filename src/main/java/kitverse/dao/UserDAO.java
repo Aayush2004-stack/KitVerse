@@ -42,6 +42,15 @@ public class UserDAO implements UserDAOInterface {
             if (rs.next()) {
                 return 2;   // 2 for user or email already present
             }
+            //check for already used phn no
+            final String CHECK_PHN="select phn_no from users where phn_no=?;";
+            PreparedStatement pStm2= conn.prepareStatement(CHECK_PHN);
+            pStm2.setString(1,phnNo);
+            ResultSet rs2 = pStm2.executeQuery();
+            if (rs2.next()) {
+                return 4;   // 4 for phn no already present
+            }
+            
             final String INSERT_USER = "insert into users (full_name, email, phn_no, password) values (?,?,?,?);";
             PreparedStatement pStm = conn.prepareStatement(INSERT_USER);
             pStm.setString(1, fullName);
@@ -68,9 +77,10 @@ public class UserDAO implements UserDAOInterface {
             if (rs.next()) {
                 final User user = new User();
                 user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("name"));
+                user.setFullName(rs.getString("full_name"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
+                user.setUserType("user_type");
                 user.setCreateAt(rs.getObject("created_at", LocalDateTime.class));
                 user.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
                 return user;
