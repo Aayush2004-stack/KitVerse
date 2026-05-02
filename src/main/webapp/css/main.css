@@ -4,6 +4,28 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 /* 
     Created on : May 1, 2026, 1:54:28 PM
-    Author     : aayushbastola
+    Author     : nischal
 */
+:root {
 
+    /* primary colors*/
+    --color-primary: #285A48;
+    --color-primary-hover: #3C7A63;
+    --color-primary-dark: #1F4336;
+
+    /* bg colors*/
+    --bg-primary: #F2F5F3;
+    --bg-secondary: #E3EBE6;
+    --bg-white: #ffffff;
+
+    /*text colors*/
+    --text-primary: #1C1C1E;
+    --text-secondary: #5C5C6E;
+    --text-light: rgba(255,255,255,0.85);
+    --text-white: #ffffff;
+
+    /* border colors*/
+    --border-light: #C9D6CF;
+
+
+}
