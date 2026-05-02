@@ -8,7 +8,6 @@ package kitverse.dao;
  *
  * @author ACER
  */
-
 import kitverse.daoInterfaces.ProductDAOInterface;
 import kitverse.models.Product;
 import kitverse.utilities.DBConfig;
@@ -25,21 +24,25 @@ public class ProductDAO implements ProductDAOInterface {
     public ProductDAO() {
         try {
             conn = DBConfig.getConnection();
-        } catch (SQLException | ClassNotFoundException ex) {
-            isConnectionError = true;
-            System.out.println(ex.getLocalizedMessage());
+
+            if (conn == null) {
+                System.out.println("Connection is NULL!");
+            } else {
+                System.out.println("DB Connected Successfully");
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     @Override
     public ArrayList<Product> fetchAllProducts() {
-        if (isConnectionError) return null;
 
         ArrayList<Product> products = new ArrayList<>();
         String query = "SELECT * FROM products";
 
-        try (PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 products.add(map(rs));
@@ -54,7 +57,6 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public boolean insertProduct(Product product) {
-        if (isConnectionError) return false;
 
         String query = "INSERT INTO products (product_name, team_name, category, description, image_path, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -65,13 +67,13 @@ public class ProductDAO implements ProductDAOInterface {
             ps.setString(3, product.getCategory());
             ps.setString(4, product.getDescription());
             ps.setString(5, product.getImagePath());
-            ps.setObject(6, product.getCreateAt());
-            ps.setObject(7, product.getUpdatedAt());
+            ps.setTimestamp(6, Timestamp.valueOf(product.getCreateAt()));
+            ps.setTimestamp(7, Timestamp.valueOf(product.getUpdatedAt()));
 
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
+            e.printStackTrace();
         }
 
         return false;
@@ -79,7 +81,6 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public Product getProductDetails(int productId) {
-        if (isConnectionError) return null;
 
         String query = "SELECT * FROM products WHERE product_id=?";
 
@@ -101,7 +102,6 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public boolean updateProduct(Product product) {
-        if (isConnectionError) return false;
 
         String query = "UPDATE products SET product_name=?, team_name=?, category=?, description=?, image_path=?, updated_at=? WHERE product_id=?";
 
@@ -126,7 +126,6 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public boolean deleteProduct(int productId) {
-        if (isConnectionError) return false;
 
         String query = "DELETE FROM products WHERE product_id=?";
 
@@ -144,7 +143,6 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public ArrayList<Product> getProductsByCategory(String category) {
-        if (isConnectionError) return null;
 
         ArrayList<Product> list = new ArrayList<>();
         String query = "SELECT * FROM products WHERE category=?";
@@ -167,7 +165,6 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public ArrayList<Product> getProductsByTeam(String teamName) {
-        if (isConnectionError) return null;
 
         ArrayList<Product> list = new ArrayList<>();
         String query = "SELECT * FROM products WHERE team_name=?";
@@ -190,7 +187,6 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public ArrayList<Product> searchProductByName(String keyword) {
-        if (isConnectionError) return null;
 
         ArrayList<Product> list = new ArrayList<>();
         String query = "SELECT * FROM products WHERE product_name LIKE ?";
@@ -213,12 +209,10 @@ public class ProductDAO implements ProductDAOInterface {
 
     @Override
     public int getTotalProducts() {
-        if (isConnectionError) return 0;
 
         String query = "SELECT COUNT(*) as count FROM products";
 
-        try (PreparedStatement ps = conn.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
             if (rs.next()) {
                 return rs.getInt("count");
@@ -241,8 +235,8 @@ public class ProductDAO implements ProductDAOInterface {
         p.setCategory(rs.getString("category"));
         p.setDescription(rs.getString("description"));
         p.setImagePath(rs.getString("image_path"));
-        p.setCreateAt(rs.getObject("created_at", LocalDateTime.class));
-        p.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
+        p.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
+        p.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
 
         return p;
     }
