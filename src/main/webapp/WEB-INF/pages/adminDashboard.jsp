@@ -26,12 +26,10 @@
             <div class="nav-actions">
 
                 <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/product">Products</a>
+                <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
                 <a href="${pageContext.request.contextPath}/order">Orders</a>
 
-                <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
+                 <a href="${pageContext.request.contextPath}/logout" class="nav-login">Logout</a>
 
             </div>
         </div>
