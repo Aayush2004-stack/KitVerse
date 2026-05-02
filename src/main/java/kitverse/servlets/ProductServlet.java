@@ -5,13 +5,12 @@
 package kitverse.servlets;
 
 import jakarta.servlet.RequestDispatcher;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import kitverse.dao.ProductDAO;
@@ -31,7 +30,7 @@ public class ProductServlet extends HttpServlet {
                 ? ""
                 : request.getParameter("action");
 
-        ProductDAO pdao = new ProductDAO();
+        ProductDAO pDao = new ProductDAO();
 
         switch (action) {
 
@@ -44,7 +43,7 @@ public class ProductServlet extends HttpServlet {
             case "edit": {
                 int productId = Integer.parseInt(request.getParameter("productid"));
 
-                Product product = pdao.getProductDetails(productId);
+                Product product = pDao.getProductDetails(productId);
 
                 request.setAttribute("product", product);
 
@@ -53,8 +52,8 @@ public class ProductServlet extends HttpServlet {
                 break;
             }
 
-            default: {
-                ArrayList<Product> products = pdao.fetchAllProducts();
+            case "admin": {
+                ArrayList<Product> products = pDao.fetchAllProducts();
 
                 if (products == null) {
                     products = new ArrayList<>();
@@ -63,6 +62,11 @@ public class ProductServlet extends HttpServlet {
                 request.setAttribute("products", products);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productlist.jsp");
+                rd.forward(request, response);
+                break;
+            }
+            default:{
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/Product.jsp");
                 rd.forward(request, response);
                 break;
             }
