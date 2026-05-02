@@ -42,7 +42,7 @@ public class UserDAO implements UserDAOInterface {
             if (rs.next()) {
                 return 2;   // 2 for user or email already present
             }
-            final String INSERT_USER = "insert into users (full_name, email, phn_no, password,) values (?,?,?,?);";
+            final String INSERT_USER = "insert into users (full_name, email, phn_no, password) values (?,?,?,?);";
             PreparedStatement pStm = conn.prepareStatement(INSERT_USER);
             pStm.setString(1, fullName);
             pStm.setString(2, email);
