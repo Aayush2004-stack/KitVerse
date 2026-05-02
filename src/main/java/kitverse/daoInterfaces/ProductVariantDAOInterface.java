@@ -36,4 +36,6 @@ public interface ProductVariantDAOInterface {
 
     // Check stock availability
     int getStock(int variantId);
+    
+    boolean increaseStock(int variantId, int addStock);
 }
