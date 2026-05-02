@@ -5,13 +5,14 @@
 package kitverse.servlets;
 
 import jakarta.servlet.RequestDispatcher;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import kitverse.dao.UserDAO;
+import kitverse.models.User;
 
 /**
  *
@@ -26,7 +27,44 @@ public class LoginServlet extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
         rd.forward(request, response);
     }
-  
+ 
+@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String typedPassword = request.getParameter("password");
+        
+        UserDAO userDao = new UserDAO();
+        User user = userDao.getUser(email);
+        //if no user found in database send error message
+        if (user == null) {
+            request.setAttribute("error", "Invalid Email or Password");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
+            rd.forward(request, response);
+        } else {
+            String hashedPassword = user.getPassword();
+            //boolean matched = PasswordUtil.checkPassword(typedPassword, hashedPassword);
+            //if user and password matched, redirect to topiclist
+            boolean matched=(typedPassword.equals(hashedPassword));
+            if (matched) {
+                
+                   if(user.getUserType().equalsIgnoreCase("admin")){
+                       response.sendRedirect("/WEB-INF/pages/login.jsp");
+                   }
+                   else{
+                       response.sendRedirect("/WEB-INF/pages/product.jsp");
+                   }
+                
+                
+            } else {
+                //if password is mismatched, send error message to login page
+                request.setAttribute("error", "user or password mismatch!");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
+            }
+        }
+
+    }
     
 
 }
