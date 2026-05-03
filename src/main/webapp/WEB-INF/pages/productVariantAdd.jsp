@@ -15,24 +15,7 @@
     </head>
 
     <body>
-        <!-- ADMIN HEADER -->
-        <div class="admin-header">
-
-            <div class="logo">
-                <h2>KitVerse Admin</h2>
-            </div>
-
-            <div class="nav-actions">
-
-                <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
-                <a href="${pageContext.request.contextPath}/order">Orders</a>
-
-                <a href="${pageContext.request.contextPath}/logout" class="nav-login">Logout</a>
-
-            </div>
-        </div>
-        <!-- END HEADER -->
+        <jsp:include page="/templates/navbar.jsp"/>
 
         <div class="page-wrapper">
 
@@ -52,7 +35,7 @@
                 <form action="${pageContext.request.contextPath}/variant" method="post">
 
                     <input type="hidden" name="action"
-                           value="${variant != null ? 'update' : 'add'}"/>
+                           value="${variant != null ? 'edit' : 'add'}"/>
 
                     <input type="hidden" name="productId" value="${productId}"/>
 

@@ -27,3 +27,60 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     /* border colors*/
     --border-light: #C9D6CF;
 }
+/* ================= NAVBAR ================= */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 14px 60px;
+    background: var(--color-primary-dark);
+    color: var(--text-white);
+}
+
+/* logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.nav-logo img {
+    width: 40px;
+}
+
+/* links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+/* button */
+.nav-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid white;
+}
+
+.nav-btn:hover {
+    background: white;
+    color: var(--color-primary-dark);
+}
