@@ -21,17 +21,24 @@ import kitverse.dao.AdminDashboardDAO;
 public class AdminDashboardServlet extends HttpServlet {
 
     /**
-     * Handles GET request for admin dashboard.
+     * Handles HTTP GET requests for the admin dashboard.
      *
-     * This method: 
-     * - Calls DAO methods to get summary statistics 
-     * - Sets data as request attributes 
-     * - Forwards request to adminDashboard.jsp
+     * This method performs the following operations:
+     * <ul>
+     * <li>Retrieves summary statistics from the DAO layer.</li>
+     * <li>Sets the retrieved data as request attributes.</li>
+     * <li>Forwards the request to the admin dashboard view
+     * (adminDashboard.jsp).</li>
+     * </ul>
      *
-     * @param request contains request data
-     * @param response sends response back to browser
-     * @throws ServletException : if servlet error occurs
-     * @throws IOException : if input/output error occurs
+     * @param request the HttpServletRequest object containing client request
+     * data
+     * @param response the HttpServletResponse object used to send data back to
+     * the client
+     * @throws ServletException if a servlet-specific error occurs during
+     * request processing
+     * @throws IOException if an input or output error occurs during request
+     * handling
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
