@@ -5,13 +5,12 @@
 package kitverse.servlets;
 
 import jakarta.servlet.RequestDispatcher;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import kitverse.dao.ProductVariantDAO;
@@ -57,40 +56,40 @@ public class ProductVariantServlet extends HttpServlet {
 
         // If no action → redirect safely
         if (action == null) {
-            response.sendRedirect(request.getContextPath() + "/product");
+            response.sendRedirect(request.getContextPath() + "/product?action=admin");
             return;
         }
 
-        ProductVariantDAO vdao = new ProductVariantDAO();
+        ProductVariantDAO vDao = new ProductVariantDAO();
 
         switch (action) {
 
             case "new": {
-                // keep productid for back button
-                String productId = request.getParameter("productid");
-                request.setAttribute("productid", productId);
+                // keep productId for back button
+                String productId = request.getParameter("productId");
+                request.setAttribute("productId", productId);
 
-                request.getRequestDispatcher("/WEB-INF/pages/productvariantadd.jsp")
+                request.getRequestDispatcher("/WEB-INF/pages/productVariantAdd.jsp")
                         .forward(request, response);
                 break;
             }
 
             case "edit": {
-                int variantId = Integer.parseInt(request.getParameter("variantid"));
-                String productId = request.getParameter("productid");
+                int variantId = Integer.parseInt(request.getParameter("variantId"));
+                String productId = request.getParameter("productId");
 
-                ProductVariant variant = vdao.getVariantById(variantId);
+                ProductVariant variant = vDao.getVariantById(variantId);
 
                 request.setAttribute("variant", variant);
-                request.setAttribute("productid", productId);
+                request.setAttribute("productId", productId);
 
-                request.getRequestDispatcher("/WEB-INF/pages/productvariantadd.jsp")
+                request.getRequestDispatcher("/WEB-INF/pages/productVariantAdd.jsp")
                         .forward(request, response);
                 break;
             }
 
             case "product": {
-                String productIdParam = request.getParameter("productid");
+                String productIdParam = request.getParameter("productId");
 
                 // safety check
                 if (productIdParam == null) {
@@ -100,18 +99,18 @@ public class ProductVariantServlet extends HttpServlet {
 
                 int productId = Integer.parseInt(productIdParam);
 
-                ArrayList<ProductVariant> variants = vdao.getVariantsByProductId(productId);
+                ArrayList<ProductVariant> variants = vDao.getVariantsByProductId(productId);
 
                 request.setAttribute("variants", variants);
-                request.setAttribute("productid", productId);
+                request.setAttribute("productId", productId);
 
-                request.getRequestDispatcher("/WEB-INF/pages/productvariantlist.jsp")
+                request.getRequestDispatcher("/WEB-INF/pages/productVariantList.jsp")
                         .forward(request, response);
                 break;
             }
 
             default:
-                response.sendRedirect(request.getContextPath() + "/product");
+                response.sendRedirect(request.getContextPath() + "/product?action=admin");
         }
     }
 
@@ -149,12 +148,12 @@ public class ProductVariantServlet extends HttpServlet {
                 ? ""
                 : request.getParameter("action");
 
-        ProductVariantDAO vdao = new ProductVariantDAO();
+        ProductVariantDAO Vdao = new ProductVariantDAO();
 
         switch (action) {
 
             case "add": {
-                int productId = Integer.parseInt(request.getParameter("productid"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
                 String size = request.getParameter("size");
                 double price = Double.parseDouble(request.getParameter("sellingPrice"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
@@ -167,22 +166,22 @@ public class ProductVariantServlet extends HttpServlet {
                 variant.setCreateAt(LocalDateTime.now());
                 variant.setUpdatedAt(LocalDateTime.now());
 
-                boolean isAdded = vdao.insertVariant(variant);
+                boolean isAdded = Vdao.insertVariant(variant);
 
                 if (isAdded) {
-                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productid=" + productId);
+                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productId=" + productId);
                 } else {
                     request.setAttribute("error", "Failed to add variant!");
-                    request.setAttribute("productid", productId);
+                    request.setAttribute("productId", productId);
                     RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productvariantadd.jsp");
                     rd.forward(request, response);
                 }
                 break;
             }
 
-            case "update": {
-                int variantId = Integer.parseInt(request.getParameter("variantid"));
-                int productId = Integer.parseInt(request.getParameter("productid"));
+            case "edit": {
+                int variantId = Integer.parseInt(request.getParameter("variantId"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
                 String size = request.getParameter("size");
                 double price = Double.parseDouble(request.getParameter("sellingPrice"));
@@ -195,27 +194,27 @@ public class ProductVariantServlet extends HttpServlet {
                 variant.setStock(stock);
                 variant.setUpdatedAt(LocalDateTime.now());
 
-                boolean isUpdated = vdao.updateVariant(variant);
+                boolean isUpdated = Vdao.updateVariant(variant);
 
                 if (isUpdated) {
-                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productid=" + productId);
+                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productId=" + productId);
                 } else {
                     request.setAttribute("error", "Failed to update variant!");
-                    request.setAttribute("productid", productId);
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productvariantadd.jsp");
+                    request.setAttribute("productId", productId);
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productVariantAdd.jsp");
                     rd.forward(request, response);
                 }
                 break;
             }
 
             case "delete": {
-                int variantId = Integer.parseInt(request.getParameter("variantid"));
-                int productId = Integer.parseInt(request.getParameter("productid"));
+                int variantId = Integer.parseInt(request.getParameter("variantId"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
-                boolean isDeleted = vdao.deleteVariant(variantId);
+                boolean isDeleted = Vdao.deleteVariant(variantId);
 
                 if (isDeleted) {
-                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productid=" + productId);
+                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productId=" + productId);
                 } else {
                     System.out.println("Failed to delete variant!");
                 }
@@ -223,23 +222,23 @@ public class ProductVariantServlet extends HttpServlet {
             }
 
             case "stock": {
-                int variantId = Integer.parseInt(request.getParameter("variantid"));
+                int variantId = Integer.parseInt(request.getParameter("variantId"));
                 String stockParam = request.getParameter("stock");
 
                 if (stockParam == null || stockParam.isEmpty()) {
                     response.sendRedirect(request.getContextPath()
-                            + "/variant?action=product&productid=" + request.getParameter("productid"));
+                            + "/variant?action=product&productId=" + request.getParameter("productId"));
                     return;
                 }
 
                 int addStock = Integer.parseInt(stockParam);
-                int productId = Integer.parseInt(request.getParameter("productid"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
-                boolean updated = vdao.increaseStock(variantId, addStock);
+                boolean updated = Vdao.increaseStock(variantId, addStock);
 
                 if (updated) {
                     response.sendRedirect(request.getContextPath()
-                            + "/variant?action=product&productid=" + productId);
+                            + "/variant?action=product&productId=" + productId);
                 } else {
                     System.out.println("Failed to update stock!");
                 }
@@ -247,15 +246,15 @@ public class ProductVariantServlet extends HttpServlet {
             }
 
             case "updateStock": {
-                int variantId = Integer.parseInt(request.getParameter("variantid"));
+                int variantId = Integer.parseInt(request.getParameter("variantId"));
                 int stock = Integer.parseInt(request.getParameter("stock"));
-                int productId = Integer.parseInt(request.getParameter("productid"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
 
-                boolean updated = vdao.updateStock(variantId, stock);
+                boolean updated = Vdao.updateStock(variantId, stock);
                 break;
             }
             default:
-                response.sendRedirect(request.getContextPath() + "/product");
+                response.sendRedirect(request.getContextPath() + "/product?action=admin");
         }
     }
 

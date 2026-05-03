@@ -1,0 +1,195 @@
+:root {
+    --primary: #1e7f3c;
+    --primary-dark: #174536;
+    --background: #f4f7f2;
+    --white: #ffffff;
+    --text-dark: #222222;
+    --text-light: #666666;
+    --border-radius: 18px;
+    --transition: 0.3s ease;
+    --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+
+
+/* ================= PAGE TITLE ================= */
+.page-title {
+    text-align: center;
+    padding: 45px 20px 25px;
+}
+
+.page-title h1 {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.page-title p {
+    color: var(--text-light);
+    font-size: 15px;
+}
+
+/* ================= PRODUCT GRID ================= */
+.grid {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* ================= PRODUCT CARD ================= */
+.card {
+    background: #eef5e8;
+    border-radius: var(--border-radius);
+    padding: 18px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.product-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    background: var(--white);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.card h3 {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.card p {
+    margin-top: 6px;
+    font-size: 15px;
+    color: var(--text-light);
+}
+
+/* ================= BUTTON ================= */
+.card input {
+    display: none;
+}
+
+.pick-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 22px;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--primary);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pick-btn::after {
+    content: "PICK ▼";
+}
+
+.card input:checked ~ .pick-btn {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.card input:checked ~ .pick-btn::after {
+    content: "ADDED ✓";
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    margin-top: 60px;
+    padding: 50px 20px 20px;
+    background: var(--primary-dark);
+    color: var(--white);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer h3,
+.footer h4 {
+    margin-bottom: 12px;
+}
+
+.footer p,
+.footer a {
+    font-size: 14px;
+    color: #dddddd;
+    text-decoration: none;
+}
+
+.footer ul {
+    list-style: none;
+}
+
+.footer li {
+    margin: 8px 0;
+}
+
+.footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navbar {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        gap: 15px; 
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-container {
+        flex-direction: column;
+    }
+}

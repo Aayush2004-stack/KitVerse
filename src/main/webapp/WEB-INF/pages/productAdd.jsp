@@ -12,29 +12,10 @@
     <head>
         <title>Add / Edit Product</title>
 
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productadd.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productAdd.css">
     </head>
     <body>
-        <!-- ADMIN HEADER -->
-        <div class="admin-header">
-
-            <div class="logo">
-                <h2>KitVerse Admin</h2>
-            </div>
-
-            <div class="nav-actions">
-
-                <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/product">Products</a>
-                <a href="${pageContext.request.contextPath}/order">Orders</a>
-
-                <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
-
-            </div>
-        </div>
-        <!-- END HEADER -->
+        <jsp:include page="/templates/navbar.jsp"/>
 
         <h2 style="text-align:center;">
             <c:choose>
@@ -62,7 +43,7 @@
                        value="${product != null ? 'update' : 'add'}"/>
 
                 <c:if test="${product != null}">
-                    <input type="hidden" name="productid" value="${product.productId}"/>
+                    <input type="hidden" name="productId" value="${product.productId}"/>
                 </c:if>
 
                 <!-- Product Name -->
@@ -107,7 +88,7 @@
 
             <!-- Back Button -->
             <div style="text-align:center; margin-top:15px;">
-                <a href="${pageContext.request.contextPath}/product">← Back to List</a>
+                <a href="${pageContext.request.contextPath}/product?action=admin">← Back to List</a>
             </div>
 
         </div>

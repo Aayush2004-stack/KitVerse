@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import kitverse.daoInterfaces.UserDAOInterface;
 import kitverse.models.User;
 import kitverse.utilities.DBConfig;
@@ -17,6 +18,7 @@ import kitverse.utilities.DBConfig;
  * @author aayushbastola
  */
 public class UserDAO implements UserDAOInterface {
+
     private Connection conn;
     private boolean isConnectionError = false;
 
@@ -29,7 +31,6 @@ public class UserDAO implements UserDAOInterface {
         }
     }
 
-
     @Override
     public int insertUser(String fullName, String email, String phnNo, String password) {
         try {
@@ -41,7 +42,16 @@ public class UserDAO implements UserDAOInterface {
             if (rs.next()) {
                 return 2;   // 2 for user or email already present
             }
-            final String INSERT_USER = "insert into users (full_name, email, phn_no, password,) values (?,?,?,?);";
+            //check for already used phn no
+            final String CHECK_PHN="select phn_no from users where phn_no=?;";
+            PreparedStatement pStm2= conn.prepareStatement(CHECK_PHN);
+            pStm2.setString(1,phnNo);
+            ResultSet rs2 = pStm2.executeQuery();
+            if (rs2.next()) {
+                return 4;   // 4 for phn no already present
+            }
+            
+            final String INSERT_USER = "insert into users (full_name, email, phn_no, password) values (?,?,?,?);";
             PreparedStatement pStm = conn.prepareStatement(INSERT_USER);
             pStm.setString(1, fullName);
             pStm.setString(2, email);
@@ -57,7 +67,33 @@ public class UserDAO implements UserDAOInterface {
     }
 
     @Override
-    public User getUser(String user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public User getUser(String email) {
+        try {
+            final String SELECT_USER = "select * from users where email=?;";
+
+            PreparedStatement pStm_ = conn.prepareStatement(SELECT_USER);
+            pStm_.setString(1, email);
+            ResultSet rs = pStm_.executeQuery();
+            if (rs.next()) {
+                final User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFullName(rs.getString("full_name"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setUserType(rs.getString("user_type"));
+                user.setCreateAt(rs.getObject("created_at", LocalDateTime.class));
+                user.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
+                return user;
+
+            }
+            return null;
+            
+        }
+        catch(SQLException ex){
+            System.out.println(ex.getLocalizedMessage());
+            return null;
+        }
+        
     }
 }
+          

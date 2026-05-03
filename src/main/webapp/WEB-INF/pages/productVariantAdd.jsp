@@ -11,30 +11,11 @@
 <html>
     <head>
         <title>Product Variant</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productvariantadd.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/productVariantAdd.css">
     </head>
 
     <body>
-        <!-- ADMIN HEADER -->
-        <div class="admin-header">
-
-            <div class="logo">
-                <h2>KitVerse Admin</h2>
-            </div>
-
-            <div class="nav-actions">
-
-                <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/product">Products</a>
-                <a href="${pageContext.request.contextPath}/order">Orders</a>
-
-                <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button type="submit" class="logout-btn">Logout</button>
-                </form>
-
-            </div>
-        </div>
-        <!-- END HEADER -->
+        <jsp:include page="/templates/navbar.jsp"/>
 
         <div class="page-wrapper">
 
@@ -54,12 +35,12 @@
                 <form action="${pageContext.request.contextPath}/variant" method="post">
 
                     <input type="hidden" name="action"
-                           value="${variant != null ? 'update' : 'add'}"/>
+                           value="${variant != null ? 'edit' : 'add'}"/>
 
-                    <input type="hidden" name="productid" value="${productid}"/>
+                    <input type="hidden" name="productId" value="${productId}"/>
 
                     <c:if test="${variant != null}">
-                        <input type="hidden" name="variantid" value="${variant.variantId}"/>
+                        <input type="hidden" name="variantId" value="${variant.variantId}"/>
                     </c:if>
 
                     <!-- SIZE -->
@@ -102,7 +83,7 @@
                 </form>
 
                 <a class="back-link"
-                   href="${pageContext.request.contextPath}/variant?action=product&productid=${productid}">
+                   href="${pageContext.request.contextPath}/variant?action=product&productId=${productId}">
                     ← Back to Variants
                 </a>
 
