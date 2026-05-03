@@ -53,7 +53,7 @@ public class ProductVariantServlet extends HttpServlet {
             return;
         }
 
-        ProductVariantDAO vdao = new ProductVariantDAO();
+        ProductVariantDAO vDao = new ProductVariantDAO();
 
         switch (action) {
 
@@ -71,7 +71,7 @@ public class ProductVariantServlet extends HttpServlet {
                 int variantId = Integer.parseInt(request.getParameter("variantId"));
                 String productId = request.getParameter("productId");
 
-                ProductVariant variant = vdao.getVariantById(variantId);
+                ProductVariant variant = vDao.getVariantById(variantId);
 
                 request.setAttribute("variant", variant);
                 request.setAttribute("productId", productId);
@@ -92,7 +92,7 @@ public class ProductVariantServlet extends HttpServlet {
 
                 int productId = Integer.parseInt(productIdParam);
 
-                ArrayList<ProductVariant> variants = vdao.getVariantsByProductId(productId);
+                ArrayList<ProductVariant> variants = vDao.getVariantsByProductId(productId);
 
                 request.setAttribute("variants", variants);
                 request.setAttribute("productId", productId);

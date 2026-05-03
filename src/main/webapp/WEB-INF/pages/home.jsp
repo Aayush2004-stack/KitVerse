@@ -15,22 +15,7 @@
 <body>
 
 
-<header class="navbar">
-
-
-    <div class="logo">
-        <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="KitVerse Logo">KitVerse
-    </div>
-
-    <nav>
-        <ul>
-            <li><a href="#">Shop</a></li>
-            <li><a href="#">Categories</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="${pageContext.request.contextPath}/login" class="login-btn">Login</a></li>
-        </ul>
-    </nav>
-</header>
+<jsp:include page="/templates/navbar.jsp"/>
 
 
 <section class="hero">

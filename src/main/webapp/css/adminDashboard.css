@@ -8,11 +8,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 
 @import url('main.css');
-@import url('adminNavbar.css');
 
-/* =========================
-   BASE
-========================= */
 
 body {
     font-family: "Segoe UI", Arial, sans-serif;

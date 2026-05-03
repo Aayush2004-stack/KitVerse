@@ -16,24 +16,7 @@
 
     <body>
 
-        <!-- HEADER START -->
-        <div class="admin-header">
-
-            <div class="logo">
-                <h2>KitVerse Admin</h2>
-            </div>
-
-            <div class="nav-actions">
-
-                <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-                <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
-                <a href="${pageContext.request.contextPath}/order">Orders</a>
-
-                 <a href="${pageContext.request.contextPath}/logout" class="nav-login">Logout</a>
-
-            </div>
-        </div>
-        <!-- HEADER END -->
+        <jsp:include page="/templates/navbar.jsp"/>
 
 
         <div class="container">
