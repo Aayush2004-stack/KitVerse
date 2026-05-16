@@ -28,6 +28,11 @@ public class ProductDAO implements ProductDAOInterface {
         }
     }
 
+    /**
+     * Retrieves all products from the database.
+     *
+     * @return ArrayList containing all Product objects
+     */
     @Override
     public ArrayList<Product> fetchAllProducts() {
 
@@ -47,6 +52,12 @@ public class ProductDAO implements ProductDAOInterface {
         return products;
     }
 
+    /**
+     * Inserts a new product into the database.
+     *
+     * @param product the Product object containing product details
+     * @return true if insertion is successful, false otherwise
+     */
     @Override
     public boolean insertProduct(Product product) {
 
@@ -71,6 +82,12 @@ public class ProductDAO implements ProductDAOInterface {
         return false;
     }
 
+    /**
+     * Retrieves product details by product ID.
+     *
+     * @param productId the ID of the product
+     * @return Product object if found, otherwise null
+     */
     @Override
     public Product getProductDetails(int productId) {
 
@@ -92,6 +109,12 @@ public class ProductDAO implements ProductDAOInterface {
         return null;
     }
 
+    /**
+     * Updates an existing product in the database.
+     *
+     * @param product the Product object containing updated data
+     * @return true if update is successful, false otherwise
+     */
     @Override
     public boolean updateProduct(Product product) {
 
@@ -116,6 +139,12 @@ public class ProductDAO implements ProductDAOInterface {
         return false;
     }
 
+    /**
+     * Deletes a product from the database using product ID.
+     *
+     * @param productId the ID of the product to delete
+     * @return true if deletion is successful, false otherwise
+     */
     @Override
     public boolean deleteProduct(int productId) {
 
@@ -133,6 +162,12 @@ public class ProductDAO implements ProductDAOInterface {
         return false;
     }
 
+    /**
+     * Retrieves products filtered by category.
+     *
+     * @param category the category name
+     * @return ArrayList of products in the given category
+     */
     @Override
     public ArrayList<Product> getProductsByCategory(String category) {
 
@@ -155,6 +190,12 @@ public class ProductDAO implements ProductDAOInterface {
         return list;
     }
 
+    /**
+     * Retrieves products filtered by team name.
+     *
+     * @param teamName the team name
+     * @return ArrayList of products belonging to the team
+     */
     @Override
     public ArrayList<Product> getProductsByTeam(String teamName) {
 
@@ -177,6 +218,12 @@ public class ProductDAO implements ProductDAOInterface {
         return list;
     }
 
+    /**
+     * Searches products by keyword in product name.
+     *
+     * @param keyword search keyword
+     * @return ArrayList of matching products
+     */
     @Override
     public ArrayList<Product> searchProductByName(String keyword) {
 
@@ -199,6 +246,11 @@ public class ProductDAO implements ProductDAOInterface {
         return list;
     }
 
+    /**
+     * Retrieves the total number of products in the database.
+     *
+     * @return total product count
+     */
     @Override
     public int getTotalProducts() {
 
@@ -217,7 +269,13 @@ public class ProductDAO implements ProductDAOInterface {
         return 0;
     }
 
-    // Helper method
+    /**
+     * Maps a ResultSet row into a Product object.
+     *
+     * @param rs ResultSet containing product data
+     * @return mapped Product object
+     * @throws SQLException if database access error occurs
+     */
     private Product map(ResultSet rs) throws SQLException {
         Product p = new Product();
 
