@@ -38,6 +38,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         }
     }
 
+    /**
+     * Inserts a new product variant into the database.
+     *
+     * @param variant the ProductVariant object containing variant details
+     * @return true if insertion is successful, false otherwise
+     */
     @Override
     public boolean insertVariant(ProductVariant variant) {
 
@@ -61,6 +67,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return false;
     }
 
+    /**
+     * Retrieves all product variants belonging to a specific product.
+     *
+     * @param productId the ID of the product
+     * @return ArrayList of ProductVariant objects for the given product
+     */
     @Override
     public ArrayList<ProductVariant> getVariantsByProductId(int productId) {
 
@@ -83,6 +95,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return list;
     }
 
+    /**
+     * Retrieves a product variant using its variant ID.
+     *
+     * @param variantId the ID of the variant
+     * @return ProductVariant object if found, otherwise null
+     */
     @Override
     public ProductVariant getVariantById(int variantId) {
 
@@ -104,6 +122,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return null;
     }
 
+    /**
+     * Updates an existing product variant in the database.
+     *
+     * @param variant the ProductVariant object containing updated details
+     * @return true if update is successful, false otherwise
+     */
     @Override
     public boolean updateVariant(ProductVariant variant) {
         if (isConnectionError) {
@@ -130,6 +154,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return false;
     }
 
+    /**
+     * Deletes a product variant from the database using variant ID.
+     *
+     * @param variantId the ID of the variant to delete
+     * @return true if deletion is successful, false otherwise
+     */
     @Override
     public boolean deleteVariant(int variantId) {
 
@@ -147,6 +177,13 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return false;
     }
 
+    /**
+     * Updates the stock value of a specific product variant.
+     *
+     * @param variantId the ID of the variant
+     * @param stock the new stock value to set
+     * @return true if stock update is successful, false otherwise
+     */
     @Override
     public boolean updateStock(int variantId, int stock) {
 
@@ -167,6 +204,15 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return false;
     }
 
+    /**
+     * Deducts stock from a product variant if sufficient stock is available.
+     *
+     * Ensures stock does not go below zero.
+     *
+     * @param variantId the ID of the variant
+     * @param quantity the quantity to deduct
+     * @return true if stock deduction is successful, false otherwise
+     */
     @Override
     public boolean deductStock(int variantId, int quantity) {
 
@@ -187,6 +233,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return false;
     }
 
+    /**
+     * Retrieves the current stock of a product variant.
+     *
+     * @param variantId the ID of the variant
+     * @return current stock value, or 0 if not found
+     */
     @Override
     public int getStock(int variantId) {
 
@@ -208,6 +260,13 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return 0;
     }
 
+    /**
+     * Increases the stock of a product variant.
+     *
+     * @param variantId the ID of the variant
+     * @param addStock the quantity to add to current stock
+     * @return true if stock update is successful, false otherwise
+     */
     @Override
     public boolean increaseStock(int variantId, int addStock) {
 
@@ -228,7 +287,13 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         return false;
     }
 
-    // Mapper
+    /**
+     * Maps a ResultSet row into a ProductVariant object.
+     *
+     * @param rs the ResultSet containing variant data
+     * @return mapped ProductVariant object
+     * @throws SQLException if a database access error occurs
+     */
     private ProductVariant map(ResultSet rs) throws SQLException {
         ProductVariant v = new ProductVariant();
 

@@ -24,21 +24,27 @@ import kitverse.models.Product;
 public class ProductServlet extends HttpServlet {
 
     /**
-     * Handles GET requests for product pages.
+     * Handles HTTP GET requests for product-related operations.
      *
-     * This method checks the "action" parameter and decides what to do:
+     * This method processes the "action" parameter to determine the required
+     * operation:
      *
-     * - If action is "new": Opens the page to add a new product.
+     * <ul>
+     * <li><b>new</b> - Forwards the request to the page for adding a new
+     * product.</li>
+     * <li><b>edit</b> - Retrieves product details by ID and forwards to the
+     * edit page.</li>
+     * <li><b>default</b> - Displays the list of all available products when no
+     * valid action is provided.</li>
+     * </ul>
      *
-     * - If action is "edit": Gets product details by ID and opens the edit
-     * page.
-     *
-     * - If no action or unknown action: Shows the list of all products.
-     *
-     * @param request contains data sent by the browser
-     * @param response is used to send data back to browser
-     * @throws ServletException - if servlet error happens
-     * @throws IOException - if input/output error happens
+     * @param request the HttpServletRequest object containing client request
+     * data
+     * @param response the HttpServletResponse object used to send data back to
+     * the client
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an input or output error occurs during request
+     * processing
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -91,22 +97,32 @@ public class ProductServlet extends HttpServlet {
     }
 
     /**
-     * Handles POST requests for product operations including add, update, delete.
+     * Handles HTTP POST requests for product operations such as add, update,
+     * and delete.
      *
-     * This method checks the "action" parameter and performs:
+     * This method processes the "action" parameter to determine the required
+     * operation:
      *
-     * add: creates a new product and saves it in database.
+     * <ul>
+     * <li><b>add</b> - Creates a new product and stores it in the
+     * database.</li>
+     * <li><b>update</b> - Updates existing product details in the
+     * database.</li>
+     * <li><b>delete</b> - Removes a product from the database using its
+     * ID.</li>
+     * </ul>
      *
-     * update: updates existing product details in database.
+     * If the action is invalid or processing fails, an appropriate error
+     * message is shown or the user is redirected back to the relevant page.
      *
-     * delete: removes a product from database using its ID.
-     *
-     * If action fails, it shows an error message or redirects back.
-     *
-     * @param request contains form data sent by user
-     * @param response is used to send response back to browser
-     * @throws ServletException - if servlet error happens
-     * @throws IOException - if input/output error happens
+     * @param request the HttpServletRequest object containing form data
+     * submitted by the user
+     * @param response the HttpServletResponse object used to send data back to
+     * the client
+     * @throws ServletException if a servlet-specific error occurs during
+     * request processing
+     * @throws IOException if an input or output error occurs during request
+     * handling
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

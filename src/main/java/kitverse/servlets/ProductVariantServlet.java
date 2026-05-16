@@ -24,22 +24,29 @@ import kitverse.models.ProductVariant;
 public class ProductVariantServlet extends HttpServlet {
 
     /**
-     * Handles GET requests for product variant pages.
+     * Handles HTTP GET requests for product variant pages.
      *
-     * Based on "action" parameter:
+     * This method processes the "action" parameter to determine the required
+     * operation:
      *
-     * new: Opens form to add a new variant.
+     * <ul>
+     * <li><b>new</b> - Opens the form to add a new product variant.</li>
+     * <li><b>edit</b> - Loads existing variant data for editing.</li>
+     * <li><b>product</b> - Displays all variants associated with a specific
+     * product.</li>
+     * </ul>
      *
-     * edit: Loads existing variant data for editing.
+     * If the action is missing or invalid, the request is redirected to the
+     * product page.
      *
-     * product: Shows all variants of a specific product.
-     *
-     * If action is missing or invalid, redirects to product page.
-     *
-     * @param request contains request data from browser
-     * @param response sends response back to browser
-     * @throws ServletException : if servlet error occurs
-     * @throws IOException : if input/output error occurs
+     * @param request the HttpServletRequest object containing client request
+     * data
+     * @param response the HttpServletResponse object used to send data back to
+     * the client
+     * @throws ServletException if a servlet-specific error occurs during
+     * request processing
+     * @throws IOException if an input or output error occurs during request
+     * handling
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -108,26 +115,31 @@ public class ProductVariantServlet extends HttpServlet {
     }
 
     /**
-     * Handles POST requests for product variant operations.
+     * Handles HTTP POST requests for product variant operations.
      *
-     * Based on "action" parameter:
+     * This method processes the "action" parameter to determine the required
+     * operation:
      *
-     * add: Adds a new product variant to database.
+     * <ul>
+     * <li><b>add</b> - Adds a new product variant to the database.</li>
+     * <li><b>update</b> - Updates existing variant details.</li>
+     * <li><b>delete</b> - Removes a variant from the database.</li>
+     * <li><b>stock</b> - Increases the stock quantity of a variant.</li>
+     * <li><b>updateStock</b> - Sets the stock quantity to a specific
+     * value.</li>
+     * </ul>
      *
-     * update: Updates existing variant details.
+     * If the operation fails or an invalid action is provided, the method
+     * redirects the user or displays an appropriate error message.
      *
-     * delete: Removes a variant from database.
-     *
-     * stock: Increases stock quantity of a variant.
-     *
-     * updateStock: Sets stock quantity directly.
-     *
-     * If operation fails, redirects or shows error message.
-     *
-     * @param request contains form form-data from user
-     * @param response sends response back to browser
-     * @throws ServletException : if servlet error occurs
-     * @throws IOException : if input/output error occurs
+     * @param request the HttpServletRequest object containing form data
+     * submitted by the user
+     * @param response the HttpServletResponse object used to send data back to
+     * the client
+     * @throws ServletException if a servlet-specific error occurs during
+     * request processing
+     * @throws IOException if an input or output error occurs during request
+     * handling
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
