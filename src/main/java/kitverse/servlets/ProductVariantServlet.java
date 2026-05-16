@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import kitverse.dao.ProductDAO;
 import kitverse.dao.ProductVariantDAO;
+import kitverse.models.Product;
 import kitverse.models.ProductVariant;
 
 /**
@@ -107,6 +109,38 @@ public class ProductVariantServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/pages/productVariantList.jsp")
                         .forward(request, response);
                 break;
+            }
+            case "view": {
+
+                String productIdParam = request.getParameter("productId");
+
+                if (productIdParam == null) {
+
+                    response.sendRedirect(request.getContextPath() + "/product");
+
+                    return;
+
+                }
+
+                int productId = Integer.parseInt(productIdParam);
+
+                ArrayList<ProductVariant> variants
+                        = vDao.getVariantsByProductId(productId);
+
+                ProductDAO pDao = new ProductDAO();
+
+                Product product = pDao.getProductDetails(productId);
+
+                request.setAttribute("product", product);
+
+                request.setAttribute("variants", variants);
+
+                // CUSTOMER PAGE
+                request.getRequestDispatcher("/WEB-INF/pages/productVariant.jsp")
+                        .forward(request, response);
+
+                break;
+
             }
 
             default:

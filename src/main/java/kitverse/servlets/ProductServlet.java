@@ -89,6 +89,12 @@ public class ProductServlet extends HttpServlet {
                 break;
             }
             default:{
+                ArrayList<Product> products = pDao.fetchAllProducts();
+                 if (products == null) {
+                    products = new ArrayList<>();
+                }
+                 request.setAttribute("products", products);
+                
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/product.jsp");
                 rd.forward(request, response);
                 break;
