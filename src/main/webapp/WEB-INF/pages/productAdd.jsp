@@ -36,7 +36,9 @@
             </c:if>
 
             <!-- Form -->
-            <form action="${pageContext.request.contextPath}/product" method="post">
+            <form action="${pageContext.request.contextPath}/product"
+                  method="post"
+                  enctype="multipart/form-data">
 
                 <!-- Hidden fields -->
                 <input type="hidden" name="action"
@@ -68,9 +70,13 @@
                 <textarea name="description" rows="4" required>${product.description}</textarea>
 
                 <!-- Image Path -->
-                <label>Image Path:</label>
-                <input type="text" name="imagePath"
-                       value="${product.imagePath}" required />
+                <label>Product Image:</label>
+                <input type="file" name="image" accept="image/*" required />
+
+                <c:if test="${product != null}">
+                    <input type="hidden" name="existingImage"
+                           value="${product.imagePath}" />
+                </c:if>
 
                 <!-- Submit -->
                 <button type="submit">
