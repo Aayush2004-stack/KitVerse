@@ -25,7 +25,7 @@
         <c:if test="${not empty sessionScope.user and sessionScope.user.userType == 'normal'}">
             <a href="${pageContext.request.contextPath}/">Home</a>
             <a href="${pageContext.request.contextPath}/product">Shop</a>
-            <a href="#">Categories</a>
+            <a href="${pageContext.request.contextPath}/contactUs.html">Contact</a>
             <a href="#">About</a>
         </c:if>
 
@@ -34,7 +34,7 @@
         <c:if test="${empty sessionScope.user}">
             <a href="${pageContext.request.contextPath}/">Home</a>
             <a href="${pageContext.request.contextPath}/product">Shop</a>
-            <a href="#">Categories</a>
+            <a href="${pageContext.request.contextPath}/contactUs.html">Contact</a>
             <a href="#">About</a>
         </c:if>
 
