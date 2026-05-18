@@ -6,6 +6,7 @@ package kitverse.servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,11 @@ import kitverse.models.Product;
  * @author ACER
  */
 @WebServlet(name = "ProductServlet", urlPatterns = {"/product"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, //2MB
+        maxFileSize = 1024 * 1024 * 10, //10MB
+        maxRequestSize = 1024 * 1024 * 50 //50MB
+)
 public class ProductServlet extends HttpServlet {
 
     /**
@@ -88,13 +94,13 @@ public class ProductServlet extends HttpServlet {
                 rd.forward(request, response);
                 break;
             }
-            default:{
+            default: {
                 ArrayList<Product> products = pDao.fetchAllProducts();
-                 if (products == null) {
+                if (products == null) {
                     products = new ArrayList<>();
                 }
-                 request.setAttribute("products", products);
-                
+                request.setAttribute("products", products);
+
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/product.jsp");
                 rd.forward(request, response);
                 break;
@@ -146,58 +152,73 @@ public class ProductServlet extends HttpServlet {
                 String team = request.getParameter("teamName");
                 String category = request.getParameter("category");
                 String description = request.getParameter("description");
-                String image = request.getParameter("imagePath");
 
-                if (image == null || image.trim().isEmpty()) {
-                    image = "resources/images/background.jpeg";
-                }
+                if (!name.isBlank()) {
+                    request.getRequestDispatcher("/upload").include(request, response);
+                    Product product = new Product();
+                    product.setProductName(name);
+                    product.setTeamName(team);
+                    product.setCategory(category);
+                    product.setDescription(description);
+                    product.setCreateAt(LocalDateTime.now());
+                    product.setUpdatedAt(LocalDateTime.now());
 
-                Product product = new Product();
-                product.setProductName(name);
-                product.setTeamName(team);
-                product.setCategory(category);
-                product.setDescription(description);
-                product.setImagePath(image);
-                product.setCreateAt(LocalDateTime.now());
-                product.setUpdatedAt(LocalDateTime.now());
+                    String upload = String.valueOf(request.getAttribute("upload"));
+                    if ("success".equals(upload)) {
+                        String filePath = String.valueOf(request.getAttribute("filePath"));
+                        product.setImagePath(filePath);
+                    } else {
+                        product.setImagePath("resources/images/background.jpeg");
+                    }
 
-                boolean isAdded = pdao.insertProduct(product);
-
-                if (isAdded) {
-                    response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                    boolean isAdded = pdao.insertProduct(product);
+                    if (isAdded) {
+                        response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                        return;
+                    } else {
+                        request.setAttribute("error", "Failed to add product!");
+                    }
                 } else {
-                    request.setAttribute("error", "Failed to add product!");
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
-                    rd.forward(request, response);
+                    request.setAttribute("error", "Product name cannot be blank!");
                 }
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
+                rd.forward(request, response);
                 break;
             }
 
             case "update": {
                 int productId = Integer.parseInt(request.getParameter("productId"));
-
                 String name = request.getParameter("productName");
                 String team = request.getParameter("teamName");
                 String category = request.getParameter("category");
                 String description = request.getParameter("description");
-                String image = request.getParameter("imagePath");
 
+                request.getRequestDispatcher("/upload").include(request, response);
                 Product product = new Product();
                 product.setProductId(productId);
                 product.setProductName(name);
                 product.setTeamName(team);
                 product.setCategory(category);
                 product.setDescription(description);
-                product.setImagePath(image);
                 product.setUpdatedAt(LocalDateTime.now());
 
-                boolean isUpdated = pdao.updateProduct(product);
+                String upload = String.valueOf(request.getAttribute("upload"));
+                if ("success".equals(upload)) {
+                    String filePath = String.valueOf(request.getAttribute("filePath"));
+                    product.setImagePath(filePath);
+                } else {
+                    product.setImagePath(request.getParameter("existingImage"));
+                }
 
+                boolean isUpdated = pdao.updateProduct(product);
                 if (isUpdated) {
                     response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                    return;
                 } else {
                     request.setAttribute("error", "Failed to update product!");
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productadd.jsp");
+                    request.setAttribute("product", product);
+
+                    RequestDispatcher rd= request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
                     rd.forward(request, response);
                 }
                 break;
