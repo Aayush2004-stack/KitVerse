@@ -22,50 +22,85 @@
     <div class="hero-text">
         <h1>Buy. Wear. Represent.</h1>
         <p>Football jerseys for fans who live and breathe the game.</p>
-        <a href="#" class="btn-primary">Shop Now</a>
+        <a href="${pageContext.request.contextPath}/product" class="btn-primary">Shop Now</a>
     </div>
 </section>
 
 
-<section class="categories">
-    <h2>Explore Categories</h2>
+<section class="highlights">
 
-    <div class="category-grid">
-        <a href="#" class="card">Club Jerseys</a>
-        <a href="#" class="card">National Jerseys</a>
+    <div class="highlight-card">
+
+        <h3>Premium Quality</h3>
+
+        <p>High-quality football kits designed for comfort and performance.</p>
+
     </div>
+
+    <div class="highlight-card">
+
+        <h3>Latest Jerseys</h3>
+
+        <p>Explore trending club and national team collections.</p>
+
+    </div>
+
+    <div class="highlight-card">
+
+        <h3>Fast Delivery</h3>
+
+        <p>Quick and reliable delivery across Nepal.</p>
+
+    </div>
+
 </section>
 
 
-<section class="products">
-    <h2>Featured Jerseys</h2>
+<!-- FEATURED PRODUCTS -->
 
-    <div class="product-grid">
+<section class="featured-products">
 
-        <div class="product-card">
-            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Barcelona">
-            <h3>Barcelona Home Kit</h3>
-            <p>Rs. 2500</p>
-            <a href="#">Add to Cart</a>
+    <div class="section-header">
+        <div>
+            <h2>Featured Jerseys</h2>
+            <p>Represent your favorite club with style.</p>
         </div>
+    </div>
 
-        <div class="product-card">
-            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Real Madrid">
-            <h3>Real Madrid Kit</h3>
-            <p>Rs. 2700</p>
-            <a href="#">Add to Cart</a>
-        </div>
+    <!-- SLIDER -->
+    <div class="slider">
 
-        <div class="product-card">
-            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Man United">
-            <h3>Manchester United Kit</h3>
-            <p>Rs. 2600</p>
-            <a href="#">Add to Cart</a>
+        <div class="slide-track">
+
+            <div class="slide">
+                <img src="${pageContext.request.contextPath}/resources/images/jersey1.jpg">
+            </div>
+
+            <div class="slide">
+                <img src="${pageContext.request.contextPath}/resources/images/jersey2.jpg">
+            </div>
+
+            <div class="slide">
+                <img src="${pageContext.request.contextPath}/resources/images/jersey3.jpg">
+            </div>
+
+            <div class="slide">
+                <img src="${pageContext.request.contextPath}/resources/images/jersey4.jpg">
+            </div>
+
+
         </div>
 
     </div>
-</section>
 
+    <!-- BUTTON -->
+    <div class="browse-wrapper">
+        <a href="${pageContext.request.contextPath}/product" class="browse-btn">
+            Browse More
+        </a>
+    </div>
+
+</section>
 <!-- FOOTER -->
 <footer class="footer">
     <div class="footer-container">
