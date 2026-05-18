@@ -131,9 +131,27 @@ public class ProductVariantServlet extends HttpServlet {
 
                 Product product = pDao.getProductDetails(productId);
 
+                ProductVariant defaultVariant = null;
+
+                for (ProductVariant v : variants) {
+
+                    if (v.getStock() > 0) {
+
+                        if (defaultVariant == null
+                                || v.getSellingPrice() < defaultVariant.getSellingPrice()) {
+
+                            defaultVariant = v;
+
+                        }
+
+                    }
+
+                }
+
                 request.setAttribute("product", product);
 
                 request.setAttribute("variants", variants);
+                request.setAttribute("selectedVariant", defaultVariant);
 
                 // CUSTOMER PAGE
                 request.getRequestDispatcher("/WEB-INF/pages/productVariant.jsp")
