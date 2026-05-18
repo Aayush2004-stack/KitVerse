@@ -35,6 +35,7 @@
                         src="${pageContext.request.contextPath}/${product.imagePath}"
                         class="product-img"
                         alt="${product.productName}"
+                        onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';"
                     >
 
                     <div class="card-content">
