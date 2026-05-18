@@ -3,65 +3,82 @@
 
 <header class="navbar">
 
-    <!-- Logo -->
+    <!-- LOGO -->
     <div class="nav-logo">
         <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Logo">
         KitVerse
     </div>
 
-    <!-- NAV LINKS -->
+    <!-- NAVIGATION -->
     <nav class="nav-links">
-
-       
 
         <!-- ADMIN NAV -->
         <c:if test="${not empty sessionScope.user and sessionScope.user.userType == 'admin'}">
+
+            <div class="admin-badge">
+                ADMIN PANEL
+            </div>
+
             <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
             <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
             <a href="${pageContext.request.contextPath}/order">Orders</a>
+
+            <!-- ADMIN DROPDOWN -->
+            <div class="profile-dropdown">
+
+                <img
+                    src="${pageContext.request.contextPath}/resources/images/default-user.png"
+                    class="profile-icon"
+                    alt="Admin">
+
+                <div class="dropdown-menu">
+                    <a href="#">Profile</a>
+                    <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                </div>
+
+            </div>
+
         </c:if>
 
-        <!-- USER NAV -->
+        <!--NORMAL USER NAV -->
         <c:if test="${not empty sessionScope.user and sessionScope.user.userType == 'normal'}">
+
             <a href="${pageContext.request.contextPath}/">Home</a>
             <a href="${pageContext.request.contextPath}/product">Shop</a>
-            <a href="${pageContext.request.contextPath}/contactUs.html">Contact</a>
-            <a href="#">About</a>
+            <a href="${pageContext.request.contextPath}/contactUs">Contact Us</a>
+            <a href="${pageContext.request.contextPath}/aboutUs">About Us</a>
+
+            <!-- USER DROPDOWN -->
+            <div class="profile-dropdown">
+
+                <img
+                    src="${pageContext.request.contextPath}/resources/images/default-user.png"
+                    class="profile-icon"
+                    alt="User">
+
+                <div class="dropdown-menu">
+                    <a href="#">Profile</a>
+                    <a href="#">My Orders</a>
+                    <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                </div>
+
+            </div>
+
         </c:if>
 
         <!-- GUEST NAV -->
-                
         <c:if test="${empty sessionScope.user}">
+
             <a href="${pageContext.request.contextPath}/">Home</a>
             <a href="${pageContext.request.contextPath}/product">Shop</a>
-            <a href="${pageContext.request.contextPath}/contactUs.html">Contact</a>
-            <a href="#">About</a>
+            <a href="${pageContext.request.contextPath}/contactUs">Contact Us</a>
+            <a href="${pageContext.request.contextPath}/aboutUs">About Us</a>
+
+            <a href="${pageContext.request.contextPath}/login" class="nav-btn">
+                Login
+            </a>
+
         </c:if>
-
-        <!-- RIGHT SIDE -->
-        <c:choose>
-
-            <c:when test="${not empty sessionScope.user}">
-                
-                <span class="nav-user">
-                    Hi, ${sessionScope.user.fullName}
-                </span>
-
-                <a href="${pageContext.request.contextPath}/logout" class="nav-btn">
-                    Logout
-                </a>
-
-            </c:when>
-
-            <c:otherwise>
-
-                <a href="${pageContext.request.contextPath}/login" class="nav-btn">
-                    Login
-                </a>
-
-            </c:otherwise>
-
-        </c:choose>
 
     </nav>
 

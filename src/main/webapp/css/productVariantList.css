@@ -9,19 +9,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 @import url('main.css');
 
-
-/* Page */
 body {
-    font-family: Arial, sans-serif;
-    background: var(--bg-primary);
-    margin: 0;
-    padding: 25px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Wrapper */
 .page-wrapper {
-    max-width: 1100px;
-    margin: auto;
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    flex: 1;
 }
 
 /* Header */
