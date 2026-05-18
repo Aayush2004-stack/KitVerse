@@ -9,6 +9,8 @@ package kitverse.dao;
  * @author ACER
  */
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import kitverse.utilities.DBConfig;
 
 public class AdminDashboardDAO {
@@ -120,5 +122,110 @@ public class AdminDashboardDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public int getTotalOrders() {
+        String sql = "SELECT COUNT(*) FROM orders";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double getTotalRevenue() {
+        String sql = "SELECT COALESCE(SUM(total_amt), 0) FROM orders";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getOrdersByStatus(String status) {
+        String sql = "SELECT COUNT(*) FROM orders WHERE status = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, status);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTodayOrders() {
+        String sql = "SELECT COUNT(*) FROM orders WHERE DATE(created_at) = CURDATE()";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double getTodayRevenue() {
+        String sql = "SELECT COALESCE(SUM(total_amt), 0) "
+                + "FROM orders WHERE DATE(created_at) = CURDATE()";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    
+    public List<Double> getWeeklyRevenue() {
+        List<Double> weeklyRevenue = new ArrayList<>();
+        String sql = """
+        SELECT COALESCE(SUM(total_amt), 0) AS revenue
+        FROM orders
+        WHERE DATE(created_at) = CURDATE() - INTERVAL ? DAY
+        """;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // 6 days ago to today
+            for (int i = 6; i >= 0; i--) {
+                ps.setInt(1, i);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    weeklyRevenue.add(rs.getDouble("revenue"));
+                } else {
+                    weeklyRevenue.add(0.0);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return weeklyRevenue;
     }
 }
