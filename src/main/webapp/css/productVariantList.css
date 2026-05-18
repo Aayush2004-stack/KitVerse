@@ -9,14 +9,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 @import url('main.css');
 
-
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 /* Page */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     background: var(--bg-primary);
-    margin: 0;
-    padding: 25px;
+    color: var(--text-primary);
+    line-height: 1.6;
 }
+
 
 /* Wrapper */
 .page-wrapper {

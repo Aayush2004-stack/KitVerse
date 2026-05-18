@@ -1,9 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
-    line-height: 1.5;
+    line-height: 1.6;
 }
+
 
 /* ================= PAGE TITLE ================= */
 
@@ -173,31 +180,10 @@ body {
     font-size: 12px;
 }
 
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 992px) {
-
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .navbar {
-        padding: 14px 30px;
-    }
-}
 
 @media (max-width: 768px) {
 
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-        padding: 20px;
-    }
 
-    .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
 
     .grid {
         grid-template-columns: 1fr;

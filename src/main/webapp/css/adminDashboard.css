@@ -9,12 +9,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 @import url('main.css');
 
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+*{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg-primary);
     color: var(--text-primary);
+    line-height: 1.6;
 }
 
 .aContainer {
