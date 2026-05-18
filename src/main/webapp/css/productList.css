@@ -8,22 +8,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 */
 @import url("main.css");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-/* =========================
-   BASE
-========================= */
-
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-}
-
 
 /* Page title */
 h2 {

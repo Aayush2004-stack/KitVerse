@@ -7,18 +7,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Nischal
 */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-}
 
 /* ================= HERO ================= */
 
@@ -195,66 +183,6 @@ body {
 
 
 
-/* ================= FOOTER ================= */
-
-.footer {
-    background: var(--color-primary-dark);
-    color: var(--text-light);
-
-    padding: 70px 20px 20px;
-}
-
-.footer-container {
-    max-width: 1200px;
-
-    margin: auto;
-
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    gap: 40px;
-}
-
-.footer h3,
-.footer h4 {
-    color: white;
-    margin-bottom: 14px;
-}
-
-.footer p,
-.footer a {
-    font-size: 14px;
-    color: rgba(255,255,255,0.8);
-}
-
-.footer ul {
-    list-style: none;
-}
-
-.footer ul li {
-    margin-bottom: 10px;
-}
-
-.footer a {
-    text-decoration: none;
-    transition: 0.25s;
-}
-
-.footer a:hover {
-    color: white;
-}
-
-.footer-bottom {
-    text-align: center;
-
-    margin-top: 40px;
-    padding-top: 18px;
-
-    border-top: 1px solid rgba(255,255,255,0.15);
-
-    font-size: 13px;
-}
 
 /* ================= RESPONSIVE ================= */
 

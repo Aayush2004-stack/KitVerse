@@ -82,40 +82,7 @@
         </section>
 
         <!-- FOOTER -->
-        <footer class="footer">
-
-            <div class="footer-container">
-
-                <div>
-                    <h3>KitVerse</h3>
-                    <p>Premium football jerseys designed for true fans.</p>
-                </div>
-
-                <div>
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">About</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">Returns</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2026 KitVerse</p>
-            </div>
-
-        </footer>
+        <jsp:include page="/templates/footer.html"/>
 
     </body>
 </html>

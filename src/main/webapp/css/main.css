@@ -27,8 +27,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     /* border colors*/
     --border-light: #C9D6CF;
 }
-/*  NAVBAR  */
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Page */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/*  NAVBAR  */
 .navbar {
     position: sticky;
     top: 0;
@@ -158,4 +171,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-weight: 700;
     letter-spacing: 1px;
     margin-right: 10px;
+}
+
+/* FOOTER */
+
+.footer {
+    background: var(--color-primary-dark);
+    color: var(--text-light);
+
+    padding: 18px 20px;
+
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer p {
+    font-size: 13px;
+    color: var(--text-light);
+    text-align: center;
 }
