@@ -50,6 +50,14 @@ public class AdminDashboardServlet extends HttpServlet {
         request.setAttribute("totalStock", dao.getTotalStock());
         request.setAttribute("lowStock", dao.getLowStockCount());
         request.setAttribute("outOfStock", dao.getOutOfStockCount());
+        request.setAttribute("totalOrders", dao.getTotalOrders());
+        request.setAttribute("totalRevenue", dao.getTotalRevenue());
+        request.setAttribute("pendingOrders", dao.getOrdersByStatus("PENDING"));
+        request.setAttribute("deliveredOrders", dao.getOrdersByStatus("DELIVERED"));
+        request.setAttribute("cancelledOrders", dao.getOrdersByStatus("CANCELLED"));
+        request.setAttribute("todayOrders", dao.getTodayOrders());
+        request.setAttribute("todayRevenue", dao.getTodayRevenue());
+        request.setAttribute("weeklyRevenue", dao.getWeeklyRevenue());
 
         request.getRequestDispatcher("/WEB-INF/pages/adminDashboard.jsp")
                 .forward(request, response);
