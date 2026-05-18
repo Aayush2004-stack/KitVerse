@@ -45,8 +45,8 @@
 
             <a href="${pageContext.request.contextPath}/">Home</a>
             <a href="${pageContext.request.contextPath}/product">Shop</a>
-            <a href="${pageContext.request.contextPath}/contactUs.html">Contact Us</a>
-            <a href="#">About Us</a>
+            <a href="${pageContext.request.contextPath}/contactUs">Contact Us</a>
+            <a href="${pageContext.request.contextPath}/aboutUs">About Us</a>
 
             <!-- USER DROPDOWN -->
             <div class="profile-dropdown">
@@ -71,8 +71,8 @@
 
             <a href="${pageContext.request.contextPath}/">Home</a>
             <a href="${pageContext.request.contextPath}/product">Shop</a>
-            <a href="${pageContext.request.contextPath}/contactUs.html">Contact</a>
-            <a href="#">About</a>
+            <a href="${pageContext.request.contextPath}/contactUs">Contact Us</a>
+            <a href="${pageContext.request.contextPath}/aboutUs">About Us</a>
 
             <a href="${pageContext.request.contextPath}/login" class="nav-btn">
                 Login
