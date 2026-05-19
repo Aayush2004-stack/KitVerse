@@ -8,8 +8,8 @@ package kitverse.daoInterfaces;
  *
  * @author ACER
  */
-import kitverse.models.Product;
 import java.util.ArrayList;
+import kitverse.models.Product;
 
 public interface ProductDAOInterface {
 
@@ -31,8 +31,6 @@ public interface ProductDAOInterface {
     // Get products by category (useful for jersey filtering)
     ArrayList<Product> getProductsByCategory(String category);
 
-    // Get products by team (e.g., Real Madrid, Barcelona)
-    ArrayList<Product> getProductsByTeam(String teamName);
 
     // Search product by name
     ArrayList<Product> searchProductByName(String keyword);
