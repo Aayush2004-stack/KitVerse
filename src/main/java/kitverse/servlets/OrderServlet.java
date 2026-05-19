@@ -43,6 +43,22 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User user = (User) SessionUtil.getAttribute(request, "user");
+
+       
+
+        int customerId = user.getId();
+
+        OrderDAO orderDAO = new OrderDAO();
+
+        List<Order> orders = orderDAO.getOrdersByCustomerId(customerId);
+
+        request.setAttribute("orders", orders);
+
+        request.getRequestDispatcher("/WEB-INF/pages/myOrder.jsp")
+                .forward(request, response);
+
+        
 
     }
 
@@ -57,7 +73,8 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
+        //if no action parameter Null Pointer exception so handle it
+        final String action = request.getParameter("action") == null ? "" : request.getParameter("action");
 
         switch (action) {
             case "checkout": {
@@ -200,9 +217,12 @@ public class OrderServlet extends HttpServlet {
                 }
 
                 response.sendRedirect(request.getContextPath()
-                        + "/order?action=invoice&orderId=" + orderId);
+                        + "/order");
 
                 break;
+            }
+            default: {
+
             }
 
         }
