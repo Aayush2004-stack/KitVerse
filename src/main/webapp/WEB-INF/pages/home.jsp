@@ -2,103 +2,108 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KitVerse</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>KitVerse</title>
 
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
-</head>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+    </head>
 
-<body>
-
-
-<jsp:include page="/templates/navbar.jsp"/>
+    <body>
 
 
-<section class="hero">
-    <div class="hero-text">
-        <h1>Buy. Wear. Represent.</h1>
-        <p>Football jerseys for fans who live and breathe the game.</p>
-        <a href="#" class="btn-primary">Shop Now</a>
-    </div>
-</section>
+        <jsp:include page="/templates/navbar.jsp"/>
 
 
-<section class="categories">
-    <h2>Explore Categories</h2>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Buy. Wear. Represent.</h1>
+                <p>Football jerseys for fans who live and breathe the game.</p>
+                <a href="${pageContext.request.contextPath}/product" class="btn-primary">Shop Now</a>
+            </div>
+        </section>
 
-    <div class="category-grid">
-        <a href="#" class="card">Club Jerseys</a>
-        <a href="#" class="card">National Jerseys</a>
-    </div>
-</section>
+
+        <section class="highlights">
+
+            <div class="highlight-card">
+
+                <h3>Premium Quality</h3>
+
+                <p>High-quality football kits designed for comfort and performance.</p>
+
+            </div>
+
+            <div class="highlight-card">
+
+                <h3>Latest Jerseys</h3>
+
+                <p>Explore trending club and national team collections.</p>
+
+            </div>
+
+            <div class="highlight-card">
+
+                <h3>Fast Delivery</h3>
+
+                <p>Quick and reliable delivery across Nepal.</p>
+
+            </div>
+
+        </section>
 
 
-<section class="products">
-    <h2>Featured Jerseys</h2>
+        <!-- FEATURED PRODUCTS -->
 
-    <div class="product-grid">
+        <section class="featured-products">
 
-        <div class="product-card">
-            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Barcelona">
-            <h3>Barcelona Home Kit</h3>
-            <p>Rs. 2500</p>
-            <a href="#">Add to Cart</a>
-        </div>
+            <div class="section-header">
+                <div>
+                    <h2>Featured Jerseys</h2>
+                    <p>Represent your favorite club with style.</p>
+                </div>
+            </div>
 
-        <div class="product-card">
-            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Real Madrid">
-            <h3>Real Madrid Kit</h3>
-            <p>Rs. 2700</p>
-            <a href="#">Add to Cart</a>
-        </div>
+            <!-- SLIDER -->
+            <div class="slider">
 
-        <div class="product-card">
-            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Man United">
-            <h3>Manchester United Kit</h3>
-            <p>Rs. 2600</p>
-            <a href="#">Add to Cart</a>
-        </div>
+                <div class="slide-track">
 
-    </div>
-</section>
+                    <div class="slide">
+                        <img src="${pageContext.request.contextPath}/resources/images/jersey1.jpg">
+                    </div>
 
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="footer-container">
+                    <div class="slide">
+                        <img src="${pageContext.request.contextPath}/resources/images/jersey2.jpg">
+                    </div>
 
-        <div>
-            <h3>KitVerse</h3>
-            <p>Premium football jerseys designed for true fans.</p>
-        </div>
+                    <div class="slide">
+                        <img src="${pageContext.request.contextPath}/resources/images/jersey3.jpg">
+                    </div>
 
-        <div>
-            <h4>Quick Links</h4>
-            <ul>
-                <li><a href="#">Shop</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </div>
+                    <div class="slide">
+                        <img src="${pageContext.request.contextPath}/resources/images/jersey4.jpg">
+                    </div>
 
-        <div>
-            <h4>Support</h4>
-            <ul>
-                <li><a href="#">Shipping</a></li>
-                <li><a href="#">Returns</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
 
-    </div>
+                </div>
 
-    <div class="footer-bottom">
-        <p>© 2026 KitVerse</p>
-    </div>
-</footer>
+            </div>
 
-</body>
+            <!-- BUTTON -->
+            <div class="browse-wrapper">
+                <a href="${pageContext.request.contextPath}/product" class="browse-btn">
+                    Browse More
+                </a>
+            </div>
+
+        </section>
+
+        <!-- FOOTER -->
+        <jsp:include page="/templates/footer.html"/>
+
+    </body>
 </html>

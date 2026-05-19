@@ -8,13 +8,12 @@ package kitverse.dao;
  *
  * @author ACER
  */
-import kitverse.daoInterfaces.ProductVariantDAOInterface;
-import kitverse.models.ProductVariant;
-import kitverse.utilities.DBConfig;
-
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import kitverse.daoInterfaces.ProductVariantDAOInterface;
+import kitverse.models.ProductVariant;
+import kitverse.utilities.DBConfig;
 
 public class ProductVariantDAO implements ProductVariantDAOInterface {
 
@@ -25,16 +24,11 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         try {
             conn = DBConfig.getConnection();
 
-            if (conn == null) {
-                throw new SQLException("DB connection is NULL");
-            }
-
-            System.out.println("DB CONNECTED SUCCESSFULLY");
+         
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            conn = null;
             isConnectionError = true;
+            System.out.println(ex.getLocalizedMessage());
         }
     }
 

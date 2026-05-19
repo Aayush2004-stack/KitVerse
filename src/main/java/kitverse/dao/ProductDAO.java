@@ -51,7 +51,7 @@ public class ProductDAO implements ProductDAOInterface {
 
         return products;
     }
-
+    
     /**
      * Inserts a new product into the database.
      *

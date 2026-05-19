@@ -10,19 +10,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 @import url('main.css');
 
 
-/* Page background */
-body {
-    font-family: Arial, sans-serif;
-    background: var(--bg-primary);
-    margin: 0;
-    padding: 30px;
-}
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 /* Center wrapper */
 .page-wrapper {
+    width: 100%;
+    max-width: 1200px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 30px auto;
 }
 
 /* Card */

@@ -89,6 +89,8 @@
 
             </div>
         </div>
+        <!-- FOOTER -->
+        <jsp:include page="/templates/footer.html"/>     
 
     </body>
 </html>

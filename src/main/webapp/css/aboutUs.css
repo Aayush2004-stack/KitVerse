@@ -1,0 +1,119 @@
+
+/* SECTION */
+.about-section {
+    padding: 80px 20px;
+}
+
+/* INTRO */
+.who-we-are {
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 60px;
+}
+
+.who-we-are h1 {
+    font-size: 42px;
+    color: var(--color-primary-dark);
+    margin-bottom: 15px;
+}
+
+.who-we-are p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* HEADING */
+.team-heading {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: var(--color-primary-dark);
+}
+
+/* GRID */
+.team-grid {
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* CARD */
+.card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+
+    border-radius: 16px;
+    padding: 20px;
+
+    display: flex;
+    gap: 18px;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+
+    transition: 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* IMAGE */
+.card img {
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* CONTENT */
+.card-content h3 {
+    color: var(--color-primary);
+    margin-bottom: 5px;
+}
+
+.card-content span {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+/* BUTTON */
+.card-content button {
+    border: 1px solid var(--color-primary);
+    background: transparent;
+
+    color: var(--color-primary);
+
+    padding: 6px 12px;
+    border-radius: 20px;
+
+    font-size: 12px;
+}
+
+/* SINGLE CARD FULL WIDTH */
+.single-card {
+    grid-column: span 2;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .single-card {
+        grid-column: span 1;
+    }
+}

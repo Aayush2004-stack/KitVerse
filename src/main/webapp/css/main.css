@@ -27,7 +27,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     /* border colors*/
     --border-light: #C9D6CF;
 }
-/* ================= NAVBAR ================= */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Page */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/*  NAVBAR  */
 .navbar {
     position: sticky;
     top: 0;
@@ -59,7 +73,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 22px;
 }
 
 .nav-links a {
@@ -73,7 +87,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: white;
 }
 
-/* button */
+/* login button */
 .nav-btn {
     padding: 8px 16px;
     border-radius: 20px;
@@ -83,4 +97,104 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .nav-btn:hover {
     background: white;
     color: var(--color-primary-dark);
+}
+
+/*PROFILE DROPDOWN  */
+
+.profile-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.5);
+    transition: 0.25s;
+}
+
+.profile-icon:hover {
+    border-color: white;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 55px;
+    right: 0;
+
+    min-width: 180px;
+
+    background: white;
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+
+    transition: 0.25s;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 14px 18px;
+    color: #222;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.dropdown-menu a:hover {
+    background: var(--bg-secondary);
+    color: var(--color-primary-dark);
+}
+
+/* ADMIN BADGE */
+
+.admin-badge {
+    background: #ffcc00;
+    color: #222;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-right: 10px;
+}
+
+/* FOOTER */
+
+.footer {
+    background: var(--color-primary-dark);
+    color: var(--text-light);
+
+    padding: 18px 20px;
+
+    margin-top: auto;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer p {
+    font-size: 13px;
+    color: var(--text-light);
+    text-align: center;
 }
