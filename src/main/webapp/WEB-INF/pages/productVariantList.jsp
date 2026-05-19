@@ -3,8 +3,7 @@
     Created on : May 2, 2026, 5:24:34 PM
     Author     : ACER
 --%>
-
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <!DOCTYPE html>

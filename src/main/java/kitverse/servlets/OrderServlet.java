@@ -10,6 +10,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import kitverse.dao.OrderDAO;
 import kitverse.dao.OrderItemDAO;
 import kitverse.dao.ProductDAO;
@@ -96,86 +100,109 @@ public class OrderServlet extends HttpServlet {
 
                 break;
             }
-            case "confirm": {
+            case "bulkCheckout": {
+
                 User user = (User) SessionUtil.getAttribute(request, "user");
 
-                if (user == null) {
+                String[] variantIds = request.getParameterValues("variantIds");
 
-                    response.sendRedirect(request.getContextPath() + "/login");
-
+                if (variantIds == null || variantIds.length == 0) {
+                    response.sendRedirect(request.getContextPath() + "/cart");
                     return;
-
                 }
 
+                ProductVariantDAO pvDAO = new ProductVariantDAO();
+                ProductDAO pDAO = new ProductDAO();
+
+                List<Map<String, Object>> items = new ArrayList<>();
+                double totalAmt = 0;
+
+                for (String vid : variantIds) {
+
+                    int variantId = Integer.parseInt(vid);
+
+                    String qtyStr = request.getParameter("qty_" + variantId);
+                    int quantity = (qtyStr != null && !qtyStr.isEmpty())
+                            ? Integer.parseInt(qtyStr)
+                            : 1;
+
+                    ProductVariant variant = pvDAO.getVariantById(variantId);
+                    Product product = pDAO.getProductDetails(variant.getProductId());
+
+                    Map<String, Object> item = new HashMap<>();
+                    item.put("product", product);
+                    item.put("variant", variant);
+                    item.put("quantity", quantity);
+                    item.put("productVariantId", variantId);
+
+                    items.add(item);
+
+                    totalAmt += variant.getSellingPrice() * quantity;
+                }
+
+                request.setAttribute("items", items);
+                request.setAttribute("totalAmt", totalAmt);
+
+                request.getRequestDispatcher("/WEB-INF/pages/checkout.jsp")
+                        .forward(request, response);
+
+                break;
+            }
+            case "confirm": {
+
+                User user = (User) SessionUtil.getAttribute(request, "user");
                 int customerId = user.getId();
 
-                
-                // 2. REQUIRED FIELDS
-                
-                int variantId = Integer.parseInt(request.getParameter("variantId"));
-                int quantity = Integer.parseInt(request.getParameter("quantity"));
-                double totalAmt = Double.parseDouble(request.getParameter("totalAmt"));
                 String address = request.getParameter("address");
-             
-                // 3. OPTIONAL FIELDS            
-                String playerName = request.getParameter("playerName");
+                double totalAmt = Double.parseDouble(request.getParameter("totalAmt"));
 
-                if (playerName != null && playerName.trim().isEmpty()) {
-                    playerName = null;
-                }
-
-                String playerNoStr = request.getParameter("playerNo");
-                Integer playerNo = null;
-                if (playerNoStr != null && !playerNoStr.trim().isEmpty()) {
-
-                    try {
-                        playerNo = Integer.parseInt(playerNoStr);
-
-                    } catch (NumberFormatException e) {
-                        playerNo = 0;
-                    }
-                }
-                else{
-                    playerNo=0;
-                }
-
-                
-                // 4. CREATE ORDER (PARENT)
-                
                 Order order = new Order();
-                
                 order.setCustomerId(customerId);
                 order.setTotalAmt(totalAmt);
                 order.setStatus("PENDING");
                 order.setAddress(address);
-                
 
                 OrderDAO oDao = new OrderDAO();
                 int orderId = oDao.insertOrder(order);
 
-                // 5. CREATE ORDER ITEM (CHILD)
+                String[] variantIds = request.getParameterValues("variantIds");
 
-                OrderItem item = new OrderItem();
+                OrderItemDAO oiDAO = new OrderItemDAO();
 
-                item.setOrderId(orderId);
-                item.setProductVariantId(variantId);
-                item.setQuantity(quantity);
-                //just for testing
-                
-                item.setPlayerName(playerName);
-                item.setPlayerNo(playerNo);
+                if (variantIds != null) {
 
-                OrderItemDAO oiDAO= new OrderItemDAO();
-           
+                    // CART MODE
+                    for (String vid : variantIds) {
 
-                oiDAO.insertOrderItem(item);
+                        int variantId = Integer.parseInt(vid);
+                        int qty = Integer.parseInt(request.getParameter("qty_" + variantId));
 
+                        OrderItem item = new OrderItem();
+                        item.setOrderId(orderId);
+                        item.setProductVariantId(variantId);
+                        item.setQuantity(qty);
 
-                // 6. REDIRECT TO INVOICE
+                        oiDAO.insertOrderItem(item);
+                    }
 
-                response.sendRedirect(
-                        request.getContextPath() + "/order?action=invoice&orderId=" + orderId
-                );
+                } else {
+
+                    // BUY NOW MODE
+                    int variantId = Integer.parseInt(request.getParameter("variantId"));
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+                    OrderItem item = new OrderItem();
+                    item.setOrderId(orderId);
+                    item.setProductVariantId(variantId);
+                    item.setQuantity(quantity);
+
+                    oiDAO.insertOrderItem(item);
+                }
+
+                response.sendRedirect(request.getContextPath()
+                        + "/order?action=invoice&orderId=" + orderId);
+
+                break;
             }
 
         }

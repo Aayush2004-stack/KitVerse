@@ -5,8 +5,10 @@
 
     <!-- LOGO -->
     <div class="nav-logo">
-        <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Logo">
+        <a href="${pageContext.request.contextPath}/">
+            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Logo"></a>
         KitVerse
+
     </div>
 
     <!-- NAVIGATION -->
@@ -45,6 +47,7 @@
 
             <a href="${pageContext.request.contextPath}/">Home</a>
             <a href="${pageContext.request.contextPath}/product">Shop</a>
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
             <a href="${pageContext.request.contextPath}/contactUs">Contact Us</a>
             <a href="${pageContext.request.contextPath}/aboutUs">About Us</a>
 
