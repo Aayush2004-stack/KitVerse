@@ -64,7 +64,7 @@ public class AdminProductServlet extends HttpServlet {
         switch (action) {
 
             case "new": {
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productAdd.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -76,7 +76,7 @@ public class AdminProductServlet extends HttpServlet {
 
                 request.setAttribute("product", product);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productAdd.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -88,7 +88,7 @@ public class AdminProductServlet extends HttpServlet {
                 }
                 request.setAttribute("products", products);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productList.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productList.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -168,7 +168,7 @@ public class AdminProductServlet extends HttpServlet {
                 } else {
                     request.setAttribute("error", "Product name cannot be blank!");
                 }
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productAdd.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -205,7 +205,7 @@ public class AdminProductServlet extends HttpServlet {
                     request.setAttribute("error", "Failed to update product!");
                     request.setAttribute("product", product);
 
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productAdd.jsp");
                     rd.forward(request, response);
                 }
                 break;
@@ -220,7 +220,7 @@ public class AdminProductServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/admin/product");
                 } else {
                     request.setAttribute("error", "Failed to update product!");
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productList.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productList.jsp");
                     rd.forward(request, response);
                 }
                 break;

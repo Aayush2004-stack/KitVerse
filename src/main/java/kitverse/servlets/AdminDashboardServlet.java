@@ -4,13 +4,12 @@
  */
 package kitverse.servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import kitverse.dao.AdminDashboardDAO;
 
 /**
@@ -59,7 +58,7 @@ public class AdminDashboardServlet extends HttpServlet {
         request.setAttribute("todayRevenue", dao.getTodayRevenue());
         request.setAttribute("weeklyRevenue", dao.getWeeklyRevenue());
 
-        request.getRequestDispatcher("/WEB-INF/pages/adminDashboard.jsp")
+        request.getRequestDispatcher("/WEB-INF/pages/adminPages/adminDashboard.jsp")
                 .forward(request, response);
     }
 

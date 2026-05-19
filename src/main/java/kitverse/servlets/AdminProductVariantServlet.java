@@ -13,9 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import kitverse.dao.ProductDAO;
 import kitverse.dao.ProductVariantDAO;
-import kitverse.models.Product;
 import kitverse.models.ProductVariant;
 
 /**
@@ -67,7 +65,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 String productId = request.getParameter("productId");
                 request.setAttribute("productId", productId);
 
-                request.getRequestDispatcher("/WEB-INF/pages/productVariantAdd.jsp")
+                request.getRequestDispatcher("/WEB-INF/pages/adminPages/productVariantAdd.jsp")
                         .forward(request, response);
                 break;
             }
@@ -81,7 +79,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 request.setAttribute("variant", variant);
                 request.setAttribute("productId", productId);
 
-                request.getRequestDispatcher("/WEB-INF/pages/productVariantAdd.jsp")
+                request.getRequestDispatcher("/WEB-INF/pages/adminPages/productVariantAdd.jsp")
                         .forward(request, response);
                 break;
             }
@@ -102,61 +100,11 @@ public class AdminProductVariantServlet extends HttpServlet {
                 request.setAttribute("variants", variants);
                 request.setAttribute("productId", productId);
 
-                request.getRequestDispatcher("/WEB-INF/pages/productVariantList.jsp")
+                request.getRequestDispatcher("/WEB-INF/pages/adminPages/productVariantList.jsp")
                         .forward(request, response);
                 break;
             }
-            case "view": {
-
-                String productIdParam = request.getParameter("productId");
-
-                if (productIdParam == null) {
-
-                    response.sendRedirect(request.getContextPath() + "/product");
-
-                    return;
-
-                }
-
-                int productId = Integer.parseInt(productIdParam);
-
-                ArrayList<ProductVariant> variants
-                        = vDao.getVariantsByProductId(productId);
-
-                ProductDAO pDao = new ProductDAO();
-
-                Product product = pDao.getProductDetails(productId);
-
-                ProductVariant defaultVariant = null;
-
-                for (ProductVariant v : variants) {
-
-                    if (v.getStock() > 0) {
-
-                        if (defaultVariant == null
-                                || v.getSellingPrice() < defaultVariant.getSellingPrice()) {
-
-                            defaultVariant = v;
-
-                        }
-
-                    }
-
-                }
-
-                request.setAttribute("product", product);
-
-                request.setAttribute("variants", variants);
-                request.setAttribute("selectedVariant", defaultVariant);
-
-                // CUSTOMER PAGE
-                request.getRequestDispatcher("/WEB-INF/pages/productVariant.jsp")
-                        .forward(request, response);
-
-                break;
-
-            }
-
+            
             default:
                 response.sendRedirect(request.getContextPath() + "admin/product");
         }
@@ -221,7 +169,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 } else {
                     request.setAttribute("error", "Failed to add variant!");
                     request.setAttribute("productId", productId);
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productvariantadd.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productvariantadd.jsp");
                     rd.forward(request, response);
                 }
                 break;
@@ -249,7 +197,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 } else {
                     request.setAttribute("error", "Failed to update variant!");
                     request.setAttribute("productId", productId);
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productVariantAdd.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productVariantAdd.jsp");
                     rd.forward(request, response);
                 }
                 break;
