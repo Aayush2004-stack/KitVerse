@@ -23,7 +23,7 @@ import kitverse.models.Product;
 @WebServlet(name = "ProductServlet", urlPatterns = {"/product"})
 public class ProductServlet extends HttpServlet {
 
-    private static final int LIMIT = 9; //max 9 product in one page
+    private static final int LIMIT = 8; //max 8 product in one page
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

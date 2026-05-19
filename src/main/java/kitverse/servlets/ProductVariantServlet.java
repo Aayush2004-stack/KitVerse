@@ -29,7 +29,7 @@ public class ProductVariantServlet extends HttpServlet {
 
         ProductVariantDAO vDao = new ProductVariantDAO();
         String productIdParam = request.getParameter("productId");
-        
+
         if (productIdParam == null) {
             response.sendRedirect(request.getContextPath() + "/product");
             return;
@@ -41,11 +41,11 @@ public class ProductVariantServlet extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         Product product = pDao.getProductDetails(productId);
         ProductVariant defaultVariant = null;
-        
+
         for (ProductVariant v : variants) {
             if (v.getStock() > 0) {
                 if (defaultVariant == null
-                      || v.getSellingPrice() < defaultVariant.getSellingPrice()) {
+                        || v.getSellingPrice() < defaultVariant.getSellingPrice()) {
                     defaultVariant = v;
 
                 }
@@ -58,6 +58,13 @@ public class ProductVariantServlet extends HttpServlet {
 
         request.setAttribute("variants", variants);
         request.setAttribute("selectedVariant", defaultVariant);
+        String error = request.getParameter("error");
+
+        if (error != null) {
+
+            request.setAttribute("error", "Insufficient stock.");
+
+        }
 
         // CUSTOMER PAGE
         request.getRequestDispatcher("/WEB-INF/pages/productVariant.jsp")

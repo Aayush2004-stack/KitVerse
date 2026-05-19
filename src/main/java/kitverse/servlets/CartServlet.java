@@ -144,6 +144,10 @@ public class CartServlet extends HttpServlet {
             }
 
         }
+        String error = request.getParameter("error");
+        if (error != null) {
+            request.setAttribute("error", "Insufficient stock.");
+        }
 
         request.setAttribute("cartItems", cartItems);
 
