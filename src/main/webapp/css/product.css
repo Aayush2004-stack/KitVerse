@@ -20,44 +20,97 @@
 
 /* ================= FILTER BAR ================= */
 
+
 .filter-bar {
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 20px;
+}
 
+/* FORM */
+.filter-form {
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
     justify-content: center;
 }
 
-.search-box {
-    flex: 1;
-    min-width: 220px;
+/* GROUP */
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-    padding: 12px 14px;
+    width: 100%;
+    max-width: 750px;   /* 👈 prevents full stretch */
+}
+
+/* SEARCH INPUT */
+.search-box {
+    flex: 1;            /* only input grows */
+    height: 44px;
+    padding: 10px 14px;
+
     border: 1px solid var(--border-light);
     border-radius: 10px;
+
     outline: none;
 }
 
+/* CATEGORY */
 .filter {
-    padding: 12px 14px;
+    height: 44px;
+    padding: 0 12px;
+
     border: 1px solid var(--border-light);
     border-radius: 10px;
     background: white;
+
+    min-width: 160px;   /* keeps it compact */
+}
+
+/* SEARCH BUTTON */
+.search-group button {
+    height: 44px;
+    padding: 0 16px;
+
+    border-radius: 10px;
+    border: none;
+
+    background: var(--color-primary);
+    color: white;
+
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.search-group button:hover {
+    background: var(--color-primary-hover);
+}
+
+/* Improve readability for inputs */
+.search-box, .filter {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Better placeholder visibility */
+
+.search-box::placeholder {
+    font-size: 14px;
+    color: rgba(92, 92, 110, 0.7);
+
 }
 
 /* ================= GRID ================= */
 
 .grid {
-    max-width: 1200px;
+    max-width: auto;
     margin: 30px auto;
     padding: 20px;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 26px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
 }
 
 /* ================= CARD ================= */
