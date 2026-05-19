@@ -101,6 +101,13 @@
 
                         <input type="number" name="quantity" min="1" value="1" required>
                     </div>
+                    
+                    <!-- ERROR MESSAGE -->
+                    <c:if test="${not empty error}">
+                        <div class="error-box">
+                            ${error}
+                        </div>
+                    </c:if>
 
                     <!-- BUTTONS -->
                     <button type="submit"
