@@ -28,7 +28,7 @@
             </div>
 
             <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-            <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
+            <a href="${pageContext.request.contextPath}/admin/product">Products</a>
             <a href="${pageContext.request.contextPath}/admin/orders">Manage Orders</a>
 
             <!-- ADMIN DROPDOWN -->

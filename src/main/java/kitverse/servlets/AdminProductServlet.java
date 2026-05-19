@@ -21,13 +21,13 @@ import kitverse.models.Product;
  *
  * @author ACER
  */
-@WebServlet(name = "ProductServlet", urlPatterns = {"/product"})
+@WebServlet(name = "AdminProductServlet", urlPatterns = {"/admin/product"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, //2MB
         maxFileSize = 1024 * 1024 * 10, //10MB
         maxRequestSize = 1024 * 1024 * 50 //50MB
 )
-public class ProductServlet extends HttpServlet {
+public class AdminProductServlet extends HttpServlet {
 
     /**
      * Handles HTTP GET requests for product-related operations.
@@ -81,19 +81,6 @@ public class ProductServlet extends HttpServlet {
                 break;
             }
 
-            case "admin": {
-                ArrayList<Product> products = pDao.fetchAllProducts();
-
-                if (products == null) {
-                    products = new ArrayList<>();
-                }
-
-                request.setAttribute("products", products);
-
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productList.jsp");
-                rd.forward(request, response);
-                break;
-            }
             default: {
                 ArrayList<Product> products = pDao.fetchAllProducts();
                 if (products == null) {
@@ -101,7 +88,7 @@ public class ProductServlet extends HttpServlet {
                 }
                 request.setAttribute("products", products);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/product.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productList.jsp");
                 rd.forward(request, response);
                 break;
             }
@@ -173,7 +160,7 @@ public class ProductServlet extends HttpServlet {
 
                     boolean isAdded = pdao.insertProduct(product);
                     if (isAdded) {
-                        response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                        response.sendRedirect(request.getContextPath() + "/admin/product");
                         return;
                     } else {
                         request.setAttribute("error", "Failed to add product!");
@@ -212,13 +199,13 @@ public class ProductServlet extends HttpServlet {
 
                 boolean isUpdated = pdao.updateProduct(product);
                 if (isUpdated) {
-                    response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                    response.sendRedirect(request.getContextPath() + "/admin/product");
                     return;
                 } else {
                     request.setAttribute("error", "Failed to update product!");
                     request.setAttribute("product", product);
 
-                    RequestDispatcher rd= request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productAdd.jsp");
                     rd.forward(request, response);
                 }
                 break;
@@ -230,15 +217,17 @@ public class ProductServlet extends HttpServlet {
                 boolean isDeleted = pdao.deleteProduct(productId);
 
                 if (isDeleted) {
-                    response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                    response.sendRedirect(request.getContextPath() + "/admin/product");
                 } else {
-                    System.out.println("Failed to delete product!");
+                    request.setAttribute("error", "Failed to update product!");
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/productList.jsp");
+                    rd.forward(request, response);
                 }
                 break;
             }
 
             default:
-                response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                response.sendRedirect(request.getContextPath() + "/admin/product");
         }
     }
 }

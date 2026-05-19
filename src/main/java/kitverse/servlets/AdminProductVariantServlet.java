@@ -22,8 +22,8 @@ import kitverse.models.ProductVariant;
  *
  * @author ACER
  */
-@WebServlet(name = "ProductVariantServlet", urlPatterns = {"/variant"})
-public class ProductVariantServlet extends HttpServlet {
+@WebServlet(name = "AdminProductVariantServlet", urlPatterns = {"/admin/variant"})
+public class AdminProductVariantServlet extends HttpServlet {
 
     /**
      * Handles HTTP GET requests for product variant pages.
@@ -54,13 +54,9 @@ public class ProductVariantServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
-
-        // If no action → redirect safely
-        if (action == null) {
-            response.sendRedirect(request.getContextPath() + "/product?action=admin");
-            return;
-        }
+        final String action = request.getParameter("action") == null
+                ? ""
+                : request.getParameter("action");
 
         ProductVariantDAO vDao = new ProductVariantDAO();
 
@@ -162,7 +158,7 @@ public class ProductVariantServlet extends HttpServlet {
             }
 
             default:
-                response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                response.sendRedirect(request.getContextPath() + "admin/product");
         }
     }
 
@@ -221,7 +217,7 @@ public class ProductVariantServlet extends HttpServlet {
                 boolean isAdded = Vdao.insertVariant(variant);
 
                 if (isAdded) {
-                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productId=" + productId);
+                    response.sendRedirect(request.getContextPath() + "/admin/variant?action=product&productId=" + productId);
                 } else {
                     request.setAttribute("error", "Failed to add variant!");
                     request.setAttribute("productId", productId);
@@ -249,7 +245,7 @@ public class ProductVariantServlet extends HttpServlet {
                 boolean isUpdated = Vdao.updateVariant(variant);
 
                 if (isUpdated) {
-                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productId=" + productId);
+                    response.sendRedirect(request.getContextPath() + "/admin/variant?action=product&productId=" + productId);
                 } else {
                     request.setAttribute("error", "Failed to update variant!");
                     request.setAttribute("productId", productId);
@@ -266,7 +262,7 @@ public class ProductVariantServlet extends HttpServlet {
                 boolean isDeleted = Vdao.deleteVariant(variantId);
 
                 if (isDeleted) {
-                    response.sendRedirect(request.getContextPath() + "/variant?action=product&productId=" + productId);
+                    response.sendRedirect(request.getContextPath() + "/admin/variant?action=product&productId=" + productId);
                 } else {
                     System.out.println("Failed to delete variant!");
                 }
@@ -279,7 +275,7 @@ public class ProductVariantServlet extends HttpServlet {
 
                 if (stockParam == null || stockParam.isEmpty()) {
                     response.sendRedirect(request.getContextPath()
-                            + "/variant?action=product&productId=" + request.getParameter("productId"));
+                            + "admin/variant?action=product&productId=" + request.getParameter("productId"));
                     return;
                 }
 
@@ -290,7 +286,7 @@ public class ProductVariantServlet extends HttpServlet {
 
                 if (updated) {
                     response.sendRedirect(request.getContextPath()
-                            + "/variant?action=product&productId=" + productId);
+                            + "/admin/variant?action=product&productId=" + productId);
                 } else {
                     System.out.println("Failed to update stock!");
                 }
@@ -306,7 +302,7 @@ public class ProductVariantServlet extends HttpServlet {
                 break;
             }
             default:
-                response.sendRedirect(request.getContextPath() + "/product?action=admin");
+                response.sendRedirect(request.getContextPath() + "/admin/product");
         }
     }
 
