@@ -68,6 +68,20 @@
 
         <!-- FOOTER -->
         <jsp:include page="/templates/footer.html"/>
+        <script>
 
+            const form = document.querySelector("form");
+
+            form.addEventListener("submit", function (e) {
+
+                e.preventDefault(); // stop real submit
+
+                alert(" Message sent successfully!");
+
+                form.reset();
+
+            });
+
+        </script>
     </body>
 </html>

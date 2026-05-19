@@ -36,7 +36,7 @@
             </c:if>
 
             <!-- Form -->
-            <form action="${pageContext.request.contextPath}/product"
+            <form action="${pageContext.request.contextPath}/admin/product"
                   method="post"
                   enctype="multipart/form-data">
 
@@ -94,7 +94,7 @@
 
             <!-- Back Button -->
             <div style="text-align:center; margin-top:15px;">
-                <a href="${pageContext.request.contextPath}/product?action=admin">← Back to List</a>
+                <a href="${pageContext.request.contextPath}/admin/product">← Back to List</a>
             </div>
 
         </div>

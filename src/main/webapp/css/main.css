@@ -198,3 +198,67 @@ body {
     color: var(--text-light);
     text-align: center;
 }
+
+/* HAMBURGER MENU */
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 24px;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+}
+
+/* MOBILE NAV DROPDOWN */
+
+@media (max-width: 768px) {
+
+    .hamburger {
+        display: flex;
+    }
+
+    .navbar {
+        position: sticky;
+        flex-wrap: wrap;
+    }
+
+    /* NAV DROPDOWN PANEL */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+
+        width: 100%;
+        margin-top: 10px;
+
+        background: var(--color-primary-dark);
+        border-radius: 12px;
+
+        padding: 8px 0;
+
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    /* ACTIVE STATE (DROPDOWN OPEN) */
+    .nav-links.active {
+        display: flex;
+        animation: dropdown 0.2s ease-out;
+    }
+
+    /* COMPACT LINKS */
+    .nav-links a {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    .profile-dropdown {
+        padding: 8px 16px;
+    }
+
+  
+}

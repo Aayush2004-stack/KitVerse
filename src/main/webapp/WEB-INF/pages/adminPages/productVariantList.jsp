@@ -22,7 +22,7 @@
                 <h2>Product Variants</h2>
 
                 <a class="btn-add"
-                   href="${pageContext.request.contextPath}/variant?action=new&productId=${productId}">
+                   href="${pageContext.request.contextPath}/admin/variant?action=new&productId=${productId}">
                     + Add New Variant
                 </a>
             </div>
@@ -55,12 +55,12 @@
 
                                     <!-- Edit -->
                                     <a class="btn-edit"
-                                       href="${pageContext.request.contextPath}/variant?action=edit&variantId=${v.variantId}&productId=${productId}">
+                                       href="${pageContext.request.contextPath}/admin/variant?action=edit&variantId=${v.variantId}&productId=${productId}">
                                         Edit
                                     </a>
 
                                     <!-- Delete -->
-                                    <form action="${pageContext.request.contextPath}/variant" method="post">
+                                    <form action="${pageContext.request.contextPath}/admin/variant" method="post">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="variantId" value="${v.variantId}">
                                         <input type="hidden" name="productId" value="${productId}">
@@ -69,7 +69,7 @@
                                     </form>
 
                                     <!-- Stock Update -->
-                                    <form action="${pageContext.request.contextPath}/variant" method="post" class="stock-form">
+                                    <form action="${pageContext.request.contextPath}/admin/variant" method="post" class="stock-form">
                                         <input type="hidden" name="action" value="stock">
                                         <input type="hidden" name="variantId" value="${v.variantId}">
                                         <input type="hidden" name="productId" value="${productId}">
@@ -86,7 +86,7 @@
 
             </div>
 
-            <a class="btn-back" href="${pageContext.request.contextPath}/product?action=admin">
+            <a class="btn-back" href="${pageContext.request.contextPath}/admin/product">
                 ← Back to Products
             </a>
 

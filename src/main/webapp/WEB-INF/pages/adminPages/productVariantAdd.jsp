@@ -32,7 +32,7 @@
                     <div class="error-box">${error}</div>
                 </c:if>
 
-                <form action="${pageContext.request.contextPath}/variant" method="post">
+                <form action="${pageContext.request.contextPath}/admin/variant" method="post">
 
                     <input type="hidden" name="action"
                            value="${variant != null ? 'edit' : 'add'}"/>
@@ -83,7 +83,7 @@
                 </form>
 
                 <a class="back-link"
-                   href="${pageContext.request.contextPath}/variant?action=product&productId=${productId}">
+                   href="${pageContext.request.contextPath}/admin/variant?action=product&productId=${productId}">
                     ← Back to Variants
                 </a>
 

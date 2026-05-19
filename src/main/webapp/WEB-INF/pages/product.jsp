@@ -24,21 +24,57 @@
         </section>
 
         <!-- FILTER BAR -->
-        <!-- FILTER BAR -->
         <section class="filter-bar">
 
-            <input type="text" placeholder="Search club or country jerseys..." class="search-box">
+            <form method="get"
+                  action="${pageContext.request.contextPath}/product"
+                  class="filter-form">
+                <!-- SEARCH -->
+                <div class="search-group">
+                    <input type="text"
+                           name="search"
+                           placeholder="Search club or country jerseys..."
+                           value="${search}"
+                           class="search-box">
 
-            <select class="filter">
-                <option>All</option>
-                <option>Club Jerseys</option>
-                <option>Country Jerseys</option>
-            </select>
+                    <!-- CATEGORY -->
+                    <select name="category" class="filter">
+                        <option value="All"
+                                ${empty category || category == 'All' ? 'selected' : ''}>
+                            All
+                        </option>
+                        <option value="club"
+
+                                ${category == 'club' ? 'selected' : ''}>
+
+                            Club Jerseys
+
+                        </option>
+
+                        <option value="country"
+
+                                ${category == 'country' ? 'selected' : ''}>
+
+                            Country Jerseys
+
+                        </option>
+
+                    </select>
+
+                    <button type="submit" class="view-btn" style="width:auto; padding:10px 18px;">
+
+                        Search
+
+                    </button>
+                </div>
+
+            </form>
 
         </section>
 
         <!-- PRODUCT GRID -->
         <section class="product-list">
+
             <div class="grid">
 
                 <c:forEach var="product" items="${products}">
@@ -58,17 +94,14 @@
 
                             <p class="team-name">${product.teamName}</p>
 
-
                             <p class="category">${product.category}</p>
 
                             <p class="description">
                                 ${product.description}
                             </p>
 
-                            <a
-                                href="${pageContext.request.contextPath}/variant?action=view&productId=${product.productId}"
-                                class="view-btn"
-                                >
+                            <a href="${pageContext.request.contextPath}/variant?action=view&productId=${product.productId}"
+                               class="view-btn">
                                 View Sizes
                             </a>
 
@@ -79,9 +112,40 @@
                 </c:forEach>
 
             </div>
+
         </section>
 
-        <!-- FOOTER -->
+        <!-- ================= PAGINATION ================= -->
+        <section class="pagination">
+
+            <!-- PREV -->
+            <c:if test="${currentPage > 1}">
+                <a class="page-btn"
+                   href="${pageContext.request.contextPath}/product?page=${currentPage - 1}">
+                    Prev
+                </a>
+            </c:if>
+
+            <!-- PAGE NUMBERS -->
+            <c:forEach begin="1" end="${totalPages}" var="page">
+
+                <a class="page-btn ${page == currentPage ? 'active' : ''}"
+                   href="${pageContext.request.contextPath}/product?page=${page}">
+                    ${page}
+                </a>
+
+            </c:forEach>
+
+            <!-- NEXT -->
+            <c:if test="${currentPage < totalPages}">
+                <a class="page-btn"
+                   href="${pageContext.request.contextPath}/product?page=${currentPage + 1}">
+                    Next
+                </a>
+            </c:if>
+
+        </section>
+
         <jsp:include page="/templates/footer.html"/>
 
     </body>

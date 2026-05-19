@@ -17,7 +17,7 @@
         <div class="container">
 
             <!-- Add Product Button -->
-            <a href="${pageContext.request.contextPath}/product?action=new" class="add-btn">
+            <a href="${pageContext.request.contextPath}/admin/product?action=new" class="add-btn">
                 + Add Product
             </a>
 
@@ -50,12 +50,12 @@
                             <div class="action">
 
                                 <!-- Edit -->
-                                <a href="${pageContext.request.contextPath}/product?action=edit&productId=${p.productId}">
+                                <a href="${pageContext.request.contextPath}/admin/product?action=edit&productId=${p.productId}">
                                     Edit
                                 </a>
 
                                 <!-- Delete -->
-                                <form action="${pageContext.request.contextPath}/product"
+                                <form action="${pageContext.request.contextPath}/admin/product"
                                       method="post"
                                       style="display:inline;">
                                     <input type="hidden" name="action" value="delete"/>
@@ -67,7 +67,7 @@
                                 </form>
 
                                 <!-- View Variants -->
-                                <a href="${pageContext.request.contextPath}/variant?action=product&productId=${p.productId}">
+                                <a href="${pageContext.request.contextPath}/admin/variant?action=product&productId=${p.productId}">
                                     View Variants
                                 </a>
 

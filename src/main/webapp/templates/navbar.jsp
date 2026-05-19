@@ -10,9 +10,15 @@
         KitVerse
 
     </div>
+    <!-- HAMBURGER BUTTON (MOBILE ONLY) -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
     <!-- NAVIGATION -->
-    <nav class="nav-links">
+    <nav class="nav-links" id="navLinks">
 
         <!-- ADMIN NAV -->
         <c:if test="${not empty sessionScope.user and sessionScope.user.userType == 'admin'}">
@@ -22,7 +28,7 @@
             </div>
 
             <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-            <a href="${pageContext.request.contextPath}/product?action=admin">Products</a>
+            <a href="${pageContext.request.contextPath}/admin/product">Products</a>
             <a href="${pageContext.request.contextPath}/admin/orders">Manage Orders</a>
 
             <!-- ADMIN DROPDOWN -->
@@ -34,7 +40,7 @@
                     alt="Admin">
 
                 <div class="dropdown-menu">
-                    <a href="#">Profile</a>
+                    <a href="${pageContext.request.contextPath}/profile">Profile</a>
                     <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 </div>
 
@@ -60,8 +66,8 @@
                     alt="User">
 
                 <div class="dropdown-menu">
-                    <a href="#">Profile</a>
-                    <a href="#">My Orders</a>
+                    <a href="${pageContext.request.contextPath}/profile">Profile</a>
+                    <a href="${pageContext.request.contextPath}/order">My Orders</a>
                     <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 </div>
 
@@ -84,5 +90,10 @@
         </c:if>
 
     </nav>
-
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById("navLinks");
+            nav.classList.toggle("active");
+        }
+    </script>
 </header>

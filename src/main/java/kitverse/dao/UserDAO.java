@@ -64,9 +64,9 @@ public class UserDAO implements UserDAOInterface {
         try {
             //check if email is already present
             final String CHECK_IF_USER = "select email from users where LOWER(email)=LOWER(?);";
-            PreparedStatement pStm_ = conn.prepareStatement(CHECK_IF_USER);
-            pStm_.setString(1, email);
-            ResultSet rs = pStm_.executeQuery();
+            PreparedStatement ps = conn.prepareStatement(CHECK_IF_USER);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return 2;   // 2 for user or email already present
             }
@@ -109,15 +109,16 @@ public class UserDAO implements UserDAOInterface {
         try {
             final String SELECT_USER = "select * from users where email=?;";
 
-            PreparedStatement pStm_ = conn.prepareStatement(SELECT_USER);
-            pStm_.setString(1, email);
-            ResultSet rs = pStm_.executeQuery();
+            PreparedStatement ps = conn.prepareStatement(SELECT_USER);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 final User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setFullName(rs.getString("full_name"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
+                user.setPhnNo(rs.getString("phn_no"));
                 user.setUserType(rs.getString("user_type"));
                 user.setCreateAt(rs.getObject("created_at", LocalDateTime.class));
                 user.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
@@ -131,5 +132,29 @@ public class UserDAO implements UserDAOInterface {
             return null;
         }
 
+    }
+
+    public boolean updateProfile(User user) {
+
+        final String query = "UPDATE users SET full_name = ?, password = ? WHERE id = ?;";
+
+        try  {
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setString(1, user.getFullName());
+
+            ps.setString(2, user.getPassword());
+
+            ps.setInt(3, user.getId());
+
+            int rows = ps.executeUpdate();
+
+            return rows > 0;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getLocalizedMessage());
+        }
+
+        return false;
     }
 }

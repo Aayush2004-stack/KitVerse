@@ -35,7 +35,7 @@
     <div class="team-grid">
 
         <div class="card">
-            <img src="https://i.pravatar.cc/100?img=12" alt="">
+            <img src="${pageContext.request.contextPath}/resources/images/jersey4.jpg" alt="Daniel">
             <div class="card-content">
                 <h3>Daniel Gurung</h3>
                 <span>Lead Developer</span>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="card">
-            <img src="https://i.pravatar.cc/100?img=15" alt="">
+            <img src="${pageContext.request.contextPath}/resources/images/jersey4.jpg" alt="Nischal">
             <div class="card-content">
                 <h3>Nischal Pun</h3>
                 <span>UI/UX Designer</span>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="card">
-            <img src="https://i.pravatar.cc/100?img=31" alt="">
+            <img src="${pageContext.request.contextPath}/resources/images/jersey3.jpg" alt="Asmit">
             <div class="card-content">
                 <h3>Asmit Bastola</h3>
                 <span>Full Stack Developer</span>
@@ -65,7 +65,7 @@
         </div>
 
         <div class="card">
-            <img src="https://i.pravatar.cc/100?img=18" alt="">
+            <img src="${pageContext.request.contextPath}/resources/images/jersey1.jpg" alt="Aayush">
             <div class="card-content">
                 <h3>Aayush Bastola</h3>
                 <span>Product Strategist</span>
@@ -75,7 +75,7 @@
         </div>
 
         <div class="card single-card">
-            <img src="https://i.pravatar.cc/100?img=20" alt="">
+            <img src="${pageContext.request.contextPath}/resources/images/jersey2.jpg" alt="Anuma">
             <div class="card-content">
                 <h3>Anuma Rawal</h3>
                 <span>Marketing Lead</span>

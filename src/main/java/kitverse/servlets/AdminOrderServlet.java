@@ -4,13 +4,12 @@
  */
 package kitverse.servlets;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import kitverse.dao.OrderDAO;
 import kitverse.models.Order;
@@ -29,7 +28,7 @@ public class AdminOrderServlet extends HttpServlet {
         List<Order> orders = orderDAO.getAllOrders();
 
         request.setAttribute("orders", orders);
-        request.getRequestDispatcher("/WEB-INF/pages/adminOrders.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/adminPages/adminOrders.jsp").forward(request, response);
 
     }
 

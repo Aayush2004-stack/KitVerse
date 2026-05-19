@@ -43,6 +43,18 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User user = (User) SessionUtil.getAttribute(request, "user");
+
+        int customerId = user.getId();
+
+        OrderDAO orderDAO = new OrderDAO();
+
+        List<Order> orders = orderDAO.getOrdersByCustomerId(customerId);
+
+        request.setAttribute("orders", orders);
+
+        request.getRequestDispatcher("/WEB-INF/pages/myOrder.jsp")
+                .forward(request, response);
 
     }
 
@@ -57,16 +69,29 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
+        //if no action parameter Null Pointer exception so handle it
+        final String action = request.getParameter("action") == null ? "" : request.getParameter("action");
 
         switch (action) {
             case "checkout": {
 
                 User user = (User) SessionUtil.getAttribute(request, "user");
+                ProductVariantDAO pvDAO = new ProductVariantDAO();
                 int customerId = user.getId();
                 int productId = Integer.parseInt(request.getParameter("productId"));
                 int variantId = Integer.parseInt(request.getParameter("variantId"));
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+                int availableStock = pvDAO.getStock(variantId);
+                if (quantity > availableStock) {
+                    response.sendRedirect(request.getContextPath()
+                            + "/variant?action=view&productId=" + productId
+                            + "&error=stock");
+
+                    return;
+                    
+
+                }
 
                 String playerName = request.getParameter("playerName");
                 if (playerName != null) {
@@ -79,7 +104,6 @@ public class OrderServlet extends HttpServlet {
                     playerNo = Integer.parseInt(playerNoStr);
                 }
 
-                ProductVariantDAO pvDAO = new ProductVariantDAO();
                 ProductVariant variant = pvDAO.getVariantById(variantId);
 
                 ProductDAO pDAO = new ProductDAO();
@@ -120,12 +144,20 @@ public class OrderServlet extends HttpServlet {
                 for (String vid : variantIds) {
 
                     int variantId = Integer.parseInt(vid);
+                    int availableStock = pvDAO.getStock(variantId);
 
                     String qtyStr = request.getParameter("qty_" + variantId);
                     int quantity = (qtyStr != null && !qtyStr.isEmpty())
                             ? Integer.parseInt(qtyStr)
                             : 1;
 
+                    if (quantity > availableStock) {
+                        response.sendRedirect(request.getContextPath()
+                            + "/cart?&error=stock");
+
+                    return;
+
+                    }
                     ProductVariant variant = pvDAO.getVariantById(variantId);
                     Product product = pDAO.getProductDetails(variant.getProductId());
 
@@ -150,6 +182,7 @@ public class OrderServlet extends HttpServlet {
             }
             case "confirm": {
 
+                ProductVariantDAO pvDAO = new ProductVariantDAO();
                 User user = (User) SessionUtil.getAttribute(request, "user");
                 int customerId = user.getId();
 
@@ -183,6 +216,7 @@ public class OrderServlet extends HttpServlet {
                         item.setQuantity(qty);
 
                         oiDAO.insertOrderItem(item);
+                        pvDAO.deductStock(variantId, qty);
                     }
 
                 } else {
@@ -197,12 +231,16 @@ public class OrderServlet extends HttpServlet {
                     item.setQuantity(quantity);
 
                     oiDAO.insertOrderItem(item);
+                    pvDAO.deductStock(variantId, quantity);
                 }
 
                 response.sendRedirect(request.getContextPath()
-                        + "/order?action=invoice&orderId=" + orderId);
+                        + "/order");
 
                 break;
+            }
+            default: {
+
             }
 
         }
