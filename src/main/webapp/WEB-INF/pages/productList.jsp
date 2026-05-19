@@ -46,25 +46,32 @@
                         </td>
 
 
-                        <td class="action">
+                        <td>
+                            <div class="action">
 
-                            <!-- Edit -->
-                            <a href="${pageContext.request.contextPath}/product?action=edit&productId=${p.productId}">
-                                Edit
-                            </a>
+                                <!-- Edit -->
+                                <a href="${pageContext.request.contextPath}/product?action=edit&productId=${p.productId}">
+                                    Edit
+                                </a>
 
-                            <!-- Delete (POST request) -->
-                            <form action="${pageContext.request.contextPath}/product" method="post" style="display:inline;">
-                                <input type="hidden" name="action" value="delete"/>
-                                <input type="hidden" name="productId" value="${p.productId}"/>
-                                <button class="submit" type="submit"
-                                        onclick="return confirm('Are you sure you want to delete?');">Delete</button>
-                            </form>
+                                <!-- Delete -->
+                                <form action="${pageContext.request.contextPath}/product"
+                                      method="post"
+                                      style="display:inline;">
+                                    <input type="hidden" name="action" value="delete"/>
+                                    <input type="hidden" name="productId" value="${p.productId}"/>
+                                    <button type="submit"
+                                            onclick="return confirm('Are you sure you want to delete?');">
+                                        Delete
+                                    </button>
+                                </form>
 
-                            <a href="${pageContext.request.contextPath}/variant?action=product&productId=${p.productId}">
-                                View Variants
-                            </a>
+                                <!-- View Variants -->
+                                <a href="${pageContext.request.contextPath}/variant?action=product&productId=${p.productId}">
+                                    View Variants
+                                </a>
 
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>

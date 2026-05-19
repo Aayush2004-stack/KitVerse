@@ -94,53 +94,72 @@ td img {
     border: 1px solid var(--border-light);
 }
 
-/* =========================
-   ACTIONS
-========================= */
+/* ACTIONS */
 
 .action {
     display: flex;
     justify-content: center;
-    gap: 8px;
     align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
 }
 
-/* edit button */
-.action a {
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    background: #3498db;
-    color: white;
-    transition: 0.2s ease;
+.action form {
+    margin: 0;
+    display: inline-block;
 }
 
-.action a:hover {
-    background: #2c80b4;
-    transform: translateY(-1px);
-}
-
-/* delete button */
+/* Common style for all action buttons */
+.action a,
 .action button {
-    padding: 6px 10px;
-    border-radius: 6px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Flexible width based on longest text */
+    min-width: 130px;      /* Same width as "View Variants" */
+    height: 42px;
+
+    padding: 0 16px;
+    margin: 0;
+
     border: none;
-    background: #e74c3c;
-    color: white;
+    border-radius: 8px;
+
     font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+
     cursor: pointer;
-    font-weight: 500;
+    box-sizing: border-box;
     transition: 0.2s ease;
+
+    white-space: nowrap;   /* Prevent text wrapping */
+}
+
+/* Edit button */
+.action a:first-child {
+    background: #3498db;
+}
+
+.action a:first-child:hover {
+    background: #2c80b4;
+}
+
+/* Delete button */
+.action button {
+    background: #e74c3c;
 }
 
 .action button:hover {
     background: #c0392b;
-    transform: translateY(-1px);
 }
 
-/* variant link (special style) */
+/* View Variants button */
 .action a:last-child {
     background: var(--color-primary);
 }
@@ -160,15 +179,102 @@ td[colspan] {
 }
 
 /* =========================
-   RESPONSIVE (optional but useful)
+   RESPONSIVE DESIGN
 ========================= */
 
 @media (max-width: 900px) {
-    table {
-        font-size: 12px;
+
+    .container {
+        width: 98%;
+        margin: 20px auto;
     }
 
+    h2 {
+        font-size: 22px;
+    }
+
+    /* Reduce table spacing */
+    th,
+    td {
+        padding: 8px 6px;
+        font-size: 12px;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    /* Reduce image size */
+    td img {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Limit description width */
+    td:nth-child(5) {
+        max-width: 180px;
+        line-height: 1.4;
+    }
+
+    /* Stack action buttons */
     .action {
         flex-direction: column;
+        gap: 6px;
+    }
+
+    .action a,
+    .action button {
+        min-width: 130px;
+        height: 36px;
+        font-size: 12px;
     }
 }
+
+@media (max-width: 600px) {
+
+    .container {
+        width: 100%;
+        padding: 0 8px;
+        margin: 15px auto;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin: 15px 0;
+    }
+
+    /* Add Product button full width */
+    .add-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    /* Smaller table text */
+    th,
+    td {
+        padding: 6px 4px;
+        font-size: 11px;
+    }
+
+    /* Smaller images */
+    td img {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* Hide description column on very small screens */
+    th:nth-child(5),
+    td:nth-child(5) {
+        display: none;
+    }
+
+    /* Smaller buttons */
+    .action a,
+    .action button {
+        min-width: 110px;
+        height: 34px;
+        font-size: 11px;
+        padding: 0 10px;
+    }
+}
+

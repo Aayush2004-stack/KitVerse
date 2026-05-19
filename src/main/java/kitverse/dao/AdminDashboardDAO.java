@@ -124,6 +124,11 @@ public class AdminDashboardDAO {
         return 0;
     }
 
+    /**
+     * Retrieves the total number of orders placed in the system.
+     *
+     * @return total count of orders
+     */
     public int getTotalOrders() {
         String sql = "SELECT COUNT(*) FROM orders";
 
@@ -139,6 +144,11 @@ public class AdminDashboardDAO {
         return 0;
     }
 
+    /**
+     * Calculates the total revenue generated from all orders.
+     *
+     * @return total revenue amount (sum of total_amt from orders)
+     */
     public double getTotalRevenue() {
         String sql = "SELECT COALESCE(SUM(total_amt), 0) FROM orders";
 
@@ -154,6 +164,13 @@ public class AdminDashboardDAO {
         return 0;
     }
 
+    /**
+     * Retrieves the number of orders filtered by a specific status.
+     *
+     * @param status the order status to filter by (e.g., "PENDING",
+     * "COMPLETED", "CANCELLED")
+     * @return count of orders matching the given status
+     */
     public int getOrdersByStatus(String status) {
         String sql = "SELECT COUNT(*) FROM orders WHERE status = ?";
 
@@ -170,6 +187,11 @@ public class AdminDashboardDAO {
         return 0;
     }
 
+    /**
+     * Retrieves the number of orders placed on the current date.
+     *
+     * @return count of today's orders
+     */
     public int getTodayOrders() {
         String sql = "SELECT COUNT(*) FROM orders WHERE DATE(created_at) = CURDATE()";
 
@@ -185,6 +207,11 @@ public class AdminDashboardDAO {
         return 0;
     }
 
+    /**
+     * Calculates the total revenue generated from orders placed today.
+     *
+     * @return total revenue for the current day
+     */
     public double getTodayRevenue() {
         String sql = "SELECT COALESCE(SUM(total_amt), 0) "
                 + "FROM orders WHERE DATE(created_at) = CURDATE()";
@@ -201,7 +228,15 @@ public class AdminDashboardDAO {
         return 0;
     }
 
-    
+    /**
+     * Retrieves revenue for the last 7 days (including today).
+     *
+     * <p>
+     * The method calculates daily revenue from 6 days ago up to today using a
+     * loop and returns a list of values in chronological order.</p>
+     *
+     * @return list of revenue values for each of the last 7 days
+     */
     public List<Double> getWeeklyRevenue() {
         List<Double> weeklyRevenue = new ArrayList<>();
         String sql = """
