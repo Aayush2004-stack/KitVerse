@@ -27,8 +27,8 @@ public class LogoutServlet extends HttpServlet {
         SessionUtil.invalidateSession(request);
         CookieUtil.deleteCookie(response, "cart");//delete the cart cookie
          
-        // Now route to login page
-        response.sendRedirect("login");
+        // Now route to home page
+        response.sendRedirect(request.getContextPath());
     }
 
 }
