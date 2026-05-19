@@ -61,8 +61,8 @@ public class LoginServlet extends HttpServlet {
                 
             } else {
                 //if password is mismatched, send error message to login page
-                request.setAttribute("error", "user or password mismatch!");
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                request.setAttribute("error", "Invalid Email or Password!");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/login.jsp");
                 rd.forward(request, response);
             }
         }
