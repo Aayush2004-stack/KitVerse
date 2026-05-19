@@ -10,6 +10,7 @@ package kitverse.dao;
  */
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import kitverse.daoInterfaces.ProductDAOInterface;
 import kitverse.models.Product;
 import kitverse.utilities.DBConfig;
@@ -37,7 +38,7 @@ public class ProductDAO implements ProductDAOInterface {
     public ArrayList<Product> fetchAllProducts() {
 
         ArrayList<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM products";
+        final String query = "SELECT * FROM products";
 
         try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
@@ -51,7 +52,7 @@ public class ProductDAO implements ProductDAOInterface {
 
         return products;
     }
-    
+
     /**
      * Inserts a new product into the database.
      *
@@ -61,7 +62,7 @@ public class ProductDAO implements ProductDAOInterface {
     @Override
     public boolean insertProduct(Product product) {
 
-        String query = "INSERT INTO products (product_name, team_name, category, description, image_path, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO products (product_name, team_name, category, description, image_path, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -91,7 +92,7 @@ public class ProductDAO implements ProductDAOInterface {
     @Override
     public Product getProductDetails(int productId) {
 
-        String query = "SELECT * FROM products WHERE product_id=?";
+        final String query = "SELECT * FROM products WHERE product_id=?";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -118,7 +119,7 @@ public class ProductDAO implements ProductDAOInterface {
     @Override
     public boolean updateProduct(Product product) {
 
-        String query = "UPDATE products SET product_name=?, team_name=?, category=?, description=?, image_path=?, updated_at=? WHERE product_id=?";
+        final String query = "UPDATE products SET product_name=?, team_name=?, category=?, description=?, image_path=?, updated_at=? WHERE product_id=?;";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -148,7 +149,7 @@ public class ProductDAO implements ProductDAOInterface {
     @Override
     public boolean deleteProduct(int productId) {
 
-        String query = "DELETE FROM products WHERE product_id=?";
+        final String query = "DELETE FROM products WHERE product_id=?;";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -172,7 +173,7 @@ public class ProductDAO implements ProductDAOInterface {
     public ArrayList<Product> getProductsByCategory(String category) {
 
         ArrayList<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM products WHERE category=?";
+        final String query = "SELECT * FROM products WHERE category=?;";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -190,33 +191,33 @@ public class ProductDAO implements ProductDAOInterface {
         return list;
     }
 
-    /**
-     * Retrieves products filtered by team name.
-     *
-     * @param teamName the team name
-     * @return ArrayList of products belonging to the team
-     */
-    @Override
-    public ArrayList<Product> getProductsByTeam(String teamName) {
-
-        ArrayList<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM products WHERE team_name=?";
-
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-
-            ps.setString(1, teamName);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                list.add(map(rs));
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getLocalizedMessage());
-        }
-
-        return list;
-    }
+//    /**
+//     * Retrieves products filtered by team name.
+//     *
+//     * @param teamName the team name
+//     * @return ArrayList of products belonging to the team
+//     */
+//    @Override
+//    public ArrayList<Product> getProductsByTeam(String teamName) {
+//
+//        ArrayList<Product> list = new ArrayList<>();
+//        final String query = "SELECT * FROM products WHERE team_name=?";
+//
+//        try (PreparedStatement ps = conn.prepareStatement(query)) {
+//
+//            ps.setString(1, teamName);
+//            ResultSet rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                list.add(map(rs));
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getLocalizedMessage());
+//        }
+//
+//        return list;
+//    }
 
     /**
      * Searches products by keyword in product name.
@@ -228,7 +229,7 @@ public class ProductDAO implements ProductDAOInterface {
     public ArrayList<Product> searchProductByName(String keyword) {
 
         ArrayList<Product> list = new ArrayList<>();
-        String query = "SELECT * FROM products WHERE product_name LIKE ?";
+        final String query = "SELECT * FROM products WHERE product_name LIKE ?;";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -254,7 +255,7 @@ public class ProductDAO implements ProductDAOInterface {
     @Override
     public int getTotalProducts() {
 
-        String query = "SELECT COUNT(*) as count FROM products";
+        final String query = "SELECT COUNT(*) as count FROM products;";
 
         try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
@@ -269,6 +270,31 @@ public class ProductDAO implements ProductDAOInterface {
         return 0;
     }
 
+    public List<Product> getPaginatedProducts(int offset, int limit) {
+
+        List<Product> products = new ArrayList<>();
+
+        final String query = "SELECT * FROM products ORDER BY product_id DESC LIMIT ? OFFSET ?;";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, limit);
+            ps.setInt(2, offset);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                products.add(map(rs));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        return products;
+    }
+
     /**
      * Maps a ResultSet row into a Product object.
      *
@@ -277,17 +303,17 @@ public class ProductDAO implements ProductDAOInterface {
      * @throws SQLException if database access error occurs
      */
     private Product map(ResultSet rs) throws SQLException {
-        Product p = new Product();
+        Product product = new Product();
 
-        p.setProductId(rs.getInt("product_id"));
-        p.setProductName(rs.getString("product_name"));
-        p.setTeamName(rs.getString("team_name"));
-        p.setCategory(rs.getString("category"));
-        p.setDescription(rs.getString("description"));
-        p.setImagePath(rs.getString("image_path"));
-        p.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
-        p.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+        product.setProductId(rs.getInt("product_id"));
+        product.setProductName(rs.getString("product_name"));
+        product.setTeamName(rs.getString("team_name"));
+        product.setCategory(rs.getString("category"));
+        product.setDescription(rs.getString("description"));
+        product.setImagePath(rs.getString("image_path"));
+        product.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
+        product.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
 
-        return p;
+        return product;
     }
 }
