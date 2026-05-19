@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import kitverse.dao.OrderDAO;
 import kitverse.dao.OrderItemDAO;
 import kitverse.dao.ProductDAO;
@@ -96,6 +98,56 @@ public class OrderServlet extends HttpServlet {
 
                 break;
             }
+            case "bulkCheckout": {
+
+                User user = (User) SessionUtil.getAttribute(request, "user");
+              
+                String[] variantIds = request.getParameterValues("variantIds");
+
+                if (variantIds == null || variantIds.length == 0) {
+                    response.sendRedirect(request.getContextPath() + "/cart");
+                    return;
+                }
+
+                ProductVariantDAO pvDAO = new ProductVariantDAO();
+                ProductDAO pDAO = new ProductDAO();
+
+                List<OrderItem> orderItems = new ArrayList<>();
+                double totalAmt = 0;
+
+                for (String vidStr : variantIds) {
+
+                    int variantId = Integer.parseInt(vidStr);
+
+                    // quantity from dynamic input
+                    String qtyParam = request.getParameter("qty_" + variantId);
+                    int quantity = (qtyParam != null && !qtyParam.isEmpty())
+                            ? Integer.parseInt(qtyParam)
+                            : 1;
+
+                    ProductVariant variant = pvDAO.getVariantById(variantId);
+
+                    // optional product fetch (if needed in checkout page)
+                    Product product = pDAO.getProductDetails(variant.getProductId());
+
+                    OrderItem item = new OrderItem();
+                    item.setProductVariantId(variantId);
+                    item.setQuantity(quantity);
+
+                    orderItems.add(item);
+
+                    totalAmt += variant.getSellingPrice() * quantity;
+                }
+
+                // pass to checkout page
+                request.setAttribute("items", orderItems);
+                request.setAttribute("totalAmt", totalAmt);
+
+                request.getRequestDispatcher("/WEB-INF/pages/checkout.jsp")
+                        .forward(request, response);
+
+                break;
+            }
             case "confirm": {
                 User user = (User) SessionUtil.getAttribute(request, "user");
 
@@ -109,14 +161,12 @@ public class OrderServlet extends HttpServlet {
 
                 int customerId = user.getId();
 
-                
                 // 2. REQUIRED FIELDS
-                
                 int variantId = Integer.parseInt(request.getParameter("variantId"));
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
                 double totalAmt = Double.parseDouble(request.getParameter("totalAmt"));
                 String address = request.getParameter("address");
-             
+
                 // 3. OPTIONAL FIELDS            
                 String playerName = request.getParameter("playerName");
 
@@ -134,45 +184,37 @@ public class OrderServlet extends HttpServlet {
                     } catch (NumberFormatException e) {
                         playerNo = 0;
                     }
-                }
-                else{
-                    playerNo=0;
+                } else {
+                    playerNo = 0;
                 }
 
-                
                 // 4. CREATE ORDER (PARENT)
-                
                 Order order = new Order();
-                
+
                 order.setCustomerId(customerId);
                 order.setTotalAmt(totalAmt);
                 order.setStatus("PENDING");
                 order.setAddress(address);
-                
 
                 OrderDAO oDao = new OrderDAO();
                 int orderId = oDao.insertOrder(order);
 
                 // 5. CREATE ORDER ITEM (CHILD)
-
                 OrderItem item = new OrderItem();
 
                 item.setOrderId(orderId);
                 item.setProductVariantId(variantId);
                 item.setQuantity(quantity);
                 //just for testing
-                
+
                 item.setPlayerName(playerName);
                 item.setPlayerNo(playerNo);
 
-                OrderItemDAO oiDAO= new OrderItemDAO();
-           
+                OrderItemDAO oiDAO = new OrderItemDAO();
 
                 oiDAO.insertOrderItem(item);
 
-
                 // 6. REDIRECT TO INVOICE
-
                 response.sendRedirect(
                         request.getContextPath() + "/order?action=invoice&orderId=" + orderId
                 );
