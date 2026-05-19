@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import kitverse.utilities.CookieUtil;
 import kitverse.utilities.SessionUtil;
 
 /**
@@ -24,6 +25,7 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         // Invalidate the session that delete the user data from session 
         SessionUtil.invalidateSession(request);
+        CookieUtil.deleteCookie(response, "cart");//delete the cart cookie
          
         // Now route to login page
         response.sendRedirect("login");
