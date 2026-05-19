@@ -62,10 +62,10 @@ public class OrderDAO {
 
         Order order = null;
 
-        String sql = "SELECT * FROM orders WHERE order_id = ?";
+        String query = "SELECT * FROM orders WHERE order_id = ?";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, orderId);
 
             ResultSet rs = ps.executeQuery();
@@ -92,10 +92,10 @@ public class OrderDAO {
     public List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
 
-        String sql = "SELECT * FROM orders ORDER BY created_at DESC";
+        String query = "SELECT * FROM orders ORDER BY created_at DESC";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -128,10 +128,10 @@ public class OrderDAO {
 
     // UPDATE ORDER STATUS
     public boolean updateOrderStatus(int orderId, String status) {
-        String sql = "UPDATE orders SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE order_id = ?";
+        String query = "UPDATE orders SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE order_id = ?";
 
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, status);
             ps.setInt(2, orderId);
 
@@ -142,6 +142,35 @@ public class OrderDAO {
         }
 
         return false;
+    }
+
+    public List<Order> getOrdersByCustomerId(int customerId) {
+        List<Order> orders = new ArrayList<>();
+
+        String query = "SELECT * FROM orders WHERE customer_id = ? ORDER BY order_id DESC";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, customerId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("order_id"));
+                order.setCustomerId(rs.getInt("customer_id"));
+                order.setTotalAmt(rs.getDouble("total_amt"));
+                order.setStatus(rs.getString("status"));
+                order.setAddress(rs.getString("address"));
+                orders.add(order);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+
+        }
+
+        return orders;
     }
 
 }
