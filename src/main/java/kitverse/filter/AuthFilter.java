@@ -44,7 +44,7 @@ public class AuthFilter implements Filter {
         String context = req.getContextPath();
 
         //Allow static files to pass in pages; else file may not load
-        if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".css")) {
+        if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".jpeg") || uri.endsWith(".css")) {
             chain.doFilter(request, response);
             return;
         }
@@ -69,7 +69,7 @@ public class AuthFilter implements Filter {
         }
         String role = user.getUserType(); // admin / normal
         boolean adminOnly
-                = uri.contains("/admin");
+                = uri.contains("/admin") || uri.contains("/upload");
 
         
         //restrict normal users from admin sites
