@@ -20,6 +20,11 @@
 
             <div class="header">
                 <h2>Product Variants</h2>
+                <c:if test="${not empty error}">
+                    <div class="error-message">
+                        ${error}
+                    </div>
+                </c:if>
 
                 <a class="btn-add"
                    href="${pageContext.request.contextPath}/admin/variant?action=new&productId=${productId}">
@@ -64,7 +69,7 @@
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="variantId" value="${v.variantId}">
                                         <input type="hidden" name="productId" value="${productId}">
-                                        <button class="submit" type="submit"
+                                        <button class="btn-delete" type="submit"
                                                 onclick="return confirm('Are you sure you want to delete?');">Delete</button>
                                     </form>
 
