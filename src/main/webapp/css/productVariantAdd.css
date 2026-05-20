@@ -11,11 +11,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
 /* Center wrapper */
 .page-wrapper {
     width: 100%;

@@ -16,135 +16,137 @@
     <body>
 
         <jsp:include page="/templates/navbar.jsp"/>
+        <main>
 
-        <!-- PAGE TITLE -->
-        <section class="page-title">
-            <h1>Football Jerseys</h1>
-            <p>Explore premium football kits from top clubs around the world.</p>
-        </section>
+            <!-- PAGE TITLE -->
+            <section class="page-title">
+                <h1>Football Jerseys</h1>
+                <p>Explore premium football kits from top clubs around the world.</p>
+            </section>
 
-        <!-- FILTER BAR -->
-        <section class="filter-bar">
+            <!-- FILTER BAR -->
+            <section class="filter-bar">
 
-            <form method="get"
-                  action="${pageContext.request.contextPath}/product"
-                  class="filter-form">
-                <!-- SEARCH -->
-                <div class="search-group">
-                    <input type="text"
-                           name="search"
-                           placeholder="Search club or country jerseys..."
-                           value="${search}"
-                           class="search-box">
+                <form method="get"
+                      action="${pageContext.request.contextPath}/product"
+                      class="filter-form">
+                    <!-- SEARCH -->
+                    <div class="search-group">
+                        <input type="text"
+                               name="search"
+                               placeholder="Search club or country jerseys..."
+                               value="${search}"
+                               class="search-box">
 
-                    <!-- CATEGORY -->
-                    <select name="category" class="filter">
-                        <option value="All"
-                                ${empty category || category == 'All' ? 'selected' : ''}>
-                            All
-                        </option>
-                        <option value="club"
+                        <!-- CATEGORY -->
+                        <select name="category" class="filter">
+                            <option value="All"
+                                    ${empty category || category == 'All' ? 'selected' : ''}>
+                                All
+                            </option>
+                            <option value="club"
 
-                                ${category == 'club' ? 'selected' : ''}>
+                                    ${category == 'club' ? 'selected' : ''}>
 
-                            Club Jerseys
+                                Club Jerseys
 
-                        </option>
+                            </option>
 
-                        <option value="country"
+                            <option value="country"
 
-                                ${category == 'country' ? 'selected' : ''}>
+                                    ${category == 'country' ? 'selected' : ''}>
 
-                            Country Jerseys
+                                Country Jerseys
 
-                        </option>
+                            </option>
 
-                    </select>
+                        </select>
 
-                    <button type="submit" class="view-btn" style="width:auto; padding:10px 18px;">
+                        <button type="submit" class="view-btn" style="width:auto; padding:10px 18px;">
 
-                        Search
+                            Search
 
-                    </button>
-                </div>
+                        </button>
+                    </div>
 
-            </form>
+                </form>
 
-        </section>
+            </section>
 
-        <!-- PRODUCT GRID -->
-        <section class="product-list">
+            <!-- PRODUCT GRID -->
+            <section class="product-list">
 
-            <div class="grid">
+                <div class="grid">
 
-                <c:forEach var="product" items="${products}">
+                    <c:forEach var="product" items="${products}">
 
-                    <div class="card">
+                        <div class="card">
 
-                        <img
-                            src="${pageContext.request.contextPath}/${product.imagePath}"
-                            class="product-img"
-                            alt="${product.productName}"
-                            onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';"
-                            >
+                            <img
+                                src="${pageContext.request.contextPath}/${product.imagePath}"
+                                class="product-img"
+                                alt="${product.productName}"
+                                onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';"
+                                >
 
-                        <div class="card-content">
+                            <div class="card-content">
 
-                            <h3>${product.productName}</h3>
+                                <h3>${product.productName}</h3>
 
-                            <p class="team-name">${product.teamName}</p>
+                                <p class="team-name">${product.teamName}</p>
 
-                            <p class="category">${product.category}</p>
+                                <p class="category">${product.category}</p>
 
-                            <p class="description">
-                                ${product.description}
-                            </p>
+                                <p class="description">
+                                    ${product.description}
+                                </p>
 
-                            <a href="${pageContext.request.contextPath}/variant?action=view&productId=${product.productId}"
-                               class="view-btn">
-                                View Sizes
-                            </a>
+                                <a href="${pageContext.request.contextPath}/variant?action=view&productId=${product.productId}"
+                                   class="view-btn">
+                                    View Sizes
+                                </a>
+
+                            </div>
 
                         </div>
 
-                    </div>
+                    </c:forEach>
+
+                </div>
+
+            </section>
+
+            <!-- ================= PAGINATION ================= -->
+            <section class="pagination">
+
+                <!-- PREV -->
+                <c:if test="${currentPage > 1}">
+                    <a class="page-btn"
+                       href="${pageContext.request.contextPath}/product?page=${currentPage - 1}">
+                        Prev
+                    </a>
+                </c:if>
+
+                <!-- PAGE NUMBERS -->
+                <c:forEach begin="1" end="${totalPages}" var="page">
+
+                    <a class="page-btn ${page == currentPage ? 'active' : ''}"
+                       href="${pageContext.request.contextPath}/product?page=${page}">
+                        ${page}
+                    </a>
 
                 </c:forEach>
 
-            </div>
+                <!-- NEXT -->
+                <c:if test="${currentPage < totalPages}">
+                    <a class="page-btn"
+                       href="${pageContext.request.contextPath}/product?page=${currentPage + 1}">
+                        Next
+                    </a>
+                </c:if>
 
-        </section>
-
-        <!-- ================= PAGINATION ================= -->
-        <section class="pagination">
-
-            <!-- PREV -->
-            <c:if test="${currentPage > 1}">
-                <a class="page-btn"
-                   href="${pageContext.request.contextPath}/product?page=${currentPage - 1}">
-                    Prev
-                </a>
-            </c:if>
-
-            <!-- PAGE NUMBERS -->
-            <c:forEach begin="1" end="${totalPages}" var="page">
-
-                <a class="page-btn ${page == currentPage ? 'active' : ''}"
-                   href="${pageContext.request.contextPath}/product?page=${page}">
-                    ${page}
-                </a>
-
-            </c:forEach>
-
-            <!-- NEXT -->
-            <c:if test="${currentPage < totalPages}">
-                <a class="page-btn"
-                   href="${pageContext.request.contextPath}/product?page=${currentPage + 1}">
-                    Next
-                </a>
-            </c:if>
-
-        </section>
+            </section>
+        </main>
 
         <jsp:include page="/templates/footer.html"/>
 

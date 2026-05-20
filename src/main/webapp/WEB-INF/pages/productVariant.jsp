@@ -16,140 +16,142 @@
     <body>
 
         <jsp:include page="/templates/navbar.jsp"/>
+        <main>
 
-        <div class="product-page">
+            <div class="product-page">
 
-            <!-- LEFT -->
-            <div class="product-left">
+                <!-- LEFT -->
+                <div class="product-left">
 
-                <img class="main-image"
-                     src="${pageContext.request.contextPath}/${product.imagePath}"
-                     alt="${product.productName}"
-                     onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';"
-                     >
-
-
-
-            </div>
-
-            <!-- CENTER -->
-            <div class="product-center">
-
-                <h1>${product.productName}</h1>
-
-                <p class="team-name">${product.teamName}</p>
+                    <img class="main-image"
+                         src="${pageContext.request.contextPath}/${product.imagePath}"
+                         alt="${product.productName}"
+                         onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';"
+                         >
 
 
 
-                <p class="description">${product.description}</p>
+                </div>
 
-                <h2 class="price">
-                    Rs. <span id="priceText">${selectedVariant.sellingPrice}</span>
-                </h2>
+                <!-- CENTER -->
+                <div class="product-center">
 
-                <form method="post"
-                      action="${pageContext.request.contextPath}/order?action=checkout">
+                    <h1>${product.productName}</h1>
 
-                    <input type="hidden" name="productId" value="${product.productId}">
+                    <p class="team-name">${product.teamName}</p>
 
-                    <!-- SIZE -->
-                    <div class="section">
-                        <h3>Select Size</h3>
 
-                        <div class="options">
 
-                            <c:forEach var="v" items="${variants}">
+                    <p class="description">${product.description}</p>
 
-                                <label class="option-card">
+                    <h2 class="price">
+                        Rs. <span id="priceText">${selectedVariant.sellingPrice}</span>
+                    </h2>
 
-                                    <input type="radio"
-                                           name="variantId"
-                                           value="${v.variantId}"
-                                           data-price="${v.sellingPrice}"
-                                           onchange="updatePrice(this)"
-                                           required
-                                           <c:if test="${selectedVariant.variantId == v.variantId}">checked</c:if>
-                                           <c:if test="${v.stock == 0}">disabled</c:if>>
+                    <form method="post"
+                          action="${pageContext.request.contextPath}/order?action=checkout">
 
-                                           <div class="size-name">${v.size}</div>
+                        <input type="hidden" name="productId" value="${product.productId}">
 
-                                    <span class="stock">
-                                        <c:choose>
-                                            <c:when test="${v.stock > 0}">In Stock</c:when>
-                                            <c:otherwise>Out of Stock</c:otherwise>
-                                        </c:choose>
-                                    </span>
+                        <!-- SIZE -->
+                        <div class="section">
+                            <h3>Select Size</h3>
 
-                                </label>
+                            <div class="options">
 
-                            </c:forEach>
+                                <c:forEach var="v" items="${variants}">
 
+                                    <label class="option-card">
+
+                                        <input type="radio"
+                                               name="variantId"
+                                               value="${v.variantId}"
+                                               data-price="${v.sellingPrice}"
+                                               onchange="updatePrice(this)"
+                                               required
+                                               <c:if test="${selectedVariant.variantId == v.variantId}">checked</c:if>
+                                               <c:if test="${v.stock == 0}">disabled</c:if>>
+
+                                               <div class="size-name">${v.size}</div>
+
+                                        <span class="stock">
+                                            <c:choose>
+                                                <c:when test="${v.stock > 0}">In Stock</c:when>
+                                                <c:otherwise>Out of Stock</c:otherwise>
+                                            </c:choose>
+                                        </span>
+
+                                    </label>
+
+                                </c:forEach>
+
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- CUSTOM -->
-                    <div class="section">
-                        <h3>Customize Jersey</h3>
+                        <!-- CUSTOM -->
+                        <div class="section">
+                            <h3>Customize Jersey</h3>
 
-                        <input type="text" name="playerName" placeholder="Player Name">
-                        <input type="number" name="playerNo" placeholder="Player Number">
-                    </div>
-
-                    <!-- QTY -->
-                    <div class="section">
-                        <h3>Quantity</h3>
-
-                        <input type="number" name="quantity" min="1" value="1" required>
-                    </div>
-                    
-                    <!-- ERROR MESSAGE -->
-                    <c:if test="${not empty error}">
-                        <div class="error-box">
-                            ${error}
+                            <input type="text" name="playerName" placeholder="Player Name">
+                            <input type="number" name="playerNo" placeholder="Player Number">
                         </div>
-                    </c:if>
 
-                    <!-- BUTTONS -->
-                    <button type="submit"
-                            formaction="${pageContext.request.contextPath}/cart?action=add"
-                            class="cart-btn">
-                        Add to Cart
-                    </button>
+                        <!-- QTY -->
+                        <div class="section">
+                            <h3>Quantity</h3>
 
-                    <button type="submit" class="buy-btn">
-                        Buy Now
-                    </button>
+                            <input type="number" name="quantity" min="1" value="1" required>
+                        </div>
 
-                </form>
+                        <!-- ERROR MESSAGE -->
+                        <c:if test="${not empty error}">
+                            <div class="error-box">
+                                ${error}
+                            </div>
+                        </c:if>
+
+                        <!-- BUTTONS -->
+                        <button type="submit"
+                                formaction="${pageContext.request.contextPath}/cart?action=add"
+                                class="cart-btn">
+                            Add to Cart
+                        </button>
+
+                        <button type="submit" class="buy-btn">
+                            Buy Now
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="product-right">
+
+                    <div class="info-card">
+                        <h3>Why Buy From Us?</h3>
+                        <ul>
+                            <li>✔ Premium quality jerseys</li>
+                            <li>✔ Authentic club designs</li>
+                            <li>✔ Fast delivery in Nepal</li>
+                            <li>✔ Easy return policy</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Care Instructions</h3>
+                        <p>Wash inside out with cold water. Avoid ironing on print.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Delivery Info</h3>
+                        <p>Standard delivery: 2–4 days<br>Cash on delivery available</p>
+                    </div>
+
+                </div>
 
             </div>
-
-            <!-- RIGHT -->
-            <div class="product-right">
-
-                <div class="info-card">
-                    <h3>Why Buy From Us?</h3>
-                    <ul>
-                        <li>✔ Premium quality jerseys</li>
-                        <li>✔ Authentic club designs</li>
-                        <li>✔ Fast delivery in Nepal</li>
-                        <li>✔ Easy return policy</li>
-                    </ul>
-                </div>
-
-                <div class="info-card">
-                    <h3>Care Instructions</h3>
-                    <p>Wash inside out with cold water. Avoid ironing on print.</p>
-                </div>
-
-                <div class="info-card">
-                    <h3>Delivery Info</h3>
-                    <p>Standard delivery: 2–4 days<br>Cash on delivery available</p>
-                </div>
-
-            </div>
-
-        </div>
+        </main>
 
         <!-- FOOTER -->
         <jsp:include page="/templates/footer.html"/>

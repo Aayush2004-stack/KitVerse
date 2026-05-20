@@ -9,11 +9,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 @import url('main.css');
 
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+
 
 .aContainer {
     max-width: 1200px;
