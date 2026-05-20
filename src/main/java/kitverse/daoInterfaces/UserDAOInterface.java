@@ -17,4 +17,6 @@ public interface UserDAOInterface {
     //get password for the user
     User getUser(String email);
     
+    boolean updateProfile(User user);
+    
 }
