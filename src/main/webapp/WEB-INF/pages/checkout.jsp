@@ -84,6 +84,29 @@
                                     <span>Quantity</span>
                                     <span>${item.quantity}</span>
                                 </div>
+                                <c:if test="${not empty item.playerName}">
+
+                                    <div class="row">
+
+                                        <span>Player Name</span>
+
+                                        <span>${item.playerName}</span>
+
+                                    </div>
+
+                                </c:if>
+
+                                <c:if test="${not empty item.playerNo}">
+
+                                    <div class="row">
+
+                                        <span>Player No</span>
+
+                                        <span>${item.playerNo}</span>
+
+                                    </div>
+
+                                </c:if>
 
                                 <div class="row">
                                     <span>Price</span>
@@ -118,6 +141,8 @@
                         <c:if test="${not empty variant}">
                             <input type="hidden" name="variantId" value="${variant.variantId}">
                             <input type="hidden" name="quantity" value="${quantity}">
+                            <input type="hidden" name="playerName" value="${playerName}">
+                            <input type="hidden" name="playerNo" value="${playerNo}">
                         </c:if>
 
                         <!-- CART -->
@@ -126,9 +151,18 @@
                                 <input type="hidden"
                                        name="variantIds"
                                        value="${item.productVariantId}">
+
                                 <input type="hidden"
                                        name="qty_${item.productVariantId}"
                                        value="${item.quantity}">
+
+                                <input type="hidden"
+                                       name="playerName_${item.productVariantId}"
+                                       value="${item.playerName}">
+
+                                <input type="hidden"
+                                       name="playerNo_${item.productVariantId}"
+                                       value="${item.playerNo}">
                             </c:forEach>
                         </c:if>
 
@@ -155,8 +189,8 @@
                 </div>
 
             </div>
-            </<main>
-                <jsp:include page="/templates/footer.html"/>
+        </main>
+        <jsp:include page="/templates/footer.html"/>
 
-                </body>
-                </html>
+    </body>
+</html>

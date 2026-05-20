@@ -75,6 +75,23 @@
                                            value="1"
                                            min="1">
                                 </div>
+                                <!-- CUSTOMIZATION -->
+
+                                <div class="custom-box">
+
+                                    <input type="text"
+
+                                           name="playerName_${v.variantId}"
+
+                                           placeholder="Player Name">
+
+                                    <input type="number"
+
+                                           name="playerNo_${v.variantId}"
+
+                                           placeholder="Player No">
+
+                                </div>
 
                             </div>
                             <!-- ERROR MESSAGE -->

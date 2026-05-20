@@ -89,7 +89,6 @@ public class OrderServlet extends HttpServlet {
                             + "&error=stock");
 
                     return;
-                    
 
                 }
 
@@ -153,10 +152,21 @@ public class OrderServlet extends HttpServlet {
 
                     if (quantity > availableStock) {
                         response.sendRedirect(request.getContextPath()
-                            + "/cart?&error=stock");
+                                + "/cart?&error=stock");
 
-                    return;
+                        return;
 
+                    }
+                    String playerName = request.getParameter("playerName_" + variantId);
+                    String playerNoStr = request.getParameter("playerNo_" + variantId);
+
+                    if (playerName != null) {
+                        playerName = playerName.trim();
+                    }
+
+                    Integer playerNo = null;
+                    if (playerNoStr != null && !playerNoStr.trim().isEmpty()) {
+                        playerNo = Integer.parseInt(playerNoStr);
                     }
                     ProductVariant variant = pvDAO.getVariantById(variantId);
                     Product product = pDAO.getProductDetails(variant.getProductId());
@@ -166,6 +176,8 @@ public class OrderServlet extends HttpServlet {
                     item.put("variant", variant);
                     item.put("quantity", quantity);
                     item.put("productVariantId", variantId);
+                    item.put("playerName", playerName);
+                    item.put("playerNo", playerNo);
 
                     items.add(item);
 
@@ -210,10 +222,30 @@ public class OrderServlet extends HttpServlet {
                         int variantId = Integer.parseInt(vid);
                         int qty = Integer.parseInt(request.getParameter("qty_" + variantId));
 
+                        String playerName = request.getParameter("playerName_" + variantId);
+
+                        String playerNoStr = request.getParameter("playerNo_" + variantId);
+                        Integer playerNo = null;
+
+                        if (playerNoStr != null && !playerNoStr.trim().isEmpty()) {
+
+                            playerNo = Integer.parseInt(playerNoStr.trim());
+
+                        }
+
+                        if (playerName != null) {
+
+                            playerName = playerName.trim();
+
+                        }
+
                         OrderItem item = new OrderItem();
                         item.setOrderId(orderId);
                         item.setProductVariantId(variantId);
                         item.setQuantity(qty);
+                        item.setPlayerName(playerName);
+
+                        item.setPlayerNo(playerNo);
 
                         oiDAO.insertOrderItem(item);
                         pvDAO.deductStock(variantId, qty);
@@ -225,10 +257,29 @@ public class OrderServlet extends HttpServlet {
                     int variantId = Integer.parseInt(request.getParameter("variantId"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
 
+                    String playerName = request.getParameter("playerName");
+                    String playerNoStr = request.getParameter("playerNo");
+                    if (playerName != null) {
+
+                        playerName = playerName.trim();
+
+                    }
+
+                    Integer playerNo = null;
+
+                    if (playerNoStr != null && !playerNoStr.trim().isEmpty()) {
+
+                        playerNo = Integer.parseInt(playerNoStr.trim());
+
+                    }
+
                     OrderItem item = new OrderItem();
                     item.setOrderId(orderId);
                     item.setProductVariantId(variantId);
                     item.setQuantity(quantity);
+                    item.setPlayerName(playerName);
+
+                    item.setPlayerNo(playerNo);
 
                     oiDAO.insertOrderItem(item);
                     pvDAO.deductStock(variantId, quantity);
