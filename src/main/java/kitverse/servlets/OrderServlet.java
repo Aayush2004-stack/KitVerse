@@ -6,11 +6,13 @@ package kitverse.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import kitverse.models.OrderItem;
 import kitverse.models.Product;
 import kitverse.models.ProductVariant;
 import kitverse.models.User;
+import kitverse.utilities.CookieUtil;
 import kitverse.utilities.SessionUtil;
 
 /**
@@ -249,6 +252,39 @@ public class OrderServlet extends HttpServlet {
 
                         oiDAO.insertOrderItem(item);
                         pvDAO.deductStock(variantId, qty);
+                    }
+                    Cookie cookie = CookieUtil.getCookie(request, "cart");
+
+                    if (cookie != null && cookie.getValue() != null && !cookie.getValue().isEmpty()) {
+
+                        List<String> ids = new ArrayList<>(
+                                Arrays.asList(cookie.getValue().split("\\|"))
+                        );
+
+                        for (String vid : variantIds) {
+
+                            ids.remove(vid);
+
+                        }
+
+                        // clean empty values
+                        ids.removeIf(id -> id == null || id.trim().isEmpty());
+
+                        if (ids.isEmpty()) {
+
+                            CookieUtil.deleteCookie(response, "cart");
+
+                        } else {
+
+                            CookieUtil.addCookie(
+                                    response,
+                                    "cart",
+                                    String.join("|", ids),
+                                    7 * 24 * 60 * 60
+                            );
+
+                        }
+
                     }
 
                 } else {
