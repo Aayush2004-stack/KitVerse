@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import kitverse.dao.ProductVariantDAO;
 import kitverse.models.ProductVariant;
@@ -160,7 +159,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 ? ""
                 : request.getParameter("action");
 
-        ProductVariantDAO Vdao = new ProductVariantDAO();
+        ProductVariantDAO vDAO = new ProductVariantDAO();
 
         switch (action) {
 
@@ -209,10 +208,9 @@ public class AdminProductVariantServlet extends HttpServlet {
                 variant.setSize(size);
                 variant.setSellingPrice(price);
                 variant.setStock(stock);
-                variant.setCreateAt(LocalDateTime.now());
-                variant.setUpdatedAt(LocalDateTime.now());
 
-                boolean isAdded = Vdao.insertVariant(variant);
+
+                boolean isAdded = vDAO.insertVariant(variant);
 
                 if (isAdded) {
                     response.sendRedirect(request.getContextPath()
@@ -257,7 +255,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                     request.setAttribute("error", error);
                     request.setAttribute("productId", productId);
 
-                    ProductVariant variant = Vdao.getVariantById(variantId);
+                    ProductVariant variant = vDAO.getVariantById(variantId);
                     request.setAttribute("variant", variant);
 
                     request.getRequestDispatcher("/WEB-INF/pages/adminPages/productVariantAdd.jsp")
@@ -270,9 +268,9 @@ public class AdminProductVariantServlet extends HttpServlet {
                 variant.setSize(size);
                 variant.setSellingPrice(price);
                 variant.setStock(stock);
-                variant.setUpdatedAt(LocalDateTime.now());
 
-                boolean isUpdated = Vdao.updateVariant(variant);
+
+                boolean isUpdated = vDAO.updateVariant(variant);
 
                 if (isUpdated) {
                     response.sendRedirect(request.getContextPath()
@@ -280,7 +278,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 } else {
                     request.setAttribute("error", "Failed to update variant!");
                     request.setAttribute("productId", productId);
-                    request.setAttribute("variant", Vdao.getVariantById(variantId));
+                    request.setAttribute("variant", vDAO.getVariantById(variantId));
 
                     request.getRequestDispatcher("/WEB-INF/pages/adminPages/productVariantAdd.jsp")
                             .forward(request, response);
@@ -293,7 +291,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 int variantId = Integer.parseInt(request.getParameter("variantId"));
                 int productId = Integer.parseInt(request.getParameter("productId"));
 
-                boolean isDeleted = Vdao.deleteVariant(variantId);
+                boolean isDeleted = vDAO.deleteVariant(variantId);
 
                 if (isDeleted) {
                     response.sendRedirect(request.getContextPath() + "/admin/variant?action=product&productId=" + productId);
@@ -303,7 +301,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                     request.setAttribute("error", "Failed to delete variant!");
 
                     // Reload variants
-                    ArrayList<ProductVariant> variants = Vdao.getVariantsByProductId(productId);
+                    ArrayList<ProductVariant> variants = vDAO.getVariantsByProductId(productId);
 
                     request.setAttribute("variants", variants);
                     request.setAttribute("productId", productId);
@@ -327,7 +325,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 if (addStock == null || addStock <= 0) {
                     request.setAttribute("error", "Stock must be a positive number.");
 
-                    ArrayList<ProductVariant> variants = Vdao.getVariantsByProductId(productId);
+                    ArrayList<ProductVariant> variants = vDAO.getVariantsByProductId(productId);
                     request.setAttribute("variants", variants);
                     request.setAttribute("productId", productId);
 
@@ -336,12 +334,12 @@ public class AdminProductVariantServlet extends HttpServlet {
                     return;
                 }
 
-                boolean updated = Vdao.increaseStock(variantId, addStock);
+                boolean updated = vDAO.increaseStock(variantId, addStock);
 
                 if (!updated) {
                     request.setAttribute("error", "Failed to update stock.");
 
-                    ArrayList<ProductVariant> variants = Vdao.getVariantsByProductId(productId);
+                    ArrayList<ProductVariant> variants = vDAO.getVariantsByProductId(productId);
                     request.setAttribute("variants", variants);
                     request.setAttribute("productId", productId);
 
@@ -352,7 +350,7 @@ public class AdminProductVariantServlet extends HttpServlet {
 
                 response.sendRedirect(request.getContextPath()
                         + "/admin/variant?action=product&productId=" + productId);
-
+          
                 break;
             }
 
@@ -361,7 +359,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                 int stock = Integer.parseInt(request.getParameter("stock"));
                 int productId = Integer.parseInt(request.getParameter("productId"));
 
-                boolean updated = Vdao.updateStock(variantId, stock);
+                boolean updated = vDAO.updateStock(variantId, stock);
                 break;
             }
             default:

@@ -62,7 +62,7 @@ public class ProductDAO implements ProductDAOInterface {
     @Override
     public boolean insertProduct(Product product) {
 
-        final String query = "INSERT INTO products (product_name, team_name, category, description, image_path, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        final String query = "INSERT INTO products (product_name, team_name, category, description, image_path) VALUES (?, ?, ?, ?, ?);";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -71,8 +71,7 @@ public class ProductDAO implements ProductDAOInterface {
             ps.setString(3, product.getCategory());
             ps.setString(4, product.getDescription());
             ps.setString(5, product.getImagePath());
-            ps.setTimestamp(6, Timestamp.valueOf(product.getCreateAt()));
-            ps.setTimestamp(7, Timestamp.valueOf(product.getUpdatedAt()));
+
 
             return ps.executeUpdate() > 0;
 
@@ -119,7 +118,7 @@ public class ProductDAO implements ProductDAOInterface {
     @Override
     public boolean updateProduct(Product product) {
 
-        final String query = "UPDATE products SET product_name=?, team_name=?, category=?, description=?, image_path=?, updated_at=? WHERE product_id=?;";
+        final String query = "UPDATE products SET product_name=?, team_name=?, category=?, description=?, image_path=? WHERE product_id=?;";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -128,8 +127,7 @@ public class ProductDAO implements ProductDAOInterface {
             ps.setString(3, product.getCategory());
             ps.setString(4, product.getDescription());
             ps.setString(5, product.getImagePath());
-            ps.setObject(6, product.getUpdatedAt());
-            ps.setInt(7, product.getProductId());
+            ps.setInt(6, product.getProductId());
 
             return ps.executeUpdate() > 0;
 

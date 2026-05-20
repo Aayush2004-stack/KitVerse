@@ -9,7 +9,6 @@ package kitverse.dao;
  * @author ACER
  */
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import kitverse.daoInterfaces.ProductVariantDAOInterface;
 import kitverse.models.ProductVariant;
@@ -41,7 +40,7 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
     @Override
     public boolean insertVariant(ProductVariant variant) {
 
-        String query = "INSERT INTO product_variants (product_id, size, selling_price, stock, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO product_variants (product_id, size, selling_price, stock) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
@@ -49,8 +48,7 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
             ps.setString(2, variant.getSize());
             ps.setDouble(3, variant.getSellingPrice());
             ps.setInt(4, variant.getStock());
-            ps.setTimestamp(5, Timestamp.valueOf(variant.getCreateAt()));
-            ps.setTimestamp(6, Timestamp.valueOf(variant.getUpdatedAt()));
+
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -129,15 +127,14 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         }
 
         String query
-                = "UPDATE product_variants SET size=?, selling_price=?, stock=?, updated_at=? WHERE variant_id=?";
+                = "UPDATE product_variants SET size=?, selling_price=?, stock=? WHERE variant_id=?";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setString(1, variant.getSize());
             ps.setDouble(2, variant.getSellingPrice());
             ps.setInt(3, variant.getStock());
-            ps.setTimestamp(4, Timestamp.valueOf(variant.getUpdatedAt()));
-            ps.setInt(5, variant.getVariantId());
+            ps.setInt(4, variant.getVariantId());
 
             return ps.executeUpdate() > 0;
 
@@ -181,13 +178,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
     @Override
     public boolean updateStock(int variantId, int stock) {
 
-        String query = "UPDATE product_variants SET stock=?, updated_at=? WHERE variant_id=?";
+        String query = "UPDATE product_variants SET stock=? WHERE variant_id=?";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, stock);
-            ps.setObject(2, LocalDateTime.now());
-            ps.setInt(3, variantId);
+            ps.setInt(2, variantId);
 
             return ps.executeUpdate() > 0;
 
@@ -264,13 +260,12 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
     @Override
     public boolean increaseStock(int variantId, int addStock) {
 
-        String query = "UPDATE product_variants SET stock = stock + ?, updated_at = ? WHERE variant_id = ?";
+        String query = "UPDATE product_variants SET stock = stock + ? WHERE variant_id = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, addStock);
-            ps.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setInt(3, variantId);
+            ps.setInt(2, variantId);
 
             return ps.executeUpdate() > 0;
 

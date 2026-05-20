@@ -128,7 +128,7 @@ public class OrderDAO {
 
     // UPDATE ORDER STATUS
     public boolean updateOrderStatus(int orderId, String status) {
-        final String query = "UPDATE orders SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE order_id = ?";
+        final String query = "UPDATE orders SET status = ? WHERE order_id = ?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(query);
