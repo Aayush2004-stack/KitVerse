@@ -77,6 +77,16 @@ main {
     width: 40px;
 }
 
+/* NAV LEFT */
+
+.nav-left {
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+}
+
 /* links */
 .nav-links {
     display: flex;
@@ -225,7 +235,7 @@ main {
 
 /* MOBILE NAV DROPDOWN */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
     .hamburger {
         display: flex;
@@ -268,5 +278,5 @@ main {
         padding: 8px 16px;
     }
 
-  
+
 }

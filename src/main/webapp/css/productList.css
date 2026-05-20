@@ -39,6 +39,7 @@ h2 {
 .container {
     width: 92%;
     margin: 25px auto;
+    overflow-x: auto;
 }
 
 /*  ADD BUTTON */
@@ -189,99 +190,87 @@ td[colspan] {
 
 /* RESPONSIVE DESIGN */
 
+
 @media (max-width: 900px) {
 
+    /* allow table to scroll instead of breaking layout */
+
     .container {
-        width: 98%;
-        margin: 20px auto;
+
+        overflow-x: auto;
+
     }
 
-    h2 {
-        font-size: 22px;
+    table {
+
+        min-width: 700px;
+
+        font-size: 12px;
+
     }
 
-    /* Reduce table spacing */
-    th,
-    td {
+    th, td {
+
         padding: 8px 6px;
+
         font-size: 12px;
-        white-space: normal;
-        word-break: break-word;
+
+        white-space: nowrap;
+
     }
 
-    /* Reduce image size */
+    /* image shrink */
+
     td img {
-        width: 60px;
-        height: 60px;
+
+        width: 55px;
+
+        height: 55px;
+
     }
 
-    /* Limit description width */
-    td:nth-child(5) {
-        max-width: 180px;
-        line-height: 1.4;
+    /* badge / text cleanup */
+
+    .badge {
+
+        padding: 3px 8px;
+
+        font-size: 11px;
+
     }
 
-    /* Stack action buttons */
+    /* ACTION FIX (IMPORTANT) */
+
     .action {
-        flex-direction: column;
+
+        flex-direction: row;     /* keep horizontal (prevents tall overflow) */
+
+        flex-wrap: wrap;         /* allows wrapping instead of breaking */
+
         gap: 6px;
+
     }
 
     .action a,
+
     .action button {
-        min-width: 130px;
+
+        min-width: 110px;        /* reduce width */
+
         height: 36px;
+
         font-size: 12px;
-    }
-}
 
-@media (max-width: 600px) {
-
-    .container {
-        width: 100%;
-        padding: 0 8px;
-        margin: 15px auto;
-    }
-
-    h2 {
-        font-size: 20px;
-        margin: 15px 0;
-    }
-
-    /* Add Product button full width */
-    .add-btn {
-        display: block;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 12px;
-    }
-
-    /* Smaller table text */
-    th,
-    td {
-        padding: 6px 4px;
-        font-size: 11px;
-    }
-
-    /* Smaller images */
-    td img {
-        width: 45px;
-        height: 45px;
-    }
-
-    /* Hide description column on very small screens */
-    th:nth-child(5),
-    td:nth-child(5) {
-        display: none;
-    }
-
-    /* Smaller buttons */
-    .action a,
-    .action button {
-        min-width: 110px;
-        height: 34px;
-        font-size: 11px;
         padding: 0 10px;
-    }
-}
 
+    }
+
+    /* back button */
+
+    .btn-back {
+
+        font-size: 13px;
+
+    }
+
+}

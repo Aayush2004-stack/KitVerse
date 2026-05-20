@@ -182,20 +182,20 @@ tbody tr:hover {
 
 /* Delete */
 .actions .btn-delete {
-    background-color: #e74c3c;
+    background: #e74c3c;
 }
 
 .actions .btn-delete:hover {
-    background-color: #c0392b;
+    background: #c0392b;
 }
 
 /* Add Stock */
 .actions .btn-stock {
-    background-color: #27ae60;
+    background: var(--color-primary);
 }
 
 .actions .btn-stock:hover {
-    background-color: #1e8449;
+    background: var(--color-primary-hover);
 }
 
 /* Back button */
@@ -211,4 +211,94 @@ tbody tr:hover {
     text-decoration: underline;
 }
 
+@media (max-width: 900px) {
 
+    /* allow table to shrink safely */
+
+    .table-card {
+
+        overflow-x: auto;
+
+    }
+
+    table {
+
+        min-width: 650px; /* prevents crushing layout */
+
+        font-size: 12px;
+
+    }
+
+    th, td {
+
+        padding: 8px 6px;
+
+        font-size: 12px;
+
+        white-space: nowrap; /* keeps table compact */
+
+    }
+
+    /* shrink badges */
+
+    .badge {
+
+        padding: 3px 8px;
+
+        font-size: 11px;
+
+    }
+
+    /* stock text */
+
+    .stock {
+
+        font-size: 12px;
+
+    }
+
+    /* FIX BUTTON OVERFLOW */
+
+    .actions {
+
+        gap: 6px;
+
+    }
+
+    .actions .btn-edit,
+
+    .actions .btn-delete,
+
+    .actions .btn-stock {
+
+        width: 110px;
+
+        height: 36px;
+
+        font-size: 12px;
+
+        padding: 0 10px;
+
+    }
+
+    /* stock input shrink */
+
+    .stock-form input[type="number"] {
+
+        width: 60px;
+
+        height: 36px;
+
+        font-size: 12px;
+
+    }
+
+    /* back button */
+
+    .btn-back {
+
+        font-size: 13px;
+
+    }
+
+}

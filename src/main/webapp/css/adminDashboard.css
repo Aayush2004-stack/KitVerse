@@ -12,12 +12,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 .aContainer {
-    max-width: 1200px;
-    margin: 30px auto;
+    margin: 30px ;
     padding: 0 20px;
-
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
@@ -70,8 +68,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .dashboard {
-    max-width: 1200px;
-    margin: 0 auto 40px;
+    margin: 30px ;
     padding: 0 20px;
 
     display: grid;
@@ -143,15 +140,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 
 /* Mobile devices */
-@media (max-width: 768px) {
-    .aContainer,
-    .dashboard {
+@media (max-width: 900px) {
+    .aContainer, .dashboard {
         padding: 0 15px;
     }
 
-    .aContainer {
+    .dashboard {
         grid-template-columns: 1fr;
-        gap: 16px;
+    }
+
+
+    .aContainer {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 18px;
     }
 
     .aCard,
@@ -172,6 +174,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     .chartContainer {
         height: 240px;
     }
-
 
 }

@@ -4,10 +4,32 @@
 <header class="navbar">
 
     <!-- LOGO -->
-    <div class="nav-logo">
-        <a href="${pageContext.request.contextPath}/">
-            <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Logo"></a>
-        KitVerse
+
+    <div class="nav-left">
+
+        <div class="nav-logo">
+
+            <a href="${pageContext.request.contextPath}/">
+
+                <img src="${pageContext.request.contextPath}/resources/logo/logo.png" alt="Logo">
+
+            </a>
+
+            <span>KitVerse</span>
+
+        </div>
+
+        <!-- ADMIN BADGE -->
+
+        <c:if test="${not empty sessionScope.user and sessionScope.user.userType == 'admin'}">
+
+            <div class="admin-badge">
+
+                ADMIN PANEL
+
+            </div>
+
+        </c:if>
 
     </div>
     <!-- HAMBURGER BUTTON (MOBILE ONLY) -->
@@ -23,9 +45,7 @@
         <!-- ADMIN NAV -->
         <c:if test="${not empty sessionScope.user and sessionScope.user.userType == 'admin'}">
 
-            <div class="admin-badge">
-                ADMIN PANEL
-            </div>
+            
 
             <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
             <a href="${pageContext.request.contextPath}/admin/product">Products</a>

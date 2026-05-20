@@ -196,10 +196,8 @@
     animation: fadeIn 0.3s ease-in-out;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
+/*RESPONSIVE */
+@media (max-width: 900px) {
 
     .cart-card {
         grid-template-columns: 1fr;
