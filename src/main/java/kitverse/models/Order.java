@@ -16,7 +16,7 @@ public class Order {
     private double totalAmt;
     private String status;
     private String address;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public Order() {
@@ -62,15 +62,15 @@ public class Order {
         this.address = address;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 

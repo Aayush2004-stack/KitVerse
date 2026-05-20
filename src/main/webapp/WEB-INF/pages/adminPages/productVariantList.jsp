@@ -20,17 +20,19 @@
 
             <div class="header">
                 <h2>Product Variants</h2>
-                <c:if test="${not empty error}">
-                    <div class="error-message">
-                        ${error}
-                    </div>
-                </c:if>
+
 
                 <a class="btn-add"
                    href="${pageContext.request.contextPath}/admin/variant?action=new&productId=${productId}">
                     + Add New Variant
                 </a>
+
             </div>
+            <c:if test="${not empty error}">
+                <div class="error-message">
+                    ${error}
+                </div>
+            </c:if>
 
             <div class="table-card">
 

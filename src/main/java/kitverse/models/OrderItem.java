@@ -16,7 +16,7 @@ public class OrderItem {
     private int ProductVariantId;
     private int quantity;
     private String playerName;
-    private int playerNo;
+    private Integer playerNo;
     //private double totalPrice;
     private LocalDateTime createAt;
     private LocalDateTime updatedAt;
@@ -64,11 +64,11 @@ public class OrderItem {
         this.playerName = playerName;
     }
 
-    public int getPlayerNo() {
+    public Integer getPlayerNo() {
         return playerNo;
     }
 
-    public void setPlayerNo(int playerNo) {
+    public void setPlayerNo(Integer playerNo) {
         this.playerNo = playerNo;
     }
 

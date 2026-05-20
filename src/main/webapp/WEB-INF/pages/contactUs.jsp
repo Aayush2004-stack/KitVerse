@@ -15,6 +15,7 @@
 
         <!-- DEFAULT NAVBAR -->
         <jsp:include page="/templates/navbar.jsp"/>
+        <main>
 
         <!-- CONTACT SECTION -->
         <section class="contact-section">
@@ -64,6 +65,7 @@
             </div>
 
         </section>
+        </main>
 
 
         <!-- FOOTER -->

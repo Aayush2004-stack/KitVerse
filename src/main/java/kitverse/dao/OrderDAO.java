@@ -32,7 +32,7 @@ public class OrderDAO {
 
         int orderId = 0;
 
-        String query = "INSERT INTO orders (customer_id, total_amt, status, address) "
+        final String query = "INSERT INTO orders (customer_id, total_amt, status, address) "
                 + "VALUES (?, ?, ?, ?)";
 
         try {
@@ -62,7 +62,7 @@ public class OrderDAO {
 
         Order order = null;
 
-        String query = "SELECT * FROM orders WHERE order_id = ?";
+        final String query = "SELECT * FROM orders WHERE order_id = ?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -77,7 +77,7 @@ public class OrderDAO {
                 order.setTotalAmt(rs.getDouble("total_amt"));
                 order.setStatus(rs.getString("status"));
                 order.setAddress(rs.getString("address"));
-                order.setCreateAt(rs.getTimestamp("created_at").toLocalDateTime());
+                order.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
                 order.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
 
             }
@@ -92,7 +92,7 @@ public class OrderDAO {
     public List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
 
-        String query = "SELECT * FROM orders ORDER BY created_at DESC";
+        final String query = "SELECT * FROM orders ORDER BY created_at DESC";
 
         try {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -108,7 +108,7 @@ public class OrderDAO {
 
                 Timestamp created = rs.getTimestamp("created_at");
                 if (created != null) {
-                    order.setCreateAt(created.toLocalDateTime());
+                    order.setCreatedAt(created.toLocalDateTime());
                 }
 
                 Timestamp updated = rs.getTimestamp("updated_at");
@@ -128,7 +128,7 @@ public class OrderDAO {
 
     // UPDATE ORDER STATUS
     public boolean updateOrderStatus(int orderId, String status) {
-        String query = "UPDATE orders SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE order_id = ?";
+        final String query = "UPDATE orders SET status = ? WHERE order_id = ?";
 
         try {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -147,7 +147,7 @@ public class OrderDAO {
     public List<Order> getOrdersByCustomerId(int customerId) {
         List<Order> orders = new ArrayList<>();
 
-        String query = "SELECT * FROM orders WHERE customer_id = ? ORDER BY order_id DESC";
+        final String query = "SELECT * FROM orders WHERE customer_id = ? ORDER BY order_id DESC";
 
         try {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -162,6 +162,16 @@ public class OrderDAO {
                 order.setTotalAmt(rs.getDouble("total_amt"));
                 order.setStatus(rs.getString("status"));
                 order.setAddress(rs.getString("address"));
+                
+                Timestamp created = rs.getTimestamp("created_at");
+                if (created != null) {
+                    order.setCreatedAt(created.toLocalDateTime());
+                }
+
+                Timestamp updated = rs.getTimestamp("updated_at");
+                if (updated != null) {
+                    order.setUpdatedAt(updated.toLocalDateTime());
+                }
                 orders.add(order);
             }
 

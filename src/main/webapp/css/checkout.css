@@ -102,7 +102,7 @@ button:hover {
 }
 
 /* RESPONSIVE */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .row {
         flex-direction: column;
         gap: 4px;

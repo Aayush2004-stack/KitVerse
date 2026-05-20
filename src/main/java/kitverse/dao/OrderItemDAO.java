@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package kitverse.dao;
+
 import java.sql.*;
 import kitverse.models.OrderItem;
 import kitverse.utilities.DBConfig;
+
 /**
  *
  * @author aayushbastola
@@ -15,7 +17,7 @@ public class OrderItemDAO {
     private Connection conn;
 
     public OrderItemDAO() {
-         try {
+        try {
             conn = DBConfig.getConnection();
         } catch (SQLException | ClassNotFoundException ex) {
 
@@ -24,12 +26,11 @@ public class OrderItemDAO {
     }
 
     // INSERT ORDER ITEM
-
     public void insertOrderItem(OrderItem item) {
 
         String query = "INSERT INTO order_items "
-                   + "(order_id, product_variant_id, quantity, player_name, player_no) "
-                   + "VALUES (?, ?, ?, ?, ?)";
+                + "(order_id, product_variant_id, quantity, player_name, player_no) "
+                + "VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = conn.prepareStatement(query);
@@ -38,16 +39,20 @@ public class OrderItemDAO {
             ps.setInt(2, item.getProductVariantId());
             ps.setInt(3, item.getQuantity());
             ps.setString(4, item.getPlayerName());
-            ps.setInt(5, item.getPlayerNo());
-            
-           
+            if (item.getPlayerNo() != null) {
+                ps.setInt(5, item.getPlayerNo());
+
+            } else {
+
+                ps.setNull(5, java.sql.Types.INTEGER);
+
+            }
+
             ps.executeUpdate();
 
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
     }
-
-
 
 }

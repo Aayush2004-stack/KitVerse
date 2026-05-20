@@ -120,8 +120,8 @@
 
 
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 1000px) {
+/*  RESPONSIVE */
+@media (max-width: 900px) {
     .team-grid {
         grid-template-columns: repeat(2, 1fr);
     }

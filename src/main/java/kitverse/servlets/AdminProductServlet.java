@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import kitverse.dao.ProductDAO;
 import kitverse.models.Product;
@@ -147,8 +146,7 @@ public class AdminProductServlet extends HttpServlet {
                     product.setTeamName(team);
                     product.setCategory(category);
                     product.setDescription(description);
-                    product.setCreateAt(LocalDateTime.now());
-                    product.setUpdatedAt(LocalDateTime.now());
+
 
                     String upload = String.valueOf(request.getAttribute("upload"));
                     if ("success".equals(upload)) {
@@ -187,7 +185,6 @@ public class AdminProductServlet extends HttpServlet {
                 product.setTeamName(team);
                 product.setCategory(category);
                 product.setDescription(description);
-                product.setUpdatedAt(LocalDateTime.now());
 
                 String upload = String.valueOf(request.getAttribute("upload"));
                 if ("success".equals(upload)) {

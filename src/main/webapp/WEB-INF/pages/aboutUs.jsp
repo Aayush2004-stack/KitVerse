@@ -14,6 +14,7 @@
 
 <jsp:include page="/templates/navbar.jsp"/>
 
+<main>
 <section class="about-section">
 
     <!-- INTRO -->
@@ -87,6 +88,7 @@
     </div>
 
 </section>
+</main>
 
 <!-- FOOTER -->
 <jsp:include page="/templates/footer.html"/>

@@ -6,11 +6,13 @@ package kitverse.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ import kitverse.models.OrderItem;
 import kitverse.models.Product;
 import kitverse.models.ProductVariant;
 import kitverse.models.User;
+import kitverse.utilities.CookieUtil;
 import kitverse.utilities.SessionUtil;
 
 /**
@@ -89,7 +92,6 @@ public class OrderServlet extends HttpServlet {
                             + "&error=stock");
 
                     return;
-                    
 
                 }
 
@@ -153,10 +155,21 @@ public class OrderServlet extends HttpServlet {
 
                     if (quantity > availableStock) {
                         response.sendRedirect(request.getContextPath()
-                            + "/cart?&error=stock");
+                                + "/cart?&error=stock");
 
-                    return;
+                        return;
 
+                    }
+                    String playerName = request.getParameter("playerName_" + variantId);
+                    String playerNoStr = request.getParameter("playerNo_" + variantId);
+
+                    if (playerName != null) {
+                        playerName = playerName.trim();
+                    }
+
+                    Integer playerNo = null;
+                    if (playerNoStr != null && !playerNoStr.trim().isEmpty()) {
+                        playerNo = Integer.parseInt(playerNoStr);
                     }
                     ProductVariant variant = pvDAO.getVariantById(variantId);
                     Product product = pDAO.getProductDetails(variant.getProductId());
@@ -166,6 +179,8 @@ public class OrderServlet extends HttpServlet {
                     item.put("variant", variant);
                     item.put("quantity", quantity);
                     item.put("productVariantId", variantId);
+                    item.put("playerName", playerName);
+                    item.put("playerNo", playerNo);
 
                     items.add(item);
 
@@ -210,13 +225,66 @@ public class OrderServlet extends HttpServlet {
                         int variantId = Integer.parseInt(vid);
                         int qty = Integer.parseInt(request.getParameter("qty_" + variantId));
 
+                        String playerName = request.getParameter("playerName_" + variantId);
+
+                        String playerNoStr = request.getParameter("playerNo_" + variantId);
+                        Integer playerNo = null;
+
+                        if (playerNoStr != null && !playerNoStr.trim().isEmpty()) {
+
+                            playerNo = Integer.parseInt(playerNoStr.trim());
+
+                        }
+
+                        if (playerName != null) {
+
+                            playerName = playerName.trim();
+
+                        }
+
                         OrderItem item = new OrderItem();
                         item.setOrderId(orderId);
                         item.setProductVariantId(variantId);
                         item.setQuantity(qty);
+                        item.setPlayerName(playerName);
+
+                        item.setPlayerNo(playerNo);
 
                         oiDAO.insertOrderItem(item);
                         pvDAO.deductStock(variantId, qty);
+                    }
+                    Cookie cookie = CookieUtil.getCookie(request, "cart");
+
+                    if (cookie != null && cookie.getValue() != null && !cookie.getValue().isEmpty()) {
+
+                        List<String> ids = new ArrayList<>(
+                                Arrays.asList(cookie.getValue().split("\\|"))
+                        );
+
+                        for (String vid : variantIds) {
+
+                            ids.remove(vid);
+
+                        }
+
+                        // clean empty values
+                        ids.removeIf(id -> id == null || id.trim().isEmpty());
+
+                        if (ids.isEmpty()) {
+
+                            CookieUtil.deleteCookie(response, "cart");
+
+                        } else {
+
+                            CookieUtil.addCookie(
+                                    response,
+                                    "cart",
+                                    String.join("|", ids),
+                                    7 * 24 * 60 * 60
+                            );
+
+                        }
+
                     }
 
                 } else {
@@ -225,10 +293,29 @@ public class OrderServlet extends HttpServlet {
                     int variantId = Integer.parseInt(request.getParameter("variantId"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
 
+                    String playerName = request.getParameter("playerName");
+                    String playerNoStr = request.getParameter("playerNo");
+                    if (playerName != null) {
+
+                        playerName = playerName.trim();
+
+                    }
+
+                    Integer playerNo = null;
+
+                    if (playerNoStr != null && !playerNoStr.trim().isEmpty()) {
+
+                        playerNo = Integer.parseInt(playerNoStr.trim());
+
+                    }
+
                     OrderItem item = new OrderItem();
                     item.setOrderId(orderId);
                     item.setProductVariantId(variantId);
                     item.setQuantity(quantity);
+                    item.setPlayerName(playerName);
+
+                    item.setPlayerNo(playerNo);
 
                     oiDAO.insertOrderItem(item);
                     pvDAO.deductStock(variantId, quantity);

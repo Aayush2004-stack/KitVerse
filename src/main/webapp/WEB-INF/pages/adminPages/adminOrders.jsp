@@ -51,7 +51,7 @@
                                             </span>
                                         </td>
                                         <td>${order.address}</td>
-                                        <td>${order.createAt}</td>
+                                        <td>${order.createdAt}</td>
                                         <td>
                                             <c:if test="${order.status eq 'PENDING'}">
                                                 <div class="action-buttons">
