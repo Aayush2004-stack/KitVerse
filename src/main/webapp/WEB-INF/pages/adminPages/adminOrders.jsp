@@ -42,7 +42,7 @@
                             <c:when test="${not empty orders}">
                                 <c:forEach var="order" items="${orders}">
                                     <tr>
-                                        <td>#${order.orderId}</td>
+                                        <td>${order.orderId}</td>
                                         <td>${order.customerId}</td>
                                         <td>Rs. ${order.totalAmt}</td>
                                         <td>

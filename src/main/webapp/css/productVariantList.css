@@ -36,6 +36,24 @@ h2 {
     color: var(--text-primary);
 }
 
+/* ERROR MESSAGE */
+.error-message {
+    width: 92%;
+    margin: 0 auto 20px;
+    padding: 12px 16px;
+
+    background-color: #fdecea;
+    color: #b71c1c;
+    border: 1px solid #f5c2c7;
+    border-left: 5px solid #e74c3c;
+
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
 /* Add button */
 .btn-add {
     background: var(--color-primary);
@@ -97,65 +115,92 @@ tbody tr:hover {
     color: #2c3e50;
 }
 
-/* Actions */
+/* Actions column */
 .actions {
     display: flex;
-    gap: 6px;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap; /* keep all items in one line */
 }
 
-/* Buttons */
-.btn-edit {
-    background: #3498db;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 13px;
-}
-
-.btn-edit:hover {
-    background: #2980b9;
-}
-
-.btn-delete {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-delete:hover {
-    background: #c0392b;
-}
-
-.btn-stock {
-    background: var(--color-primary);
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.btn-stock:hover {
-    background: var(--color-primary-hover);
+/* Forms inside actions */
+.actions form {
+    margin: 0;
+    display: flex;
+    align-items: center;
 }
 
 /* Stock form */
 .stock-form {
     display: flex;
-    gap: 5px;
+    align-items: center;
+    gap: 8px;
 }
 
-.stock-form input {
-    width: 60px;
-    padding: 5px;
-    border-radius: 5px;
+/* Stock input */
+.stock-form input[type="number"] {
+    width: 80px;
+    height: 42px;
+    padding: 0 8px;
     border: 1px solid var(--border-light);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Common button style */
+.actions .btn-edit,
+.actions .btn-delete,
+.actions .btn-stock {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 140px;      /* Same width for all buttons */
+    height: 42px;      /* Same height for all buttons */
+
+    padding: 0 16px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Edit */
+.actions .btn-edit {
+    background-color: #3498db;
+}
+
+.actions .btn-edit:hover {
+    background-color: #2980b9;
+}
+
+/* Delete */
+.actions .btn-delete {
+    background-color: #e74c3c;
+}
+
+.actions .btn-delete:hover {
+    background-color: #c0392b;
+}
+
+/* Add Stock */
+.actions .btn-stock {
+    background-color: #27ae60;
+}
+
+.actions .btn-stock:hover {
+    background-color: #1e8449;
 }
 
 /* Back button */

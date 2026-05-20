@@ -13,6 +13,11 @@
         <jsp:include page="/templates/navbar.jsp"/>
 
         <h2>Product List</h2>
+        <c:if test="${not empty error}">
+            <div class="error-message">
+                ${error}
+            </div>
+        </c:if>
 
         <div class="container">
 
