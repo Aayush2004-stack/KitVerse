@@ -217,6 +217,16 @@
     animation: fadeIn 0.3s ease-in-out;
 }
 
+.cart-footer {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cart-check {
+    transform: scale(1.2);
+}
+
 /*RESPONSIVE */
 @media (max-width: 900px) {
 

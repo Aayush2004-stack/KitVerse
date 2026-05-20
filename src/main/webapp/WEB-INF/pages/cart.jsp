@@ -15,7 +15,8 @@
     <body>
 
         <jsp:include page="/templates/navbar.jsp"/>
-        <main> 
+
+        <main>
 
             <!-- HEADER -->
             <section class="cart-header">
@@ -34,8 +35,8 @@
 
                 <c:if test="${not empty cartItems}">
 
-
-                    <form method="post"
+                    <form id="cartForm"
+                          method="post"
                           action="${pageContext.request.contextPath}/order?action=bulkCheckout">
 
                         <c:forEach var="item" items="${cartItems}">
@@ -45,9 +46,10 @@
 
                             <div class="cart-card">
 
-                                <!-- SELECT ITEM -->
+                                <!-- SELECT -->
                                 <div class="select-box">
                                     <input type="checkbox"
+                                           class="cart-check"
                                            name="variantIds"
                                            value="${v.variantId}">
                                 </div>
@@ -55,7 +57,8 @@
                                 <!-- IMAGE -->
                                 <div class="cart-img">
                                     <img src="${pageContext.request.contextPath}/${p.imagePath}"
-                                         alt="${p.productName}">
+                                         alt="${p.productName}"
+                                         onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';">
                                 </div>
 
                                 <!-- DETAILS -->
@@ -63,8 +66,6 @@
                                     <h3>${p.productName}</h3>
                                     <p class="meta">Size: ${v.size}</p>
                                     <p class="price">Rs. ${v.sellingPrice}</p>
-
-
                                 </div>
 
                                 <!-- QTY -->
@@ -75,37 +76,34 @@
                                            value="1"
                                            min="1">
                                 </div>
-                                <!-- CUSTOMIZATION -->
 
+                                <!-- CUSTOM -->
                                 <div class="custom-box">
 
                                     <input type="text"
-
                                            name="playerName_${v.variantId}"
-
                                            placeholder="Player Name">
 
                                     <input type="number"
-
                                            name="playerNo_${v.variantId}"
-
                                            placeholder="Player No">
 
                                 </div>
 
                             </div>
-                            <!-- ERROR MESSAGE -->
-
 
                         </c:forEach>
+
                         <c:if test="${not empty error}">
-                            <div class="error-box">
-                                ${error}
-                            </div>
+                            <div class="error-box">${error}</div>
                         </c:if>
 
+
                         <div class="cart-footer">
-                            <button type="submit" class="checkout-btn">
+                            <button type="submit"
+                                    id="checkoutBtn"
+                                    class="checkout-btn"
+                                    disabled>
                                 Proceed to Checkout
                             </button>
                         </div>
@@ -115,8 +113,35 @@
                 </c:if>
 
             </section>
+
         </main>
-        <!-- FOOTER -->
+
         <jsp:include page="/templates/footer.html"/>
+
+        <!-- JS: ENABLE BUTTON ONLY IF SELECTED -->
+        <script>
+            const checkboxes = document.querySelectorAll(".cart-check");
+            const btn = document.getElementById("checkoutBtn");
+
+            function updateButtonState() {
+                let anyChecked = false;
+
+                checkboxes.forEach(cb => {
+                    if (cb.checked)
+                        anyChecked = true;
+                });
+
+                btn.disabled = !anyChecked;
+                btn.style.opacity = anyChecked ? "1" : "0.5";
+                btn.style.cursor = anyChecked ? "pointer" : "not-allowed";
+            }
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener("change", updateButtonState);
+            });
+
+            updateButtonState();
+        </script>
+
     </body>
 </html>
