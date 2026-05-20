@@ -47,7 +47,9 @@
                         <td>${p.category}</td>
                         <td>${p.description}</td>
                         <td>
-                            <img src="${pageContext.request.contextPath}/${p.imagePath}" width="80" height="80"/>
+                            <img src="${pageContext.request.contextPath}/${p.imagePath}"
+                                 onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';"
+                                 width="80" height="80"/>
                         </td>
 
 
