@@ -23,8 +23,6 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
         try {
             conn = DBConfig.getConnection();
 
-         
-
         } catch (Exception ex) {
             isConnectionError = true;
             System.out.println(ex.getLocalizedMessage());
@@ -195,13 +193,18 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
     }
 
     /**
-     * Deducts stock from a product variant if sufficient stock is available.
+     * Deducts the specified quantity from a product variant's stock only if
+     * sufficient stock is available.
      *
-     * Ensures stock does not go below zero.
+     * <p>
+     * This method ensures that stock never becomes negative by updating the
+     * stock only when the current stock is greater than or equal to the
+     * requested quantity.</p>
      *
-     * @param variantId the ID of the variant
-     * @param quantity the quantity to deduct
-     * @return true if stock deduction is successful, false otherwise
+     * @param variantId the ID of the product variant
+     * @param quantity the quantity to deduct from stock
+     * @return {@code true} if the stock was successfully deducted;
+     * {@code false} if insufficient stock exists or if an error occurs
      */
     @Override
     public boolean deductStock(int variantId, int quantity) {
@@ -277,11 +280,14 @@ public class ProductVariantDAO implements ProductVariantDAOInterface {
     }
 
     /**
-     * Maps a ResultSet row into a ProductVariant object.
+     * Converts the current row of the given {@code ResultSet} into a
+     * {@code ProductVariant} object.
      *
-     * @param rs the ResultSet containing variant data
-     * @return mapped ProductVariant object
-     * @throws SQLException if a database access error occurs
+     * @param rs the {@code ResultSet} positioned at the current row containing
+     * product variant data
+     * @return a fully populated {@code ProductVariant} object
+     * @throws SQLException if an error occurs while reading data from the
+     * {@code ResultSet}
      */
     private ProductVariant map(ResultSet rs) throws SQLException {
         ProductVariant v = new ProductVariant();
