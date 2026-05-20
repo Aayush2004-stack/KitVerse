@@ -22,12 +22,14 @@ import kitverse.models.ProductVariant;
  */
 @WebServlet(name = "ProductVariantServlet", urlPatterns = {"/variant"})
 public class ProductVariantServlet extends HttpServlet {
-
+            
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ProductVariantDAO vDao = new ProductVariantDAO();
+        
+
+        ProductVariantDAO vDAO = new ProductVariantDAO();
         String productIdParam = request.getParameter("productId");
 
         if (productIdParam == null) {
@@ -37,22 +39,24 @@ public class ProductVariantServlet extends HttpServlet {
         }
         int productId = Integer.parseInt(productIdParam);
         ArrayList<ProductVariant> variants
-                = vDao.getVariantsByProductId(productId);
-        ProductDAO pDao = new ProductDAO();
-        Product product = pDao.getProductDetails(productId);
+                = vDAO.getVariantsByProductId(productId);
+        ProductDAO pDAO = new ProductDAO();
+        Product product = pDAO.getProductDetails(productId);
         ProductVariant defaultVariant = null;
+        
+        boolean hasStock = false;
 
         for (ProductVariant v : variants) {
             if (v.getStock() > 0) {
+                hasStock = true;
                 if (defaultVariant == null
                         || v.getSellingPrice() < defaultVariant.getSellingPrice()) {
                     defaultVariant = v;
-
                 }
-
             }
-
         }
+
+      
 
         request.setAttribute("product", product);
 

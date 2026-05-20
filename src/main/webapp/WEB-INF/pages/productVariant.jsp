@@ -16,6 +16,7 @@
     <body>
 
         <jsp:include page="/templates/navbar.jsp"/>
+
         <main>
 
             <div class="product-page">
@@ -26,10 +27,7 @@
                     <img class="main-image"
                          src="${pageContext.request.contextPath}/${product.imagePath}"
                          alt="${product.productName}"
-                         onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';"
-                         >
-
-
+                         onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/resources/images/background.jpeg';">
 
                 </div>
 
@@ -37,91 +35,105 @@
                 <div class="product-center">
 
                     <h1>${product.productName}</h1>
-
                     <p class="team-name">${product.teamName}</p>
-
-
-
                     <p class="description">${product.description}</p>
 
-                    <h2 class="price">
-                        Rs. <span id="priceText">${selectedVariant.sellingPrice}</span>
-                    </h2>
+                    <!-- STOCK CHECK -->
+                    <c:choose>
 
-                    <form method="post"
-                          action="${pageContext.request.contextPath}/order?action=checkout">
-
-                        <input type="hidden" name="productId" value="${product.productId}">
-
-                        <!-- SIZE -->
-                        <div class="section">
-                            <h3>Select Size</h3>
-
-                            <div class="options">
-
-                                <c:forEach var="v" items="${variants}">
-
-                                    <label class="option-card">
-
-                                        <input type="radio"
-                                               name="variantId"
-                                               value="${v.variantId}"
-                                               data-price="${v.sellingPrice}"
-                                               onchange="updatePrice(this)"
-                                               required
-                                               <c:if test="${selectedVariant.variantId == v.variantId}">checked</c:if>
-                                               <c:if test="${v.stock == 0}">disabled</c:if>>
-
-                                               <div class="size-name">${v.size}</div>
-
-                                        <span class="stock">
-                                            <c:choose>
-                                                <c:when test="${v.stock > 0}">In Stock</c:when>
-                                                <c:otherwise>Out of Stock</c:otherwise>
-                                            </c:choose>
-                                        </span>
-
-                                    </label>
-
-                                </c:forEach>
-
-                            </div>
-                        </div>
-
-                        <!-- CUSTOM -->
-                        <div class="section">
-                            <h3>Customize Jersey</h3>
-
-                            <input type="text" name="playerName" placeholder="Player Name">
-                            <input type="number" name="playerNo" placeholder="Player Number">
-                        </div>
-
-                        <!-- QTY -->
-                        <div class="section">
-                            <h3>Quantity</h3>
-
-                            <input type="number" name="quantity" min="1" value="1" required>
-                        </div>
-
-                        <!-- ERROR MESSAGE -->
-                        <c:if test="${not empty error}">
+                        <c:when test="${empty variants || selectedVariant == null}">
                             <div class="error-box">
-                                ${error}
+                                This product is currently out of stock.
                             </div>
-                        </c:if>
+                        </c:when>
 
-                        <!-- BUTTONS -->
-                        <button type="submit"
-                                formaction="${pageContext.request.contextPath}/cart?action=add"
-                                class="cart-btn">
-                            Add to Cart
-                        </button>
+                        <c:otherwise>
 
-                        <button type="submit" class="buy-btn">
-                            Buy Now
-                        </button>
+                            <h2 class="price">
+                                Rs. <span id="priceText">${selectedVariant.sellingPrice}</span>
+                            </h2>
 
-                    </form>
+                            <form method="post"
+                                  action="${pageContext.request.contextPath}/order?action=checkout">
+
+                                <input type="hidden" name="productId" value="${product.productId}">
+
+                                <!-- SIZE -->
+                                <div class="section">
+                                    <h3>Select Size</h3>
+
+                                    <div class="options">
+
+                                        <c:forEach var="v" items="${variants}">
+
+                                            <label class="option-card">
+
+                                                <input type="radio"
+                                                       name="variantId"
+                                                       value="${v.variantId}"
+                                                       data-price="${v.sellingPrice}"
+                                                       onchange="updatePrice(this)"
+                                                       required
+                                                       <c:if test="${selectedVariant.variantId == v.variantId}">checked</c:if>
+                                                       <c:if test="${v.stock == 0}">disabled</c:if>>
+
+                                                       <div class="size-name">${v.size}</div>
+
+                                                <span class="stock">
+                                                    <c:choose>
+                                                        <c:when test="${v.stock > 0}">
+                                                            In Stock
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Out of Stock
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </span>
+
+                                            </label>
+
+                                        </c:forEach>
+
+                                    </div>
+                                </div>
+
+                                <!-- CUSTOM -->
+                                <div class="section">
+                                    <h3>Customize Jersey</h3>
+
+                                    <input type="text" name="playerName" placeholder="Player Name">
+                                    <input type="number" name="playerNo" placeholder="Player Number">
+                                </div>
+
+                                <!-- QTY -->
+                                <div class="section">
+                                    <h3>Quantity</h3>
+
+                                    <input type="number" name="quantity" min="1" value="1" required>
+                                </div>
+
+                                <!-- ERROR -->
+                                <c:if test="${not empty error}">
+                                    <div class="error-box">
+                                        ${error}
+                                    </div>
+                                </c:if>
+
+                                <button type="submit"
+                                        formaction="${pageContext.request.contextPath}/cart?action=add"
+                                        class="cart-btn">
+                                    Add to Cart
+                                </button>
+
+                                <button type="submit" class="buy-btn">
+                                    Buy Now
+                                </button>
+
+                            </form>
+
+                        </c:otherwise>
+
+                    </c:choose>
 
                 </div>
 
@@ -151,10 +163,11 @@
                 </div>
 
             </div>
+
         </main>
 
-        <!-- FOOTER -->
         <jsp:include page="/templates/footer.html"/>
+
         <script>
             function updatePrice(radio) {
                 document.getElementById("priceText").innerText = radio.dataset.price;
