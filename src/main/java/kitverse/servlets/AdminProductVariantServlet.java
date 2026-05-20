@@ -104,7 +104,7 @@ public class AdminProductVariantServlet extends HttpServlet {
                         .forward(request, response);
                 break;
             }
-            
+
             default:
                 response.sendRedirect(request.getContextPath() + "admin/product");
         }
@@ -211,8 +211,20 @@ public class AdminProductVariantServlet extends HttpServlet {
 
                 if (isDeleted) {
                     response.sendRedirect(request.getContextPath() + "/admin/variant?action=product&productId=" + productId);
+                    return;
                 } else {
-                    System.out.println("Failed to delete variant!");
+                    // Error message
+                    request.setAttribute("error", "Failed to delete variant!");
+
+                    // Reload variants
+                    ArrayList<ProductVariant> variants = Vdao.getVariantsByProductId(productId);
+
+                    request.setAttribute("variants", variants);
+                    request.setAttribute("productId", productId);
+
+                    // Forward back to variant list page
+                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productVariantList.jsp");
+                    rd.forward(request, response);
                 }
                 break;
             }
