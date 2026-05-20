@@ -34,7 +34,7 @@
 
                         <div class="row">
                             <span>Order ID</span>
-                            <span>#${order.orderId}</span>
+                            <span>${order.orderId}</span>
                         </div>
 
                         <div class="row">
@@ -50,6 +50,10 @@
                         <div class="row">
                             <span>Status</span>
                             <span class="status">${order.status}</span>
+                        </div>
+                        <div class="row">
+                            <span>Order Date</span>
+                            <span class="status">${order.createdAt}</span>
                         </div>
 
                     </div>
