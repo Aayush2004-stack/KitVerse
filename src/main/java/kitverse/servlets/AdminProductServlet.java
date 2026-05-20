@@ -218,9 +218,22 @@ public class AdminProductServlet extends HttpServlet {
 
                 if (isDeleted) {
                     response.sendRedirect(request.getContextPath() + "/admin/product");
+                    return;
                 } else {
-                    request.setAttribute("error", "Failed to update product!");
-                    RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/adminPages/productList.jsp");
+                    // Set proper error message
+                    request.setAttribute("error", "Failed to delete product!");
+
+                    // Reload product list
+                    ArrayList<Product> products = pdao.fetchAllProducts();
+                    if (products == null) {
+                        products = new ArrayList<>();
+                    }
+
+                    request.setAttribute("products", products);
+
+                    // Forward back to product list page
+                    RequestDispatcher rd = request.getRequestDispatcher(
+                            "/WEB-INF/pages/adminPages/productList.jsp");
                     rd.forward(request, response);
                 }
                 break;
