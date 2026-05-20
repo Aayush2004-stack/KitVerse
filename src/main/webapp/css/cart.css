@@ -153,7 +153,28 @@
     box-shadow: 0 0 0 2px rgba(40,90,72,0.15);
 }
 
+.custom-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+}
 
+.custom-box input {
+    width: 140px;
+    padding: 6px 10px;
+
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+
+    font-size: 13px;
+    outline: none;
+}
+
+.custom-box input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(40,90,72,0.15);
+}
 
 
 /* =========================
