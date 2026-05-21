@@ -25,7 +25,17 @@ public class OrderItemDAO {
         }
     }
 
-    // INSERT ORDER ITEM
+    /**
+     * Inserts a new order item into the database.
+     * <p>
+     * Each order item stores the associated order ID, product variant ID,
+     * quantity, and optional customization details such as player name and
+     * player number.
+     * </p>
+     *
+     * @param item the {@code OrderItem} object containing the order item
+     * details
+     */
     public void insertOrderItem(OrderItem item) {
 
         String query = "INSERT INTO order_items "

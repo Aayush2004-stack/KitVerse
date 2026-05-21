@@ -27,7 +27,14 @@ public class OrderDAO {
         }
     }
 
-    // INSERT ORDER
+    /**
+     * Inserts a new order into the database.
+     *
+     * @param order the {@code Order} object containing the customer ID, total
+     * amount, status, and delivery address
+     * @return the generated order ID if the insertion is successful; {@code 0}
+     * if the insertion fails
+     */
     public int insertOrder(Order order) {
 
         int orderId = 0;
@@ -57,7 +64,13 @@ public class OrderDAO {
         return orderId;
     }
 
-    // GET ORDER BY ID
+    /**
+     * Retrieves an order by its ID.
+     *
+     * @param orderId the ID of the order to retrieve
+     * @return the matching {@code Order} object if found; {@code null}
+     * otherwise
+     */
     public Order getOrderById(int orderId) {
 
         Order order = null;
@@ -88,7 +101,12 @@ public class OrderDAO {
         return order;
     }
 
-    // GET ALL ORDERS
+    /**
+     * Retrieves all orders from the database, ordered by creation date in
+     * descending order.
+     *
+     * @return a {@code List<Order>} containing all orders
+     */
     public List<Order> getAllOrders() {
         List<Order> orders = new ArrayList<>();
 
@@ -126,7 +144,14 @@ public class OrderDAO {
         return orders;
     }
 
-    // UPDATE ORDER STATUS
+    /**
+     * Updates the status of an existing order.
+     *
+     * @param orderId the ID of the order to update
+     * @param status the new order status
+     * @return {@code true} if the order status is updated successfully;
+     * {@code false} otherwise
+     */
     public boolean updateOrderStatus(int orderId, String status) {
         final String query = "UPDATE orders SET status = ? WHERE order_id = ?";
 
@@ -144,6 +169,13 @@ public class OrderDAO {
         return false;
     }
 
+    /**
+     * Retrieves all orders placed by a specific customer.
+     *
+     * @param customerId the ID of the customer
+     * @return a {@code List<Order>} containing the customer's orders, ordered
+     * by order ID in descending order
+     */
     public List<Order> getOrdersByCustomerId(int customerId) {
         List<Order> orders = new ArrayList<>();
 
@@ -162,7 +194,7 @@ public class OrderDAO {
                 order.setTotalAmt(rs.getDouble("total_amt"));
                 order.setStatus(rs.getString("status"));
                 order.setAddress(rs.getString("address"));
-                
+
                 Timestamp created = rs.getTimestamp("created_at");
                 if (created != null) {
                     order.setCreatedAt(created.toLocalDateTime());

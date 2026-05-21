@@ -9,6 +9,7 @@ package kitverse.daoInterfaces;
  * @author ACER
  */
 import java.util.ArrayList;
+import java.util.List;
 import kitverse.models.Product;
 
 public interface ProductDAOInterface {
@@ -37,5 +38,7 @@ public interface ProductDAOInterface {
 
     // Get total number of products
     int getTotalProducts();
+    
+    List<Product> getPaginatedProducts(int offset, int limit);
     
 }

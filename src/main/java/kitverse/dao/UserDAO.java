@@ -134,11 +134,34 @@ public class UserDAO implements UserDAOInterface {
 
     }
 
+    /**
+     * Updates the profile information of an existing user in the database.
+     * <p>
+     * This method updates the user's full name and password based on the user
+     * ID provided in the {@code User} object.
+     * </p>
+     *
+     * @param user the {@code User} object containing the updated profile
+     * information, including:
+     * <ul>
+     * <li>user ID</li>
+     * <li>full name</li>
+     * <li>password</li>
+     * </ul>
+     *
+     * @return {@code true} if the profile was successfully updated (i.e., at
+     * least one row was affected); {@code false} if no matching user was found
+     * or if an error occurred.
+     *
+     * @throws NullPointerException if the provided {@code user} object is
+     * {@code null}.
+     */
+    @Override
     public boolean updateProfile(User user) {
 
         final String query = "UPDATE users SET full_name = ?, password = ? WHERE id = ?;";
 
-        try  {
+        try {
             PreparedStatement ps = conn.prepareStatement(query);
 
             ps.setString(1, user.getFullName());

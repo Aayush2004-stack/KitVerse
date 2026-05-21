@@ -56,8 +56,10 @@ public class ProductDAO implements ProductDAOInterface {
     /**
      * Inserts a new product into the database.
      *
-     * @param product the Product object containing product details
-     * @return true if insertion is successful, false otherwise
+     * @param product the Product object containing the product name, team name,
+     * category, description, and image path
+     * @return {@code true} if the product is inserted successfully;
+     * {@code false} otherwise
      */
     @Override
     public boolean insertProduct(Product product) {
@@ -71,7 +73,6 @@ public class ProductDAO implements ProductDAOInterface {
             ps.setString(3, product.getCategory());
             ps.setString(4, product.getDescription());
             ps.setString(5, product.getImagePath());
-
 
             return ps.executeUpdate() > 0;
 
@@ -112,8 +113,10 @@ public class ProductDAO implements ProductDAOInterface {
     /**
      * Updates an existing product in the database.
      *
-     * @param product the Product object containing updated data
-     * @return true if update is successful, false otherwise
+     * @param product the Product object containing the updated product name,
+     * team name, category, description, image path, and product ID
+     * @return {@code true} if the product is updated successfully;
+     * {@code false} otherwise
      */
     @Override
     public boolean updateProduct(Product product) {
@@ -216,7 +219,6 @@ public class ProductDAO implements ProductDAOInterface {
 //
 //        return list;
 //    }
-
     /**
      * Searches products by keyword in product name.
      *
@@ -268,6 +270,15 @@ public class ProductDAO implements ProductDAOInterface {
         return 0;
     }
 
+    /**
+     * Retrieves a paginated list of products from the database.
+     *
+     * @param offset the starting position of the first record
+     * @param limit the maximum number of products to retrieve
+     * @return a {@code List<Product>} containing the products for the requested
+     * page
+     */
+    @Override
     public List<Product> getPaginatedProducts(int offset, int limit) {
 
         List<Product> products = new ArrayList<>();
